@@ -1,0 +1,41 @@
+        *.messagetext
+        {
+          color: #000000;
+          font-size: 18px;
+          text-decoration: none;
+          font-weight: none;
+        }
+	  	*.permenuitem
+        {
+	  		color: #CC44FF;
+	  		font-size: 12px;
+	  		text-decoration: None;
+	  		font-weight: Bold;
+	  	}
+ 	  	*.permenuinactive
+        {
+	  		color: #CC4400;
+	  		font-size: 12px;
+	  		text-decoration: None;
+	  		font-weight: Bold;
+	  	}
+ 	  	*.perenutitle
+        {
+	  	}
+	  	*.discmenuitem
+        {
+	  		color: #777777;
+	  		font-size: 12px;
+	  		text-decoration: None;
+	  		font-weight: Bold;
+	  	}
+ 	  	*.discmenuinactive
+        {
+	  		color: #222222;
+	  		font-size: 12px;
+	  		text-decoration: None;
+	  		font-weight: Bold;
+	  	}
+ 	  	*.discmenutitle
+        {
+	  	}

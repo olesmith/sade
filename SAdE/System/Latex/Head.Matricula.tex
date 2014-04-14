@@ -1,0 +1,40 @@
+\documentclass[letterpaper,10pt,twopage]{book}
+
+\usepackage{multirow}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage
+[
+   a4paper,
+   left=0.5cm,
+   right=0.5cm,
+   top=0.5cm,
+   bottom=0.75cm,
+   includehead,
+   includefoot,
+   headheight=2.5cm,
+   headsep=0.75cm
+]{geometry}
+
+
+\lhead{\includegraphics*[width=2.5cm]{#LatexIcon1}\\}
+\rhead{\includegraphics*[width=2.5cm]{#LatexIcon2}\\}
+\chead{
+      \textbf{
+           \begin{large}#School_Name\end{large}\\
+           \begin{small}#Address\end{small}\\
+           \begin{small} #Area, #City-#State - CEP: #ZIP\end{small}\\
+           \begin{tiny}#Phone - #Fax - #WWW - #Email\end{tiny}
+      }
+}
+
+\lfoot{\small{\\\textbf{\today}\\SAdE, IP Redes}}
+\cfoot{}
+\rfoot{\small{\\\textbf{#School_Name}\\#Department}}
+
+\pagestyle{fancy}
+\begin{document}

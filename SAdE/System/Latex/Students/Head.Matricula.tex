@@ -1,0 +1,58 @@
+\documentclass[letterpaper]{article}
+
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+
+
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.9}
+\renewcommand\textfraction{.1}
+\setcounter{totalnumber}{50}
+\setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50}
+
+\setlength{\paperwidth}{21cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headsep}{0.25cm}
+\setlength{\topskip}{0cm}
+\setlength{\footskip}{2cm}
+\setlength{\headheight}{2.5cm}
+\setlength{\textwidth}{20.5cm}
+\setlength{\textheight}{22cm}
+\setlength{\parindent}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\marginparwidth}{0cm}
+\setlength{\marginparsep}{0cm}
+\setlength{\voffset}{-2.5cm}
+\setlength{\hoffset}{-2cm}
+
+\lhead{\includegraphics*[height=1.75cm,width=4cm]{#LatexIcon1}}
+\rhead{\includegraphics*[height=1.75cm,width=4cm]{#LatexIcon2}}
+
+
+\chead{
+      \textbf{
+          \begin{LARGE}#Title\end{LARGE}\\
+          \begin{Large}#Department\end{Large}\\
+           \begin{large}#Address\end{large}\\
+           \begin{small}#Phone - #Fax - #WWW - #Email\end{small}
+      }
+}
+
+
+\lfoot{\small{\textbf{\today}\\Gest, IP Redes}}
+\rfoot{\small{\textbf{#Title}\\#Department}}
+
+\pagestyle{fancy}
+
+\begin{document}

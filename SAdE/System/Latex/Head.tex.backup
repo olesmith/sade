@@ -1,0 +1,50 @@
+\documentclass[letterpaper,10pt,twopage]{book}
+
+
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+
+
+\usepackage
+[
+   a4paper,
+   left=0.5cm,
+   right=0.5cm,
+   top=0cm,
+   bottom=0.75cm,
+   includehead,
+   includefoot,
+   headheight=2cm,
+   headsep=0.25cm
+]{geometry}
+
+
+\lhead{\includegraphics*[height=1.75cm,width=4cm]{#LatexIcon1}}
+\rhead{\includegraphics*[height=1.75cm,width=4cm]{#LatexIcon2}}
+
+
+\chead{
+      \textbf{
+          \begin{LARGE}#Title\end{LARGE}\\
+          \begin{Large}#Department\end{Large}\\
+           \begin{large}#Address\end{large}\\
+           \begin{small}#Phone - #Fax - #WWW - #Email\end{small}
+      }
+}
+
+
+\lfoot{\small{\textbf{\today}\\SAdE, IP Redes}}
+\rfoot{\small{\textbf{#Title}\\#Department}}
+
+\pagestyle{fancy}
+
+\begin{document}

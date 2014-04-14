@@ -1,0 +1,21 @@
+array
+(
+   'Institution' => 'IP Redes',
+   'Department' => 'Web Applications',
+   'Address' => 'Rua C-178, Qd. 452 Lt. 17',
+   'Area' => 'Jardim América',
+   'ZIP' => '74275-247',
+   'City' => 'Goiânia',
+   'State' => 'Goiás',
+   'Country' => 'Brasil',
+   'Phone' => '(62) 3087 1382',
+   'Fax' => '(62) 3087 1382',
+   'Url' => 'www.ipredes.com.br',
+   'Email' => 'mail@ipredes.com.br',
+   'AdmEmail' => 'support@ipredes.com.br',
+   'Domain' => 'ipredes.com.br',
+   'HtmlIcon1' => 'ipredes.png',
+   'HtmlIcon2' => 'ipredes.png',
+   'LatexIcon1' => 'ipredes.png',
+   'LatexIcon2' => 'ipredes.png',
+);

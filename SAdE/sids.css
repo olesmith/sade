@@ -1,0 +1,104 @@
+        *.messagetext
+        {
+          color: #000000;
+          font-size: 18px;
+          text-decoration: none;
+          font-weight: none;
+        }
+        *.Cities
+        {
+          background-color: #fff0f5;
+        }
+        *.Campii
+        {
+          background-color: #e6e6fa;
+        }
+        *.Buildings
+        {
+          background-color: #f0f8ff;
+        }
+        *.Rooms
+        {
+          background-color: #f5deb3;
+        }
+        *.Units
+        {
+          background-color: #fafad2;
+        }
+        *.People
+        {
+          background-color: #f5deb3;
+        }
+        *.Courses
+        {
+          background-color: #e0ffff;
+        }
+        *.Classes
+        {
+          background-color: #ffe4e1;
+        }
+        *.Disciplines
+        {
+          background-color: #afeeee;
+        }
+        *.Lessons
+        {
+          background-color: #eee8aa;
+        }
+        *.Permissions
+        {
+          background-color: #CAE1FF;
+        }
+        *.TimeSchemes
+        {
+          background-color: #CAE1FF;
+        }
+        *.Lessonday
+        {
+          background-color: #CAE1FF;
+        }
+        *.Saturday
+        {
+          background-color: #e6e6fa;
+        }
+        *.Sunday
+        {
+          background-color: #ffe4e1;
+        }
+        *.Holiday
+        {
+          background-color: #afeeee;
+        }
+        *.Recessday
+        {
+          background-color: #afcccc;
+        }
+        *.Weekday
+        {
+          background-color: #eee8aa;
+        }
+
+        *.Conjugateds
+        {
+          background-color: #fff0f5;
+        }
+        *.Contents
+        {
+          background-color: #e6e6fa;
+        }
+        *.Students
+        {
+          background-color: #f0f8ff;
+        }
+        *.Absences
+        {
+          background-color: #f5deb3;
+        }
+        *.Assessments
+        {
+          background-color: #fafad2;
+        }
+        *.Marks
+        {
+          background-color: #f5deb3;
+        }

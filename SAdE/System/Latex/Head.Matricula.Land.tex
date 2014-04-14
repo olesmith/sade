@@ -1,0 +1,49 @@
+\documentclass[letterpaper,10pt,twopage,landscape]{book}
+
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+\usepackage
+[
+   a4paper,
+   landscape,
+   left=0.5cm,
+   right=0.5cm,
+   top=0.75cm,
+   bottom=0.75cm,
+   includehead,
+   includefoot,
+   headheight=2.5cm,
+   headsep=0.75cm
+]{geometry}
+
+\lhead{\includegraphics*[width=3cm]{#LatexIcon1}}
+\rhead{\includegraphics*[width=3cm]{#LatexIcon2}}
+
+
+\chead{
+      \textbf{
+           \begin{large}#School_Name\end{large}\\
+           \begin{small}#Address\end{small}\\
+           \begin{small} #Area, #City-#State - CEP: #ZIP\end{small}\\
+           \begin{tiny}#Phone - #Fax - #WWW - #Email\end{tiny}
+      }
+}
+
+
+\lfoot{\small{\textbf{\today}\\SAdE, IP Redes}}
+\cfoot{}
+\rfoot{\small{\textbf{#School_Name}\\#Department}}
+
+\pagestyle{fancy}
+
+\begin{document}

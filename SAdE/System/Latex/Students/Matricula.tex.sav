@@ -1,0 +1,135 @@
+\framebox[20.62cm]
+{
+\begin{minipage}[t]{20.62cm}
+
+   \begin{center}
+      \LARGE{\textbf{Ficha de Matr\'{\i}cula}}
+   \end{center}
+
+   \begin{Large}
+
+   \begin{tabular}{|p{3cm}|p{16.77cm}|}
+      \hline
+      \textbf{Escola:} & #SchoolName \\
+      \hline
+      \textbf{Endere\c{c}o:} & #School_Street #School_StreetNumber #School_StreetCompletion #School_Area, #School_City  \\
+      \hline
+      \textbf{Professor(a):} &#TeacherName \\
+      \hline
+   \end{tabular}
+
+   \vspace{0.25cm}
+   \hspace{1cm}
+   \textbf{I - Identifica\c{c}\~ao do Aluno:}
+   \hspace{0.25cm}
+   \textbf{Pasta:} #Map \hspace{0.25cm}
+   \textbf{Data de Matricula:} #MatriculaDate
+
+   \vspace{0.1cm}
+
+   \begin{tabular}{|p{5cm}|p{5cm}|p{2.85cm}|p{6.1cm}|}
+      \hline
+      \textbf{Nome:} & \multicolumn{3}{l|}{#Name} \\
+      \hline
+      \textbf{Data de Nascimento:} & #BirthDay & \textbf{Sexo:} & #Sex \\
+      \hline
+      \textbf{Naturalidade - Cidade:} & #BirthCity & \textbf{Estado:} & #BirthState\\
+      \hline
+      \textbf{Certid\~ao de Nasc. N$^o$:} & #BirthCertNo & 
+      \textbf{Folha/Livro:} & #BirthCertPage/#BirthCertBook \\
+      \hline
+      \textbf{Data Emiss\~ao:} & #BirthCertDate &
+      \textbf{Munic\'{\i}pio:} & #BirthCertCity-#BirthCertState \\
+      \hline
+   \end{tabular}
+
+   \vspace{-0.05cm}
+
+   \begin{tabular}{|p{10.42cm}|p{2.85cm}|p{2.25cm}|p{3.43cm}|}
+      \hline
+      \textbf{Benefici\'ario de algum Programa de Governo:} & \multicolumn{3}{l|}{#GovernmentProgram}  \\
+      \hline
+      \textbf{Utiliza Transporte Escolar:} &  & \textbf{Cor/Ra\c{c}a:}  & #Race \\
+      \hline
+      \textbf{Portador de Necessidades Especiais:} & \multicolumn{3}{l|}{} \\
+      \hline
+   \end{tabular}
+
+
+   \vspace{0.25cm}
+   \hspace{1cm}\textbf{II - Filia\c{c}\~ao do Aluno:}
+   \vspace{0.1cm}
+
+   \begin{tabular}{|p{3cm}|p{16.77cm}|}
+      \hline
+      \textbf{Pai:} & #Father \\
+      \hline
+      \textbf{Profiss\~ao:} & #FatherProfession \\
+      \hline
+      \textbf{M\~ae:} & #Mother  \\
+      \hline
+      \textbf{Profiss\~ao:} & #MotherProfession \\
+      \hline
+      \textbf{Endere\c{c}o:} & #Street, #Area, #City-#State \\
+      \hline
+      \textbf{Fones:} & #Phones \\
+      \hline
+   \end{tabular}
+
+   \vspace{0.25cm}
+   \hspace{1cm}\textbf{III - Dados Escolares do Aluno:}
+   \vspace{0.1cm}
+
+   \begin{tabular}{|p{6cm}|p{4cm}|p{3.85cm}|p{5.1cm}|}
+      \hline
+      \textbf{Matr\'{\i}cula atual na S\'erie:} & #GradePeriod &
+      \textbf{Ano Letivo:} & #ClassYear \\
+      \hline
+      \textbf{Turno:} & #ClassShift &
+      \textbf{S\'erie Anterior:} & #PreviousPeriod\\
+      \hline
+      \textbf{Estudou nesta Escola:} & #StudiedHere &
+      \textbf{Repetente:} & #Repetition \\
+      \hline
+   \end{tabular}
+
+   \vspace{0.25cm}
+   \hspace{1cm}\textbf{IV - Observa\c{c}\~oes:}
+   \mbox
+   {
+      \begin{minipage}[t]{15cm}
+         \begin{normalsize}
+            \textit
+            {
+               Solicitar, no ato da Matr\'{\i}cula, xerox da Certid\~ao de Nascimento par alunos novatos e xerox do
+               Cart\~ao de Identidade do respons\'avel quando
+               benefici\'ario do Bolsa Fam\'{\i}lia.
+            }
+         \end{normalsize}
+      \end{minipage}
+   }
+
+   \hspace{0.25cm}\underline{\hspace{20cm}}
+
+   \hspace{0.25cm}\underline{\hspace{20cm}}
+
+   \vspace{0.25cm}
+   \hspace{5cm}\textbf{Data de Matr\'{\i}cula:} \underline{\hspace{2cm}} de
+   \underline{\hspace{6cm}} de 20\underline{\hspace{0.75cm}}
+
+   \vspace{0.75cm}
+
+   \hspace{0.25cm}\underline{\hspace{9.5cm}}
+   \hspace{0.85cm}
+   \underline{\hspace{9.5cm}}
+
+   \hspace{3.5cm}
+   \tiny{ASSINATURA DO(A) DIRETOR(A)}
+   \hspace{7.75cm}
+   \tiny{ASSINATURA DO(A) PAI/RESONS\'AVEL}
+
+   \end{Large}
+   \vspace{0.25cm}
+
+\end{minipage}
+}
