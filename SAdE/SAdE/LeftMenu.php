@@ -168,7 +168,7 @@ class SAdELeftMenu extends SAdEInfoTable
            $this->Periods,
            $currentperiod,
            $this->PeriodsMenuLink(),
-           "#Name",
+           "#Title",
            "#Name, #NClasses Turmas"
         );
     }
@@ -251,7 +251,7 @@ class SAdELeftMenu extends SAdEInfoTable
            $this->ClassesObject->ReadPeriodClasses($this->School,$this->Period),
            $this->GetGET("Class"),
            $this->ClassesMenuLink(),
-           "#Name",
+           "#Name (#NStudents)",
            "#Name, #NStudents Alunos"
         );
     }

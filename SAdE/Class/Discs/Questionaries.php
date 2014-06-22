@@ -51,7 +51,7 @@ class  ClassDiscsQuestionaries extends ClassDiscsTitleRows
                   $student,
                   0,0
                ),
-               "|l|p{15cm}|"
+               "|l|p{8cm}|p{8cm}|"
             ).
             "";
         $latex.="\\vspace{0.5cm}\n";
@@ -89,8 +89,9 @@ class  ClassDiscsQuestionaries extends ClassDiscsTitleRows
         $latex.=
             $this->LatexBox(10.0,$box1,FALSE,TRUE,'t',"flushleft").
             $this->LatexBox(7.0,$box2,FALSE,TRUE,'t',"flushleft").
+            "\\end{normalsize}\n".
+            "\\clearpage\n\n".
             "";
-        $latex.="\\end{normalsize}\n";
 
         return $latex;
         
@@ -110,20 +111,6 @@ class  ClassDiscsQuestionaries extends ClassDiscsTitleRows
             return $this->QuestionariesLatexTable();
         }
 
-        $table=$this->ApplicationObj->ClassQuestionsObject->QuestionariesTable
-        (
-           $this->ApplicationObj->Class,
-           $this->ApplicationObj->Student,
-           $edit,$tedit
-        );
-
-        $rtable=$this->ApplicationObj->ClassObservationsObject->ObservationsTable
-        (
-           $this->ApplicationObj->Class,
-           $this->ApplicationObj->Student,
-           $edit,$tedit
-        );
-
         $html=$this->ApplicationObj->ClassQuestionsObject->HtmlLegendTable();
         if ($edit==1 || $tedit==1)
         {
@@ -133,8 +120,27 @@ class  ClassDiscsQuestionaries extends ClassDiscsTitleRows
         }
 
         $html.=
-            $this->HtmlTable("",$table).
-            $this->HtmlTable("",$rtable);
+            $this->HtmlTable
+            (
+               "",
+               $this->ApplicationObj->ClassQuestionsObject->QuestionariesTable
+               (
+                  $this->ApplicationObj->Class,
+                  $this->ApplicationObj->Student,
+                  $edit,$tedit
+               )
+            ).
+            $this->HtmlTable
+            (
+               "",
+               $this->ApplicationObj->ClassObservationsObject->ObservationsTable
+               (
+                  $this->ApplicationObj->Class,
+                  $this->ApplicationObj->Student,
+                  $edit,$tedit
+               )
+            ).
+            "";
 
         if ($edit==1 || $tedit==1)
         {

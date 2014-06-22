@@ -4,7 +4,7 @@ array
    (
       "Name" => "Básicos",
       "Name_UK" => "Basics",
-      "Data" => array("No","Edit","Name","Department","Email","WorkPhone","Phone","Fax","Cell"),
+      "Data" => array("No","Edit","Schedule","Name","Department","Email","WorkPhone","Phone","Fax","Cell"),
       "Admin" => 1,
       "Person" => 1,
       "Distributor" => 2,

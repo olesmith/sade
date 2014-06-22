@@ -2,15 +2,19 @@ array(
    "Common" => array
    (
       "Name" => "Básicos",
-      "Data" => array("No","Edit","Status","Name","School","Email"),
+      "Data" => array("No","Edit","Schedule","Delete","Status","Name","School","Email"),
       "Admin" => 1,
       "Person" => 1,
       "Public" => 1,
    ),
-   "Parental" => array
+   "Profiles" => array
    (
-      "Name" => "Pais",
-      "Data" => array("No","Edit","Name","Status","Civil","Mother","MotherProfession","Father","FatherProfession"),
+      "Name" => "Perfis",
+      "Data" => array
+      (
+         "No","Edit","Schedule","Name","School",
+         "Profile_Secretary","Profile_Clerk","Profile_Coordinator","Profile_Teacher"
+      ),
       "Admin" => 1,
       "Person" => 1,
       "Public" => 1,
@@ -18,7 +22,7 @@ array(
    "Contacts" => array
    (
       "Name" => "Contatos",
-      "Data" => array("No","Edit","Name","Status","Phone","Cell","Email","WorkPhone"),
+      "Data" => array("No","Edit","Schedule","Name","Status","Phone","Cell","Email","WorkPhone"),
       "Admin" => 1,
       "Person" => 1,
       "Public" => 1,
@@ -40,6 +44,14 @@ array(
          "BirthDay","BirthCity","BirthState","Nationality",
          "BirthCertNo","BirthCertPage","BirthCertBook","BirthCertDate","BirthCertCity","BirthCertState",
       ),
+      "Admin" => 1,
+      "Person" => 1,
+      "Public" => 1,
+   ),
+   "Parental" => array
+   (
+      "Name" => "Pais",
+      "Data" => array("No","Edit","Name","Status","Civil","Mother","MotherProfession","Father","FatherProfession"),
       "Admin" => 1,
       "Person" => 1,
       "Public" => 1,

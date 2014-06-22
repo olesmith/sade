@@ -38,6 +38,7 @@ class SAdE extends SAdEAccessors
 
     var $RealUnitsObject=NULL;
 
+    var $LogsObject=NULL;
     var $PeopleObject=NULL;
     var $ClerksObject=NULL;
     var $UnitsObject=NULL;
@@ -150,7 +151,22 @@ class SAdE extends SAdEAccessors
         $args[ "ValidProfiles" ]=$this->AppProfiles[ "SAdE" ];
         $this->MayCreateSessionTable=TRUE;
 
+        $this->LogGETVars=array
+        (
+           "Unit","ID","School",
+           "Grade","GradePeriod","GradeDisc",
+           "Class","Disc","Student","Teacher"
+        );
+
+        $this->LogPOSTVars=array
+        (
+           "Edit","EditList","Save","Update","Generate","Transfer",
+        );
+
         parent::Application($args);
+        $this->LoadSubModule("Logs",TRUE);
+
+        $this->LogsObject->LogEntry("SAdE");
     }
 
 
@@ -213,7 +229,7 @@ class SAdE extends SAdEAccessors
     {
         $this->Sigma   = '$'."\\Sigma".  '$';
         $this->Mu      = '$'."\\Mu".     '$';
-        $this->Percent = '$'."\\percent".'$';
+        $this->Percent = "\\%";
     }
 
     //*
@@ -583,14 +599,16 @@ class SAdE extends SAdEAccessors
     //* Overrides MySql2::SqlTableName.
     //*
 
-    function SchoolPeriodSqlClassTableName($class)
+    function SchoolPeriodSqlClassTableName($class,$classid="")
     {
+        if (empty($classid)) { $classid=$this->GetClass("ID"); }
+
         return
             $this->School("ID").
             "_".
             $this->Period2SqlTable($this->Class).
             "_".
-            $this->Class("ID").
+            $classid.
             "_".
             $class;
     }
@@ -642,7 +660,9 @@ class SAdE extends SAdEAccessors
         $comps=array();
         if ($school)
         {
-            array_push($comps,intval($this->GetGET("School")));
+            if (!empty($this->School[ "ID" ])) { $school=$this->School[ "ID" ]; }
+            if (empty($school)) { $school=intval($this->GetGET("School")); }
+            array_push($comps,$school);
         }
 
         if ($period)
@@ -651,7 +671,9 @@ class SAdE extends SAdEAccessors
         }
         if ($class)
         {
-            array_push($comps,intval($this->GetGET("Class")));
+            $class=$this->Class[ "ID" ];
+            if (empty($class)) { $class=intval($this->GetGET("Class")); }
+            array_push($comps,$class);
         }
 
         array_push($comps,$classname);

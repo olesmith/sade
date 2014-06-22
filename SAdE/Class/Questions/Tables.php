@@ -98,7 +98,16 @@ class ClassQuestionsTables extends Common
                    $this->B($cell)
                 );
             }
-            array_push($row,$this->B($this->ApplicationObj->Sigma));
+
+            if ($this->ApplicationObj->ClassDiscsObject->ShowAbsencesTotals)
+            {
+                array_push($row,$this->B($this->ApplicationObj->Sigma));
+            }
+
+            if ($this->ApplicationObj->ClassDiscsObject->ShowAbsencesPercent)
+            {
+                array_push($row,$this->B($this->ApplicationObj->Percent));
+            }
 
             array_push
             (
@@ -109,7 +118,7 @@ class ClassQuestionsTables extends Common
                   array("",$this->MultiCell("Aulas Dadas:",1,"r")),
                   $this->ApplicationObj->ClassDiscNLessonsObject->NLessonsRow
                   (
-                     $tedit,
+                     $edit,
                      $class,
                      $disc
                   )
@@ -119,7 +128,7 @@ class ClassQuestionsTables extends Common
                   array("",$this->MultiCell("Faltas:",1,"r")),
                   $this->ApplicationObj->ClassAbsencesObject->AbsencesRow
                   (
-                     $tedit,
+                     $edit,
                      $class,
                      $disc,
                      $student

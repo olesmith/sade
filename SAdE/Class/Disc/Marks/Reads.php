@@ -49,7 +49,11 @@ class ClassDiscMarksReads extends ClassDiscMarksLatex
 
             $studmarks[ "Semester" ][ $semester ][ $number ]=$mark;
 
-            $studmarks[ "Marks" ][ $semester ]=$this->SemesterStudentMark($student,$this->Assessments[ $semester ]);
+            $studmarks[ "Marks" ][ $semester ]="";
+            if (!empty($this->Assessments[ $semester ]))
+            {
+                $studmarks[ "Marks" ][ $semester ]=$this->SemesterStudentMark($student,$this->Assessments[ $semester ]);
+            }
         }
 
         $studmarks[ "MarksHash" ]=$this->ApplicationObj->ClassMarksObject->CalcStudentDiscMarks

@@ -17,6 +17,22 @@ array
    ),
    "Name" => array
    (
+      "Name" => "Nome (SQL)",
+      "Size" => "20",
+      "Sql" => "VARCHAR(255)",
+      "Search" => TRUE,
+      "Compulsory" => TRUE,
+      "Public"      => 1,
+      "Person"      => 1,
+      "Admin"       => 2,
+
+      "Clerk" => 1,
+      "Teacher"     => 1,
+      "Secretary" => 1,
+      "Coordinator" => 1,
+   ),
+   "Title" => array
+   (
       "Name" => "Nome",
       "Size" => "20",
       "Sql" => "VARCHAR(255)",

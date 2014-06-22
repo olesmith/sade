@@ -1,6 +1,5 @@
 <?php
 
-include_once("Users/Import.php");
 
 
 class UsersAdd extends UsersImport
@@ -116,15 +115,6 @@ class UsersAdd extends UsersImport
     function EditForm($title,$item=array(),$edit=0,$noupdate=FALSE,$datas=array(),$echo=TRUE,$extrarows=array(),$formurl=NULL,$buttons="",$cgiupdatevar="Update")
     {
         if (empty($item)) { $item=$this->ItemHash; }
-        /* if (!empty($item[ "Photo" ])) */
-        /* { */
-        /*     print $this->Center */
-        /*     ( */
-        /*      $this->IMG($item[ "Photo" ],"Foto do(a) Professor(a) ".$item[ "Name" ],150,0,array("BORDER" => 1)). */
-        /*      "<BR>". */
-        /*      $item[ "Name" ] */
-        /*     ); */
-        /* } */
         
         parent::EditForm($title,$item,$edit,$noupdate,$datas,$echo,$extrarows,$formurl,$buttons,$cgiupdatevar);
     }

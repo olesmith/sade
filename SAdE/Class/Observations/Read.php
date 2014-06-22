@@ -21,7 +21,7 @@ class ClassObservationsRead extends ClassObservationsUpdate
            array()
         );
 
-        if (empty($res)) { $item[ "Value" ]=""; }
+        if (empty($res)) { $item[ "Value" ]="";$item[ "ResponsibleValue" ]=""; }
         else             { $item=$res; }
        
 

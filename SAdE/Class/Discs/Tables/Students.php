@@ -66,40 +66,50 @@ class ClassDiscsTablesStudents extends ClassDiscsTablesDiscs
                 if (!empty($row[0])) { $cell1=$row[0]; }
                 $cell2="";
                 if (!empty($row[1])) { $cell2=$row[1]; }
+                $cell3="";
+                if (!empty($row[1])) { $cell3=$row[2]; }
 
+                $cells1=3;
+                $cells2=($ncols-$cells1+1)/2;
+                $cells3=$ncols-$cells1-$cells2;
                 array_push
                 (
                    $table,
                    array
                    (              
-                      $this->MultiCell($cell1,3),
-                      $this->MultiCell($cell2,$ncols-2)
+                      $this->MultiCell($cell1,$cells1),
+                      $this->MultiCell($cell2,$cells2),
+                      $this->MultiCell($cell3,$cells3),
                    )
                 );
             }
         }
 
         $observations=TRUE;
-        if ($this->GetGET("NoObs")!=1) { $observations=FALSE; }
+        if ($this->GetGET("NoObs")==1) { $observations=FALSE; }
         if ($this->NoObservations) { $observations=FALSE; }
 
- 
         $html="";
         if ($this->LatexMode)
         {
+            $scale=0.9;
+            if ($observations) { $scale=0.65; }
+
             $html=
-                $this->LatexTable("",$table);
+                "\\scalebox{".$scale."}{".
+                $this->LatexTable("",$table).
+                "}";
 
             if ($observations)
             {
                 $html.=
                     "\\vspace{0.25cm}\n\n".
-                    $this->LatexTable("",$ctable,"|l|p{10cm}|").
+                    $this->LatexTable("",$ctable,"|l|p{8cm}|p{8cm}|").
                     "";
             }
 
             $html.=$this->ApplicationObj->ClassesObject->LatexResponsibleSignatureLine(3.0,1.0,1.5,7.0);
-        }
+       }
         else
         {
             $html=$this->HtmlTable("",$table);
@@ -148,10 +158,9 @@ class ClassDiscsTablesStudents extends ClassDiscsTablesDiscs
                 $latex.="\\clearpage\n\n";
             }
 
-            $rlatex.=$this->LatexOnePage($latex,"27.5cm",0.75);
+            $rlatex.=$latex;
         }
 
-        //$this->ShowLatexCode($rlatex);exit();
         return $rlatex;
     }
 }

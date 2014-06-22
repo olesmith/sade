@@ -29,7 +29,7 @@ class ClassAbsencesTitleRows extends ClassAbsencesCalc
 
         if ($this->ApplicationObj->ClassDiscsObject->ShowAbsencesPercent)
         {
-            array_push($row,"");
+            array_push($row,$this->ApplicationObj->Percent);
         }
 
         return $row;

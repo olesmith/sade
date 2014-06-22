@@ -54,29 +54,6 @@ array
       "Teacher"     => 1,
       "Secretary" => 1,
       "Coordinator" => 1,
-      
-      
-      
-   ),
-   "Class" => array
-   (
-      "Name" => "Turma",
-      "Sql" => "INT",
-      "SqlClass" => "Classes",
-      "GETSearchVarName"  => "Class",
-      "Search" => TRUE,
-
-      "Public"      => 1,
-      "Person"      => 1,
-      "Admin"       => 2,
-
-      "Clerk" => 1,
-      "Teacher"     => 1,
-      "Secretary" => 1,
-      "Coordinator" => 1,
-      
-      
-      
    ),
    "Grade" => array
    (
@@ -93,9 +70,6 @@ array
       "Teacher"     => 1,
       "Secretary" => 1,
       "Coordinator" => 1,
-      
-      
-      
    ),
    "GradePeriod" => array
    (
@@ -112,9 +86,25 @@ array
       "Teacher"     => 1,
       "Secretary" => 1,
       "Coordinator" => 1,
-      
-      
-      
+   ),
+   "Class" => array
+   (
+      "Name" => "Turma",
+      "Sql" => "INT",
+      "SqlClass" => "Classes",
+      "GETSearchVarName"  => "Class",
+      "Search" => TRUE,
+      "SqlDerivedData" => array("Name","NameKey"),
+      "SqlFilter" => "#NameKey",
+
+      "Public"      => 1,
+      "Person"      => 1,
+      "Admin"       => 2,
+
+      "Clerk" => 1,
+      "Teacher"     => 1,
+      "Secretary" => 1,
+      "Coordinator" => 1,      
    ),
    "GradeDisc" => array
    (
@@ -126,8 +116,8 @@ array
           "Name","Status","NickName","CHS","CHT","GradePeriod",
       ),
       "SqlFilter" => "#Name, #GradePeriod",
-      "SqlWhere" => "(Grade='#Grade' AND GradePeriod='#GradePeriod')",
-      "Search" => TRUE,
+      //"SqlWhere" => "(Grade='#Grade' AND GradePeriod='#GradePeriod')",
+      "Search" => FALSE,
 
       "Public"      => 1,
       "Person"      => 1,
@@ -137,9 +127,6 @@ array
       "Teacher"     => 1,
       "Secretary" => 2,
       "Coordinator" => 1,
-      
-      
-      
    ),
    "Teacher" => array
    (
@@ -217,7 +204,7 @@ array
       "Title" => "Titulo Saindo em Atas, etc.",
       "Size" => "30",
       "Sql" => "VARCHAR(255)",
-      "Search" => TRUE,
+      "Search" => FALSE,
 
       "Public"      => 1,
       "Person"      => 1,

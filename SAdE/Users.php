@@ -1,10 +1,16 @@
 <?php
 
+include_once("Users/Import.php");
 include_once("Users/Add.php");
+include_once("Users/Teacher.php");
 
 
-class Users extends UsersAdd
+class Users extends UsersTeacher
 {
+    var $TeacherScheduleTeacherData=array("Name","Email","Status");
+    var $TeacherScheduleDiscData=array("Class","Name");
+    var $TeacherScheduleDiscActions=array("Edit","Discs","Students","Hours","Dayly");
+
 
     //*
     //* Variables of  class:
@@ -290,17 +296,9 @@ class Users extends UsersAdd
         {
             $where[ "Profile_Teacher" ]=2;
         }
-        elseif (preg_match('/(Admin|Secretary|Coordinator|Clerk)/',$this->Profile))
-        {
-        }
-        /* elseif (preg_match('/(Coordinator|Clerk)/',$this->Profile)) */
-        /* { */
-        /*     $where[ "Profile_Teacher" ]=2; */
-        /*     $where[ "School" ]=$this->ApplicationObj->SchoolIDs(); */
-        /* } */
 
         return $where;
-    }
+    }   
 }
 
 ?>

@@ -4,6 +4,25 @@
 class PeriodsRead extends PeriodsTrimester
 {
     //*
+    //* function GetAllPeriods, Parameter list:
+    //*
+    //* Reads all periods.
+    //* 
+    //*
+
+    function GetAllPeriods($datas=array("ID","Name","Type","Year","Semester","Daylies"))
+    {
+        return $this->SelectHashesFromTable
+        (
+           "Periods",
+           array(),
+           $datas,
+           FALSE,
+           "Year,Type,Semester"
+        );
+    }
+
+     //*
     //* function ReadAllPeriods, Parameter list:
     //*
     //* Reads all periods.
@@ -300,7 +319,18 @@ class PeriodsRead extends PeriodsTrimester
     {
         if (empty($period)) { $period=$this->ApplicationObj->Period(); }
 
-        return $period[ "Name" ];
+        $name=$period[ "Name" ];
+        if ($period[ "Type" ]>1)
+        {
+            $name="Semester ".$period[ "Year" ].", ".$period[ "Semester" ];
+        }
+        else
+        {
+            $name="Ano ".$period[ "Year" ];
+        }
+
+
+        return $name;
     }
 
 

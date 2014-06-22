@@ -102,6 +102,20 @@ class ItemTests extends ItemBackRefs
                 }
             }
 
+            if ($this->ItemData[ $data ][ "Unique" ])
+            {
+                if (!$this->ItemDataIsUnique($item,$data))
+                {
+                    $item[ $data."_Message" ]="<SPAN CLASS='errors'>&lt;&lt; Não Único(a)</SPAN>";
+                    array_push
+                    (
+                       $messages,
+                       $this->GetDataTitle($data)." '".$item[ $data ]."': ".$item[ $data."_Message" ]
+                    );
+                    $nerrors++;
+                }
+            }
+
             if (!isset($item[ $data."_Message" ]) || $item[ $data."_Message" ]=="")
             {
                 unset($item[ $data."_Message" ]);
@@ -136,6 +150,38 @@ class ItemTests extends ItemBackRefs
 
 
 
+    //*
+    //* Tests whether $item[ $data ] is unique.
+    //*
+
+    function ItemDataIsUnique($item,$data)
+    {
+        if (!empty($item[ $data ]))
+        {
+            $nitems=$this->MySqlNEntries("",array($data => $item[ $data ]));
+            if ($nitems>1)
+            {
+                if (!array($this->HtmlStatus))
+                {
+                    $this->HtmlStatus=array($this->HtmlStatus);
+                }
+
+                $msg=
+                    $this->ItemName.": Campo ".$this->ItemData[ $data ][ "Name" ].
+                    " não é único: ".$item[ $data ];
+
+                array_push($this->HtmlStatus,$msg);
+
+                //print $this->H(4,$msg);
+
+                return FALSE; 
+            }
+        }
+
+        return TRUE;
+    }
+
+
    //*
    //* Tests if data declared uniques ("Unique" => 1) is really unique.
    //* First detects the list of data that needs to be unique.
@@ -151,9 +197,8 @@ class ItemTests extends ItemBackRefs
             if (empty($this->ItemData[ $data ][ "Unique" ])) { continue; }
             if (empty($item[ $data ])) { continue; }
 
-            $query="SELECT * FROM ".$this->SqlTableName()." WHERE ".$data."='".$item[ $data ]."'";
-            $result=$this->QueryDB($query);
-            if (mysql_fetch_assoc($result))
+            $nitems=$this->MySqlNEntries("",array($data => $item[ $data ]));
+            if ($nitems>1)
             {
                 if (!array($this->HtmlStatus))
                 {
@@ -162,16 +207,16 @@ class ItemTests extends ItemBackRefs
 
                 array_push
                 (
-                 $this->HtmlStatus,
-                 "Campo ".$this->ItemData[ $data ][ "Name" ].
-                 " não é único - ".$this->ItemName." NÃO adicionado"
+                   $this->HtmlStatus,
+                   "Campo ".$this->ItemData[ $data ][ "Name" ].
+                   " não é único - ".$this->ItemName
                 );
 
                 print $this->H
                 (
                    4,
                    "Campo ".$this->ItemData[ $data ][ "Name" ].
-                   " não é único - ".$this->ItemName." NÃO adicionado"
+                   " não é único - ".$this->ItemName
                 );
 
                 return FALSE; // return right away, minimizing mysql talks

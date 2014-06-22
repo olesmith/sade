@@ -90,10 +90,8 @@ class ClassDiscContentsRow extends ClassDiscContentsCalendar
     //* Generates content row for $content.
     //*
 
-    function DaylyContentsContentRow($edit,$n,$content,$dates,&$lastdates)
+    function DaylyContentsContentRow($edit,$n,&$content,$dates,&$lastdates)
     {
-        $dates=$dates;
-
         if (empty($dates[ $content[ "Date" ] ]))
         {
             $dates[ $content[ "Date" ] ]=$this->ApplicationObj->DatesObject->SelectUniqueHash
@@ -105,8 +103,38 @@ class ClassDiscContentsRow extends ClassDiscContentsCalendar
              );
         }
 
-        $date=$dates[ $content[ "Date" ] ];
         $row=array($this->B($n));
+
+        if (empty($content[ "Date" ]))
+        {
+            $content=$this->MakeSureWeHaveRead("",$content,array("Date"));
+        }
+
+        if (empty($content[ "Date" ]))
+        {
+            $month=$this->GetGET("Month");
+            if (empty($month)) { $month=$this->CurrentMonth(); }
+
+            $content[ "Date" ]=$this->ApplicationObj->DatesObject->GetFirstDateInMonth
+            (
+               $this->ApplicationObj->Period[ "Year" ],
+               $month
+            );
+
+            $this->MySqlSetItemValue("","ID",$content[ "ID" ],"Date",$content[ "Date" ]);
+        }
+
+
+        if (empty($dates[ $content[ "Date" ] ]))
+        {
+            $dates[ $content[ "Date" ] ]=$this->ApplicationObj->DatesObject->SelectUniqueHash
+            (
+               "",
+               array("ID" => $content[ "Date" ]),
+               FALSE
+            );
+        }
+        $date=$dates[ $content[ "Date" ] ];
 
        //First Date data
         foreach ($this->DaylyDateDatas as $data)
@@ -158,11 +186,11 @@ class ClassDiscContentsRow extends ClassDiscContentsCalendar
             {
                 if (preg_match('/\S/',$content[ "Content" ]))
                 {
-                    $deletebox="Conteúdo Lançado - não Deletável";
+                    $deletebox="Conteúdo Lançado - Indeletável";
                 }
                 else
                 {
-                    $deletebox="Faltas Lançadas - não Deletável";
+                    $deletebox="Faltas Lançadas - Indeletável";
                 }
 
                 $deletebox=$this->B($deletebox);

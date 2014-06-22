@@ -23,7 +23,7 @@ array
          "Clerk" => 1,
          "Teacher"     => 1,
          "Secretary" => 1,
-      "Coordinator" => 1,
+         "Coordinator" => 1,
       ),
       'Dayly1' => array
       (
@@ -34,7 +34,7 @@ array
          "Clerk" => 1,
          "Teacher"     => 1,
          "Secretary" => 1,
-      "Coordinator" => 1,
+         "Coordinator" => 1,
       ),
       'DaylyTeacher' => array
       (
@@ -98,7 +98,7 @@ array
          'Admin' => 1,
 
          "Clerk" => 1,
-         "Teacher"     => 0,
+         "Teacher"     => 1,
          "Secretary" => 1,
          "Coordinator" => 1,
       ),

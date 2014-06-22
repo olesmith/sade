@@ -39,19 +39,28 @@ class PeriodsPeriod extends PeriodsRead
     function SetPeriodName(&$period)
     {
         $name=$period[ "Year" ].".".sprintf("%02d",$period[ "Semester" ]);
-        if ($name!=$period[ "Period" ])
+
+        $updatedatas=array();
+        if ($name!=$period[ "Name" ])
         {
             $period[ "Name" ]=$name;
-            $this->MySqlSetItemValue
-            (
-               "",
-               "ID",
-               $period[ "ID" ],
-               "Name" ,
-               $name
-            );
+            array_push($updatedatas,"Name");
         }
 
+        $title=$this->GetPeriodTitle($period);
+        if ($title!=$period[ "Title" ])
+        {
+            $period[ "Title" ]=$title;
+            array_push($updatedatas,"Title");
+        }
+
+        $this->MySqlSetItemValues
+        (
+           "",
+           $updatedatas,
+           $period
+        );
+ 
         return $name;
     }
 

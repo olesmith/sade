@@ -62,19 +62,38 @@ class ClassesPrintsLatex extends ClassesPrintsTable
 
     function LatexResponsibleSignatureLine($width1=2,$width2=0.5,$width3=1.0,$width4=5.0)
     {
+        $table=array
+        (
+           array("","","",),
+           array("","","",),
+           array("","","",),
+           array
+           (
+              "\\underline{\\hspace{".$width1."cm}},",
+              "\\underline{\\hspace{".$width2."cm}}/"."\\underline{\\hspace{".$width2."cm}}/"."\\underline{\\hspace{".$width3."cm}}",
+              "\\underline{\\hspace{".$width4."cm}}"
+           ),
+           array
+           (
+              "Local",
+              "Data",
+              "Assinatura do Responsável",
+           ),
+        );
         return
             "\n\n".
             "\\begin{small}\n".
-            "\\begin{tabular}{cc}\n".
-            "&\\\\\n".
-            "&\\\\\n".
-            "\\underline{\\hspace{".$width1."cm}}, ".
-            "\\underline{\\hspace{".$width2."cm}}/".
-            "\\underline{\\hspace{".$width2."cm}}/".
-            "\\underline{\\hspace{".$width3."cm}} &\n".
-            "\\underline{\\hspace{".$width4."cm}}\\\\\n".
-            "Local e Data & Assinatura do Responsável\\\\\n".
-            "\\end{tabular}".
+            $this->LatexTable("",$table,"ccc",FALSE,FALSE).
+            /* "\\begin{tabular}{ccc}\n". */
+            /* "&\\\\\n". */
+            /* "&\\\\\n". */
+            /* "\\underline{\\hspace{".$width1."cm}},&". */
+            /* "\\underline{\\hspace{".$width2."cm}}/". */
+            /* "\\underline{\\hspace{".$width2."cm}}/". */
+            /* "\\underline{\\hspace{".$width3."cm}} &\n". */
+            /* "\\underline{\\hspace{".$width4."cm}}\\\\\n". */
+            /* "Local e Data & Assinatura do Responsável\\\\\n". */
+            /* "\\end{tabular}". */
             "\\end{small}".
             "";
      }

@@ -6,12 +6,12 @@ array
    'Author' => 'Prof. Dr. Ole Peter Smith, IME/UFG',
    'AuthorLinks' => array
    (
-      'http://www.ipredes.com.br',
+      'http://www.ime.ufg.br',
       'http://olepeter.mat.ufg.br',
    ),
    'AuthorLinkNames' => array
    (
-      'http://www.ipredes.com.br',
+      'http://www.ime.ufg.br',
       'http://olepeter.mat.ufg.br',
    ),
    'CssUrl' => 'app.css',

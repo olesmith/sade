@@ -155,7 +155,7 @@ class ClassAbsencesTables extends ClassAbsencesTitleRows
         return array
         (
            sprintf("%.1f",$absenceshash[ "Percent" ]),
-           $this->PaintStudentResult($absenceshash[ "AbsencesResult" ])       
+           $this->PaintStudentResult($absenceshash[ "AbsencesResult" ])
         );
     }
 

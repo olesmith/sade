@@ -40,7 +40,10 @@ class SubModules extends Session
            )
         );
 
-        $this->Module->$object=$this->$object;
+        if ($this->Module)
+        {
+            $this->Module->$object=$this->$object;
+        }
 
         $this->Modules[ $object ]=$this->$object;
  
@@ -56,6 +59,7 @@ class SubModules extends Session
         }
 
         $this->$object->InitProfile();
+
         $this->$object->InitData($initstructure);
         $this->Module->$object=$this->$object;
 

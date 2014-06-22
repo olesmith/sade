@@ -41,6 +41,8 @@ class ClassDiscAbsencesReads extends ClassDiscAbsencesLatex
                array("ID","Date","Weight")
             );
 
+            if (empty($content[ "Date" ])) { continue; }
+
             $date=$this->ApplicationObj->DatesObject->ReadDate
             (
                $content[ "Date" ],

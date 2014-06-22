@@ -31,7 +31,7 @@ class ClassDiscsAccess extends ClassDiscsTeachers
                array("ID")
             );
 
-            if (!empty($clerkperm))
+            if (!empty($clerkperm) || $this->LoginData[ "School" ]==$this->ApplicationObj->School[ "ID" ])
             {
                 $res=TRUE;
             }

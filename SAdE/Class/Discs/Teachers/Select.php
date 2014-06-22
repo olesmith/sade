@@ -173,10 +173,28 @@ class ClassDiscsTeachersSelect extends ClassDiscsSelectForm
                "",
                array("ID" => $disc[ $data ]),
                FALSE,
-               array("Name","Email",)
+               array("ID","Name","Email",)
             );
 
-            return $teacher[ "Name" ];
+            $args=$this->Query2Hash();
+            $args[ "ModuleName" ]="Users";
+            $args[ "Action" ]="Schedule";
+            $args[ "ID" ]=$teacher[ "ID" ];
+
+            if (empty($teacher)) { return ""; }
+
+            unset($args[ "Class" ]);
+            unset($args[ "Disc" ]);
+
+            return 
+                $this->HRef
+                (
+                   "?".$this->Hash2Query($args),
+                   $teacher[ "Name" ],
+                   "Disciplinas & Horários do(a) Prof(a). ".
+                   $teacher[ "Name" ]." (".
+                   $teacher[ "Email" ].")"
+                );
         }
 
         $this->ReadTeachers();

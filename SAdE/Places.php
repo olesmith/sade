@@ -50,7 +50,7 @@ class Places extends Common
 
         if (preg_match('/^(Secretary)$/',$this->Profile))
         {
-            $this->AddDefaults[ "Department" ]=$this->LoginData[ "Department" ];
+            //$this->AddDefaults[ "Department" ]=$this->LoginData[ "Department" ];
             $this->AddFixedValues[ "Department" ]=$this->LoginData[ "Department" ];
         }
 

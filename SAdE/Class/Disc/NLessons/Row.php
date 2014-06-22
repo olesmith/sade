@@ -9,7 +9,7 @@ class ClassDiscNLessonsRow extends ClassDiscNLessonsField
     //* Makes Marks HTML table for disc $disc.
     //*
 
-    function NLessonsRow($edit=0,$class=array(),$disc=array(),$showtotals=TRUE)
+    function NLessonsRow($edit=0,$class=array(),$disc=array())
     {
         if (empty($class)) { $class=$this->ApplicationObj->Class; }
         if (empty($disc))  { $disc=$this->ApplicationObj->Disc; }
@@ -58,11 +58,15 @@ class ClassDiscNLessonsRow extends ClassDiscNLessonsField
             array_push($row,$cell);
         }
 
-        if ($showtotals)
+        if ($this->ApplicationObj->ClassDiscsObject->ShowNLessonsTotals)
         {
             array_push($row,$total);
         }
 
+        if ($this->ApplicationObj->ClassDiscsObject->ShowNLessonsPercent)
+        {
+            array_push($row,"100.0");
+        }
         return $row;
     }
 }

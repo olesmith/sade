@@ -52,6 +52,9 @@ class ClassesHandlers extends ClassesSelects
 
     function HandleAdd($echo=TRUE)
     {
+        var_dump("here");
+        $this->ApplicationObj->Periods=$this->ApplicationObj->PeriodsObject->GetAllPeriods() ;
+
         $this->ItemData[ "School" ][ $this->ApplicationObj->Profile ]=1;
 
         $this->ItemData[ "Grade" ][ $this->ApplicationObj->Profile ]=2;

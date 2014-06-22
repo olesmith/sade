@@ -16,9 +16,10 @@ include_once("Class/Discs/Menu.php");
 include_once("Class/Discs/SelectForm.php");
 include_once("Class/Discs/Teachers.php");
 include_once("Class/Discs/Access.php");
+include_once("Class/Discs/StatusTable.php");
 
 
-class ClassDiscs extends ClassDiscsAccess
+class ClassDiscs extends ClassDiscsStatusTable
 {
 
     //*
@@ -72,6 +73,7 @@ class ClassDiscs extends ClassDiscsAccess
 
     var $ShowNLessons=FALSE;
     var $ShowNLessonsTotals=TRUE;
+    var $ShowNLessonsPercent=FALSE;
 
     var $ShowFinal=TRUE;
     var $HandleTitle=TRUE;
@@ -113,23 +115,26 @@ class ClassDiscs extends ClassDiscsAccess
         $trimesterdata=$this->ReadPHPArray("System/Class/Discs/Data.Trimester.php");
 
         $key="Daylies";
-        for ($n=1;$n<=$this->ApplicationObj->MaxNAssessments;$n++)
+        for ($trimester=1;$trimester<=$this->ApplicationObj->MaxNAssessments;$trimester++)
         {
             foreach ($trimesterdata as $data => $datadef)
             {
-                $rkey=$key.$data.$n;
+                $rkey=$key.$data.$trimester;
                 $this->ItemData[ $rkey ]=$datadef;
                 foreach (array("ShortName","Name","Title") as $namekey)
                 {
                     $this->ItemData[ $rkey ][ $namekey ]=preg_replace
                     (
                        '/#N\b/',
-                       $n,
+                       $this->Latins[ $trimester ],
                        $this->ItemData[ $rkey ][ $namekey ]
                     );
                 }
             }
-       }
+        }
+
+        if (empty($this->ApplicationObj->GradeObject)) { return; }
+
 
         foreach ($this->ApplicationObj->GradeObject->ModeVars as $data)
         {
@@ -246,6 +251,7 @@ class ClassDiscs extends ClassDiscsAccess
 
     function PostProcessDaylies(&$item)
     {
+        $sqltable=$this->ApplicationObj->SchoolPeriodSqlTableName($this->ModuleName);
         $key="DayliesLimit";
         $period=$this->ApplicationObj-> LocatePeriod($item[ "Period" ]);
 
@@ -255,7 +261,7 @@ class ClassDiscs extends ClassDiscsAccess
         {
             if (empty($item[ "Daylies" ]) || $item[ "Daylies" ]==1)
             {
-                $this->SetAndUpdateDataValue("",$item,"Daylies",2);
+                $this->SetAndUpdateDataValue($sqltable,$item,"Daylies",2);
             }
         }
 
@@ -269,20 +275,20 @@ class ClassDiscs extends ClassDiscsAccess
                 array_push($ddatas,$key.$n);
             }
 
-            $item=$this->MakeSureWeHaveRead("",$item,$ddatas);
+            $item=$this->MakeSureWeHaveRead($sqltable,$item,$ddatas);
             for ($n=1;$n<=$nassessments;$n++)
             {
                 if (empty($item[ $key.$n ]))
                 {
                     $item[ $key.$n ]=$period[ $key.$n ];
-                    $this->SetAndUpdateDataValue("",$item,$key.$n,$period[ $key.$n ]);
+                    $this->SetAndUpdateDataValue($sqltable,$item,$key.$n,$period[ $key.$n ]);
                 }
 
                 $value=$this->Max($item[ $key.$n ],$period[ $key.$n ]);
                 if ($value!=$item[ $key.$n ])
                 {                   
                     $item[ $key.$n ]=$value;
-                    $this->SetAndUpdateDataValue("",$item,$key.$n,$value);
+                    $this->SetAndUpdateDataValue($sqltable,$item,$key.$n,$value);
                 }
             }
         }
@@ -324,7 +330,9 @@ class ClassDiscs extends ClassDiscsAccess
            $this->GradeDiscTransferData
         );
 
-        $item=$this->MakeSureWeHaveRead("",$item,$this->GradeDiscTransferData);
+        $sqltable=$this->ApplicationObj->SchoolPeriodSqlTableName($this->ModuleName);
+
+        $item=$this->MakeSureWeHaveRead($sqltable,$item,$this->GradeDiscTransferData);
 
         foreach ($this->GradeDiscTransferData as $data)
         {
@@ -334,7 +342,7 @@ class ClassDiscs extends ClassDiscsAccess
                 array_push($updatedatas,$data);
             }
         }
-        $item=$this->MakeSureWeHaveRead("",$item,$this->ClassTransferData);
+        $item=$this->MakeSureWeHaveRead($sqltable,$item,$this->ClassTransferData);
 
         foreach ($this->ClassTransferData as $data)
         {
@@ -346,6 +354,12 @@ class ClassDiscs extends ClassDiscsAccess
                     array_push($updatedatas,$data);
                 }
             }
+        }
+
+
+        if ($item[ "AbsencesType" ]==1)
+        {
+            $item[ "AbsencesType" ]=2;
         }
 
         if (empty($item[ "FinalMedia" ]) && isset($this->ApplicationObj->Class[ "MediaLimit" ]))
@@ -360,7 +374,7 @@ class ClassDiscs extends ClassDiscsAccess
 
         if (count($updatedatas)>0)
         {
-            $this->MySqlSetItemValues("",$updatedatas,$item);
+            $this->MySqlSetItemValues($sqltable,$updatedatas,$item);
         }
 
         $this->ReadDiscData($item);
@@ -443,7 +457,7 @@ class ClassDiscs extends ClassDiscsAccess
                        $this->ApplicationObj->Discs[ $id ]
                     );
             }
-       }
+        }
         else
         {
             die("Unable to read Discs for class: ".$class[ "ID" ]);
@@ -585,10 +599,10 @@ class ClassDiscs extends ClassDiscsAccess
 
         print $this->SearchVarsTable
         (
-           array
+           array_merge
            (
-              "School","Period","Class","Grade","GradePeriod","GradeDisc","Name","NickName",
-              "Output","Paging","ShowAll","Edit"
+              array_keys($this->ItemData),
+              array("Output","Paging","ShowAll","Edit")
            ),
            "","",array(),array(),
            "Classes"
@@ -641,6 +655,8 @@ class ClassDiscs extends ClassDiscsAccess
 
             $this->ReadDiscData($this->ApplicationObj->Disc);
 
+            
+            $this->ApplicationObj->Disc=$this->PostProcess($this->ApplicationObj->Disc);
         }
         elseif ($die)
         {

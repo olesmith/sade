@@ -20,8 +20,9 @@ class Handlers extends Profiles
     {
         $action=$this->GetCGIVarValue("Action");
         if ($action=="") { $action=$this->DefaultAction; }
-
         $this->ModuleName=$this->GetCGIVarValue("ModuleName");
+
+        $this->LogMessage($action,"Handle");
 
         if (
             empty($this->ModuleName)
@@ -233,6 +234,9 @@ class Handlers extends Profiles
 
     function HandleLog()
     {
+        $this->HtmlHead();
+        $this->HtmlDocHead();
+        
         $this->LogsTable();
     }
 

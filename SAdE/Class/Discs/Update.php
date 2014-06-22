@@ -148,6 +148,14 @@ class ClassDiscsUpdate extends ClassDiscsImport
 
     function UpdateQuestions($class,$student)
     {
+        $secedit=1;
+        if (preg_match('/^Dayly/',$this->GetGET("Action")))
+        {
+            $secedit=2;
+        }
+
+        $this->ApplicationObj->ClassDiscNLessonsObject->UpdateNLessonsFields($class,$this->ApplicationObj->Disc,$secedit);
+        $this->ApplicationObj->ClassAbsencesObject->UpdateAbsencesFields($class,$this->ApplicationObj->Disc,$student);
         $this->ApplicationObj->ClassQuestionsObject->UpdateQuestionaries($class,$student);
     }
 

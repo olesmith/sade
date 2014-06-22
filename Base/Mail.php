@@ -143,7 +143,6 @@ class Mail extends Zip
           $obj=$this->ApplicationObj;
       }
 
-
       $depkey="Institution";
       if ($obj->UnitHash && isset($obj->UnitHash[ "Name" ]))
       {

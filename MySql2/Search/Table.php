@@ -2,6 +2,9 @@
 
 class SearchTable extends SearchFields
 {
+    var $SearchVarTableModule=FALSE;
+    var $ExtraSearchRowsMethod=NULL;
+
     //*
     //* function GenerateSearchVarsTable, Parameter list: $omitvars=array(),$title="",$action="",$addvars=array(),$fixedvalues=array()
     //*
@@ -144,6 +147,16 @@ class SearchTable extends SearchFields
             );
         }
 
+        if (!empty($this->ExtraSearchRowsMethod))
+        {
+            $method=$this->ExtraSearchRowsMethod;
+            $tbl=array_merge
+            (
+               $tbl,
+               $this->$method()
+            );
+        }
+
         array_push
         (
            $tbl,
@@ -156,6 +169,7 @@ class SearchTable extends SearchFields
               )
            )
         );
+
         //Title line
         array_unshift
         (
@@ -170,7 +184,24 @@ class SearchTable extends SearchFields
            )
         );
 
+
         return $tbl;
+    }
+
+    //*
+    //* function SearchPressed, Parameter list: 
+    //*
+    //* Checks if search form loads for the first time (time to take default)
+    //* or if we should obey form values (particular to checkbox'es...)
+    //*
+
+    function SearchPressed()
+    {
+        $searchpressed=$this->GetPOST("SearchPressed");
+        if ($searchpressed==1) { $searchpressed=TRUE; }
+        else                   { $searchpressed =FALSE; }
+
+        return $searchpressed;
     }
 
     //*
@@ -182,6 +213,8 @@ class SearchTable extends SearchFields
     function SearchVarsTable($omitvars=array(),$title="",$action="",$addvars=array(),$fixedvalues=array(),$module="")
     {
         if ($this->SearchVarsTableWritten) { return ""; }
+
+        if (empty($module)) { $module=$this->SearchVarTableModule; }
 
         if (empty($module)) { $module=$this->ModuleName; }
         if (empty($action)) { $action="Search"; }
@@ -208,6 +241,7 @@ class SearchTable extends SearchFields
                array(),
                TRUE
             ).
+            $this->MakeHidden("SearchPressed",1). //determines if search button has been pressed
             $this->MakeHidden("Action",$action).
             $this->EndForm().
             "";

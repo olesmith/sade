@@ -46,15 +46,17 @@ class ClassDiscNLessonsField extends ClassDiscNLessonsImport
 
     function NLesssonsFieldSqlWhere($class,$disc,$assessment)
     {
+        $classid=$class;
+        if (is_array($class)) { $classid=$class[ "ID" ]; }
         $where=array
         (
-           "Class" => $class[ "ID" ],
+           "Class" => $classid,
            "Assessment" => $assessment,       
            //"Name" => "No. ".$assessment,
            //"NLessons" => 0,
         );
 
-        if ($class[ "AbsencesType" ]!=$this->ApplicationObj->OnlyTotals || !empty($disc[ "ID" ]))
+        if ($disc[ "AbsencesType" ]!=$this->ApplicationObj->OnlyTotals || !empty($disc[ "ID" ]))
         {
             $where[ "ClassDisc" ]=$disc[ "ID" ];
         }
@@ -100,9 +102,9 @@ class ClassDiscNLessonsField extends ClassDiscNLessonsImport
         if ($edit==1)
         {
             if (
-                  !empty($nlesson[ "SecEdit" ])
-                  &&
                   intval($nlesson[ "NLessons" ])>0
+                  &&
+                  !empty($nlesson[ "SecEdit" ])
                   &&
                   intval($nlesson[ "SecEdit" ])==1
                )

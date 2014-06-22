@@ -25,53 +25,6 @@ class ClassDiscNLessonsRead extends ClassDiscNLessonsUpdate
             $nlessons[ "SecEdit" ]=2;
         }
 
-        if ($class[ "AbsencesType" ]==$this->ApplicationObj->OnlyTotals)
-        {
-            if (empty($disc[ "ID" ]))
-            {
-                //Sum individual noof lessons
-                $where=array
-                (
-                   "Class" => $class[ "ID" ],
-                   "Assessment" => $assessment,       
-                );
-
-                $items=$this->SelectHashesFromTable("",$where,array("ClassDisc","NLessons","SecEdit"));
-
-                $registeredbyteacher=FALSE;
-                $nregistered=0;
-                foreach ($items as $item)
-                {
-                    if ($item[ "ClassDisc" ]>0 && isset($item[ "NLessons" ]))
-                    {
-                        $nregistered+=$item[ "NLessons" ];
-                        if ($item[ "SecEdit" ]==1)
-                        {
-                            $registeredbyteacher=TRUE;
-                        }
-                    }
-                }
-
-                $secedit=2;
-                if ($registeredbyteacher)
-                {
-                    $secedit=1;
-                    if (empty($nlessons[ "NLessons" ]) || $nlessons[ "NLessons" ]!=$nregistered)
-                    {
-                        $this->MySqlSetItemValue("","ID",$nlessons[ "ID" ],"NLessons",$nregistered);
-                        $nlessons[ "NLessons" ]=$nregistered;
-                    }
-                }
-
-                if ($nlessons[ "SecEdit" ]!=$secedit)
-                {
-                    $this->MySqlSetItemValue("","ID",$nlessons[ "ID" ],"SecEdit",$secedit);
-                    $nlessons[ "SecEdit" ]=$secedit;
-                }
-            }
-
-        }
-
         return $nlessons;
     }
 

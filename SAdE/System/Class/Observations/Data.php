@@ -84,15 +84,31 @@ array
       "Name" => "Observação No.",
       "Sql" => "TEXT",
       "Search" => FALSE,
-      "Size" => "75x4",
+      "Size" => "50x4",
 
       "Public"      => 1,
       "Person"      => 1,
       "Admin"       => 2,
 
       "Clerk" => 2,
-      "Teacher"     => 1,
-      "Secretary" => 1,
+      "Teacher"     => 2,
+      "Secretary" => 2,
+      "Coordinator" => 1,
+   ),
+   "ResponsibleValue" => array
+   (
+      "Name" => "Observação, Responsável No.",
+      "Sql" => "TEXT",
+      "Search" => FALSE,
+      "Size" => "50x4",
+
+      "Public"      => 1,
+      "Person"      => 1,
+      "Admin"       => 2,
+
+      "Clerk" => 2,
+      "Teacher"     => 2,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "Name" => array

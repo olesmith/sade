@@ -144,21 +144,16 @@ class SearchFields extends SearchCookies
         }
 
 
-        $value=preg_replace
+        $value=$this->CreateSubItemSelectField
         (
-           '/NAME=\''.$data.'\'/',
-           "NAME='".$rdata."'",
-           $this->CreateSubItemSelectField
-           (
-              $data,
-              array(), //empty item
-              $rval,
-              0,
-              "",
-              "Selecione ".$this->ItemData[ $data ][ "Name" ]." para Visualização",
-              FALSE,
-              TRUE
-           )
+           $data,
+           array(), //empty item
+           $rval,
+           0,
+           $rdata,
+           "Selecione ".$this->ItemData[ $data ][ "Name" ]." para Visualização",
+           FALSE,
+           TRUE
         );
 
         if ($this->ItemData[ $data ][ "SqlTextSearch" ] && ($rval=="" || $rval==0))

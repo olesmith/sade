@@ -6,12 +6,12 @@ include_once("Class/Absences/Update.php");
 class ClassAbsencesCalc extends ClassAbsencesUpdate
 {
     //*
-    //* function CalcAbsencesNAssessments, Parameter list: $disc,$marks
+    //* function CalcAbsencesNAbsences, Parameter list: $disc,$marks
     //*
     //* Calculates number of assessments.
     //*
 
-    function CalcAbsencesNAssessments($disc,$absences)
+    function CalcAbsencesNAbsences($disc,$absences)
     {
         $weight=0;
         for ($n=1;$n<=$disc[ "NAssessments" ];$n++)
@@ -116,7 +116,7 @@ class ClassAbsencesCalc extends ClassAbsencesUpdate
         $hash=array
         (
            "Absences" => $absences,
-           "NAssessments" => $this->CalcAbsencesNAssessments($disc,$absences),
+           "NAssessments" => $this->CalcAbsencesNAbsences($disc,$absences),
            "Sum" => $this->CalcAbsencesSum($disc,$absences),
            "Percent" => $this->CalcAbsencesPercent($disc,$absences),
            "AbsencesResult" => 0,
@@ -129,7 +129,7 @@ class ClassAbsencesCalc extends ClassAbsencesUpdate
         //else
 
         $hash[ "AbsencesResult" ]=0;
-        if ($hash[ "Percent" ]!="-")
+        if ($hash [ "NAssessments" ]==$disc[ "NAssessments" ])
         {
             if ($hash[ "Percent" ]>$disc[ "AbsencesLimit" ])
             {

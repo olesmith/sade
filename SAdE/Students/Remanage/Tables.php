@@ -129,12 +129,6 @@ class StudentsRemanageTables extends StudentsRemanageStart
             $edit=0;
         }
 
-        array_push
-        (
-           $table,
-           $this->StudentDiscsOriginTrimestersTable()
-        );
-
         return $this->FrameIt
         (
            $this->Html_Table
@@ -200,12 +194,6 @@ class StudentsRemanageTables extends StudentsRemanageStart
                )
             );
         }
-
-        array_push
-        (
-           $table,
-           $this->StudentDiscsDestinationTrimestersTable()
-        );
 
         return $this->FrameIt
         (

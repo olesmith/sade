@@ -59,14 +59,24 @@ class ClassDiscContentsResultsRows extends ClassDiscContentsWheres
         {
             if (!empty($lesson[ $key]))
             {
-                $lesson[ $key ]=preg_match('/(\d\d):(\d\d)$/',$lesson[ $key ],$matches);
-                array_push($hours,$matches[1]);
-                array_push($mins,$matches[2]);
+                $matches=preg_split('/:/',$lesson[ $key ]);
+                if (count($matches)>=2)
+                {
+                    array_push($hours,$matches[0]);
+                    array_push($mins,$matches[1]);
+                }
             }
         }
 
-        $nmins=$mins[1]-$mins[0];
-        $nhours=$hours[1]-$hours[0];
+        $nmins=0;
+        $nhours=0;
+ 
+        if (count($mins)>=2)
+        {
+            $nmins=$mins[1]-$mins[0];
+            $nhours=$hours[1]-$hours[0];
+        }
+
         if ($nmins>0) { $nhours++; }
 
         return $nhours;

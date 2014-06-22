@@ -29,8 +29,6 @@ class ClassStudentsShow extends ClassStudentsImport
         $enddate=$this->ApplicationObj->PeriodsObject->MySqlItemValue("","ID",$periodid,"EndDate");
         $enddatekey=$this->ApplicationObj->DatesObject->ID2SortKey($enddate);
 
-
-
         $id2studids=array();
         $this->ApplicationObj->StudentsObject->OnlyReadIDs=array();
         foreach ($this->ItemHashes as $id => $classstudent)
@@ -66,53 +64,6 @@ class ClassStudentsShow extends ClassStudentsImport
         $names=array();
         foreach ($this->ItemHashes as $item)
         {
-            /* $date=0; */
-            /* if (empty($item[ "StartDate" ])) */
-            /* { */
-            /*     $date=$item[ "StudentHash" ][ "MatriculaDate" ]; */
-            /* } */
-            /* else */
-            /* { */
-            /*     $date=$this->ApplicationObj->DatesObject->ID2SortKey($item[ "StartDate" ]); */
-            /* } */
-
-            /* $rdate=$this->Max($date,$startdatekey); */
-            /* if ($rdate!=$item[ "StartDate" ]) */
-            /* { */
-            /*     $item[ "StartDate" ]=$this->ApplicationObj->DatesObject->SortKey2ID($rdate); */
-            /*     $this->MySqlSetItemValue("","ID",$item[ "ID" ],"StartDate",$item[ "StartDate" ]); */
-            /* } */
- 
-
-            /* $date=$enddatekey; */
-            /* if (empty($item[ "EndDate" ])) */
-            /* { */
-            /*     $date=$item[ "StudentHash" ][ "StatusDate1" ]; */
-
-            /*     if (!empty($date)) */
-            /*     { */
-            /*         $date=$this->Min($date,$enddatekey); */
-            /*     } */
-            /*     else */
-            /*     { */
-            /*         $date=$enddatekey; */
-            /*     } */
-            /* } */
-            /* else */
-            /* { */
-            /*     $date=$this->ApplicationObj->DatesObject->ID2SortKey($item[ "EndDate" ]); */
-            /* } */
-
-            /* $date=$this->Min($date,$enddatekey); */
-               
-            /* $dateid=$this->ApplicationObj->DatesObject->SortKey2ID($date); */
-
-            /* if ($item[ "EndDate" ]!=$dateid) */
-            /* { */
-            /*     $item[ "EndDate" ]=$dateid; */
-            /*     $this->MySqlSetItemValue("","ID",$item[ "ID" ],"EndDate",$dateid); */
-            /* } */
-
             $names[ $item[ "StudentHash" ][ "Name" ].$item[ "StudentHash" ][ "ID" ] ]=$item;
 
         }

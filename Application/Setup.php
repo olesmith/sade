@@ -37,7 +37,13 @@ class Setup extends Modules
     {
         if ($module=="") { $module=$this->ModuleName; }
 
+        $file=$module;
         if (!empty($this->SubModulesVars[ $module ][ "SqlFile" ]))
+        {
+            $file=$this->SubModulesVars[ $module ][ "SqlFile" ];
+        }
+
+        if (!empty($file))
         {
             return
                 $this->SetupPath.
@@ -46,7 +52,7 @@ class Setup extends Modules
                 (
                    '/\.php$/',
                    "/",
-                   $this->SubModulesVars[ $module ][ "SqlFile" ]
+                   $file
                 );
         }
 
@@ -102,7 +108,7 @@ class Setup extends Modules
         $modfile=$this->ModuleSetupDataPath($module)."/Profiles.php";
         if (!file_exists($modfile))
         {
-            print "No Profiles file: ".$modfile."<BR>";exit();
+            //print "No Profiles file: ".$modfile."<BR>";exit();
         }
 
         return $modfile;

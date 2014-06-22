@@ -11,8 +11,10 @@ class ClassObservationsUpdate extends ClassObservationsTables
     function UpdateObservationField($class,$student,$n)
     {
         $item=$this->ReadObservation($class,$student,$n);
-        $value=$item[ "Value" ];
 
+        $update=FALSE;
+
+        $value=$item[ "Value" ];
         $newvalue=$this->GetPOST
         (
            $this->ObservationCGIField($class,$student,$n)
@@ -21,12 +23,26 @@ class ClassObservationsUpdate extends ClassObservationsTables
         if ($newvalue=="") { $newvalue=NULL; }
         if ($newvalue!=$value)
         {
-            $where=$this->ObservationSqlWhere($class,$student,$n);
-
-            $item=$where;
+            $update=TRUE;
             $item[ "Value" ]=$newvalue;
-            //$item[ "Teacher" ]=$teacherid;
+        }
 
+        $rvalue=$item[ "ResponsibleValue" ];
+        $newvalue=$this->GetPOST
+        (
+           $this->ResponsibleObservationCGIField($class,$student,$n)
+        );
+
+        if ($newvalue=="") { $newvalue=NULL; }
+        if ($newvalue!=$rvalue)
+        {
+            $update=TRUE;
+            $item[ "ResponsibleValue" ]=$newvalue;
+        }
+
+        if ($update)
+        {
+            $where=$this->ObservationSqlWhere($class,$student,$n);
             $this->AddOrUpdate("",$where,$item);
         }
     }

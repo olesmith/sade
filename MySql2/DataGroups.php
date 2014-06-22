@@ -603,7 +603,7 @@ class DataGroups extends HashesData
                $this->ModuleName."_GroupName",
                $values,
                $names,
-               $this->GetCGIVarValue($this->ModuleName."_GroupName"),
+               $this->GetActualDataGroup(),//$this->GetCGIVarValue($this->ModuleName."_GroupName"),
                array(),//disableds
                $titles,
                $this->GetMessage($this->ItemDataGroupsMessages,"DataGroupsTitle","Title")

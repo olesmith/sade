@@ -695,6 +695,9 @@ class Login extends LeftMenu
 
     function  SendRecoverPasswordMail($user)
     {
+        $unit=$this->Unit;
+        if (is_array($unit)) { $unit=$unit[ "ID" ]; }
+
         $user[ "Recover_Link" ]=preg_replace
         (
             '/index\.php/',
@@ -702,7 +705,7 @@ class Login extends LeftMenu
             $this->ScriptExec
             (
                "Action=Recover&".
-               "Unit=".$this->Unit."&".
+               "Unit=".$unit."&".
                "Login=".$this->GetPOST("Recover_Login")."&".
                "Code=".$user[ "RecoverCode" ]
             )

@@ -175,7 +175,7 @@ class ClassDiscMarksCells extends ClassDiscMarksCell
                   $this->ApplicationObj->PeriodsObject->TrimesterEditable
                   (
                      $trimester,
-                     $this->ApplicationObj->Period
+                     $this->ApplicationObj->Disc
                   )
                )
             {

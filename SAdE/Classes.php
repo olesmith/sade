@@ -192,7 +192,7 @@ class Classes extends ClassesAccess
 
         $studentids=$this->ApplicationObj->ClassStudentsObject->MySqlUniqueColValues
         (
-           "",
+           $this->ApplicationObj->SchoolPeriodSqlTableName("ClassStudents"),
            "Student",
            array
            (
@@ -345,7 +345,11 @@ class Classes extends ClassesAccess
 
         if (!preg_match('/^Dayly/',$this->GetGET("Action")))
         {
-            if (empty($id)) { $id=$this->ApplicationObj->Class[ "ID" ]; }
+            if (
+                  empty($id)
+                  &&
+                  !empty($this->ApplicationObj->Class[ "ID" ])
+               ) { $id=$this->ApplicationObj->Class[ "ID" ]; }
 
             parent::TinterfaceMenu($plural,$id);
         }
@@ -501,7 +505,7 @@ class Classes extends ClassesAccess
     //* Make sure that correct Discs and Students tables exists for$class .
     //*
 
-    function UpdateSubTablesStructure($class,$modulename="")
+    function UpdateSubTablesStructure($class=array(),$modulename="")
     {
         $this->SchoolAndPeriod2SqlTables($class);
         $this->ApplicationObj->UpdateTablesStructure($this->PeriodModules);

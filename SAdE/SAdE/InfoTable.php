@@ -125,7 +125,7 @@ class SAdEInfoTable extends SAdEClass
            array
            (
               $this->B("Ano/Semestre:"),
-              $this->PeriodsObject->MakeShowField("Name",$this->Period)
+              $this->PeriodsObject->GetPeriodTitle($this->Period)
            )
         );
     }

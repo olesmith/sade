@@ -2,6 +2,8 @@
 
 class StudentsRemanageForms extends StudentsRemanageTables
 {
+    var $Form1CGI="Procede";
+
     //*
     //* function TransferStudentForm, Parameter list: $classstudent
     //*
@@ -11,13 +13,13 @@ class StudentsRemanageForms extends StudentsRemanageTables
     //*   In origin class student: "End","ToSchool","ToClass"
     //*
     //* Creates destination class student, with: "Start","FromSchool","FromClass",
-    //* and: Tarsnfer values.
+    //* and: Transfer values.
     //*
 
     function TransferStudentForm($classstudent)
     {
         if (
-              $this->GetPOST("Transfer")!=1
+              $this->GetPOST($this->Form1CGI)!=1
               || 
               empty($this->DestinationSchool)
               || 
@@ -27,18 +29,30 @@ class StudentsRemanageForms extends StudentsRemanageTables
             return "";
         }
 
+        $title="Confirmar Transferência - NÃO FUNCIONAL";
+        if ($this->DestinationSchool[ "ID" ]!=$classstudent[ "School" ])
+        {
+            $title.=" entre Escolas";
+        }
+        else
+        {
+            $title.=" entre Turmas";
+        }
+
         $html=
-            $this->H(3,"Confirmar Transferência").
+            $this->H(3,$title).
+            $this->StartForm().
             $this->Html_Table
             (
                "",
                array
                (
-                array
-                (
-                  $this->TransferStudentOriginTable($classstudent),
-                  $this->TransferStudentDestinationTable($classstudent),
-                 )
+                  array
+                  (
+                     $this->TransferStudentOriginTable($classstudent),
+                     $this->TransferStudentDestinationTable($classstudent),
+                  ),
+                  $this->StudentDiscsDestinationTrimestersTable()
                ),
                array(),
                array(),
@@ -46,6 +60,10 @@ class StudentsRemanageForms extends StudentsRemanageTables
                FALSE,
                FALSE
             ).
+            $this->MakeHidden("ToSchool",$this->DestinationSchool[ "ID" ]).
+            $this->MakeHidden("ToClass",$this->DestinationClass[ "ID" ]).
+            $this->Buttons("Transferir").
+            $this->EndForm().
             "";
 
 
@@ -116,7 +134,7 @@ class StudentsRemanageForms extends StudentsRemanageTables
                FALSE,
                FALSE
             ).
-            $this->MakeHidden("Procede",1).
+            $this->MakeHidden($this->Form1CGI,1).
             $this->EndForm().
             ""
         ).

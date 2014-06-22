@@ -4,13 +4,15 @@
 class ClassDiscNLessonsUpdate extends ClassDiscNLessonsRow
 {
     //*
-    //* function UpdateNLessonsField, Parameter list: $class,&$disc,$assessment
+    //* function UpdateNLessonsField, Parameter list: $class,&$disc,$assessment,$secedit=1
     //*
     //* Updates Disc nlessons field.
     //*
 
-    function UpdateNLessonsField($class,&$disc,$assessment)
+    function UpdateNLessonsField($class,&$disc,$assessment,$secedit=1)
     {
+        $updatedatas=array();
+
         $oldvalue=$this->GetNLessons($class,$disc,$assessment);
         $newvalue=$this->GetPOST
         (
@@ -25,27 +27,32 @@ class ClassDiscNLessonsUpdate extends ClassDiscNLessonsRow
         $var="NLessons".$assessment;
         if ($newvalue!=$oldvalue)
         {
-            $this->MySqlSetItemsValue
-            (
-               "",
-               "ID",
-               $disc[ "NLessons" ][ $assessment-1 ][ "ID" ],
-               "NLessons",
-               $newvalue
-             );
-
             $disc[ "NLessons" ][ $assessment-1 ][ "NLessons" ]=$newvalue;
+            array_push($updatedatas,"NLessons");
         }
+
+        if ($secedit!=$disc[ "NLessons" ][ $assessment-1 ][ "SecEdit" ])
+        {
+            $disc[ "NLessons" ][ $assessment-1 ][ "SecEdit" ]=$secedit;
+            array_push($updatedatas,"SecEdit");
+        }
+
+        $this->MySqlSetItemValues
+        (
+           "",
+           $updatedatas,
+           $disc[ "NLessons" ][ $assessment-1 ]
+        );
     }
 
 
     //*
-    //* function UpdateNLessonsFields, Parameter list: $class,&$disc
+    //* function UpdateNLessonsFields, Parameter list: $class,&$disc,$secedit=1
     //*
     //* Updates Disc nlessons fields.
     //*
 
-    function UpdateNLessonsFields($class,&$disc)
+    function UpdateNLessonsFields($class,&$disc,$secedit=1)
     {
         if (empty($disc[ "NLessons" ]))
         {
@@ -56,7 +63,7 @@ class ClassDiscNLessonsUpdate extends ClassDiscNLessonsRow
         { 
             if ($this->NLessonsFieldEditable(1,$disc[ "NLessons" ][ $n-1 ])==1)
             {
-                $this->UpdateNLessonsField($class,$disc,$n);
+                $this->UpdateNLessonsField($class,$disc,$n,$secedit);
             }
         }
     }

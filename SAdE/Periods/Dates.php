@@ -179,6 +179,8 @@ class PeriodsDates extends Common
     function SetDayliesStartDate(&$period)
     {
         $key="DayliesStart";
+        $period=$this->MakeSureWeHaveRead("",$period,array($key));
+
         if (!empty($period[ $key ])) { return $period[ $key ]; }
 
         $datekey=$this->DayliesStartDateSortKey($period);
@@ -196,7 +198,9 @@ class PeriodsDates extends Common
     function SetDayliesEndDate(&$period)
     {
         $key="DayliesEnd";
-       if (!empty($period[ $key ])) { return $period[ $key ]; }
+        $period=$this->MakeSureWeHaveRead("",$period,array($key));
+
+        if (!empty($period[ $key ])) { return $period[ $key ]; }
 
         $datekey=$this->DayliesEndDateSortKey($period);
         return $this->SetDateData2SortKey($period,$key,$datekey);
@@ -214,6 +218,8 @@ class PeriodsDates extends Common
     function SetDayliesDate(&$period,$n)
     {
         $key="Daylies".$n;
+        $period=$this->MakeSureWeHaveRead("",$period,array($key));
+
         $nmonths=3;
         if (empty($period[ $key ]))
         {
@@ -243,6 +249,7 @@ class PeriodsDates extends Common
     function SetDayliesLimitDate(&$period,$n)
     {
         $key="DayliesLimit".$n;
+        $period=$this->MakeSureWeHaveRead("",$period,array($key));
 
         $nmonths=3;
         if (empty($period[ $key ]))

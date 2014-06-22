@@ -173,6 +173,11 @@ class SubItems extends Enums
                 $subobject->SqlWhere=$this->ItemData[ $data ][ "SqlWhere".$this->LoginType ];
             }
 
+            if (is_array($subobject->SqlWhere))
+            {
+                $subobject->SqlWhere=$subobject->Hash2MySql($subobject->SqlWhere);
+            }
+
             $subobject->SqlWhere=$this->FilterHash($subobject->SqlWhere,$this->LoginData);
             $subobject->SqlWhere=$this->FilterHash($subobject->SqlWhere,$item);
             $subobject->SqlWhere=$this->ApplicationObj->FilterObject($subobject->SqlWhere);

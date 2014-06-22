@@ -161,7 +161,7 @@ class ClassStudentsPrints extends ClassStudentsShow
 
 
         $latex=
-            $this->ApplicationObj->ClassesObject->LatexHeadLand().
+            $this->ApplicationObj->ClassesObject->LatexHead().
             "\\begin{center}\n".
             "";
 
@@ -191,8 +191,8 @@ class ClassStudentsPrints extends ClassStudentsShow
             $this->ApplicationObj->ClassesObject->LatexTail().
             "";
 
-        $this->RunLatexPrint($texfilename,$latex);
         //$this->ShowLatexCode($latex);exit();
+         $this->RunLatexPrint($texfilename,$latex);
     }
 
     //*

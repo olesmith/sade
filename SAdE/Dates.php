@@ -368,6 +368,43 @@ class Dates extends Unicity
     }
 
 
+    //*
+    //* function GetFirstDateInMonth, Parameter list: $dateid,$month
+    //*
+    //* Returns id firsst date in month.
+    //*
+
+    function GetFirstDateInMonth($year,$month)
+    {
+        $dates=$this->SelectHashesFromTable
+        (
+           "",
+           array
+           (
+              "Year" => $year,
+              "Month" => $month,
+           ),
+           array("ID","Date"),
+           FALSE,
+           "SortKey"
+        );
+
+        $dateid=0;
+        $min=-1;
+        foreach ($dates as $date)
+        {
+            if ($min<0 || $date[ "Date" ]<$min)
+            {
+                $min=$date[ "Date" ];
+                $dateid=$date[ "ID" ];
+            }
+        }
+
+        return $dateid;
+        
+    }
+
+
 
 
     //*

@@ -17,6 +17,7 @@
        ),
        "AllowedModules" => array
        (
+          "Logs",
           "People",
           "Clerks",
           "Units",
@@ -58,19 +59,21 @@
           //"Protocols" => array("Places","Consults"),
           //"Consults" => array("Protocols"),
 
-          "Dates" => array("Units"),
+          "Dates"   => array("Units"),
           "Periods" => array("Dates","Schools"),
 
-          "Grade" => array("GradePeriods"),
+          "Grade"        => array("GradePeriods"),
           "GradePeriods" => array("GradeDiscs","GradeQuestionaries","GradeQuestions"),
-          "GradeDiscs" => array("Grade","GradePeriods"),
-          "GradeQuestionaries" => array("Grade","GradePeriods"),
-          "GradeQuestions" => array("Grade","GradePeriods","GradeQuestionaries"),
+          "GradeDiscs"   => array("Grade","GradePeriods"),
 
-          "Schools" => array("Places","Clerks","Classes",),
-          "Students" => array("Schools","Classes","Matriculas",),
+          "GradeQuestionaries" => array("Grade","GradePeriods"),
+          "GradeQuestions"     => array("Grade","GradePeriods","GradeQuestionaries"),
+
+          "Schools"    => array("Places","Clerks","Classes",),
+          "Students"   => array("Schools","Classes","Matriculas",),
           "Matriculas" => array("Units","Schools"),
-          "Users" => array("Schools",),
+          "Users"      => array("Schools",),
+
           "Classes" => array
           (
              "Schools","Periods",
@@ -82,22 +85,24 @@
              "ClassQuestions","ClassObservations",
              "ClassDiscContents","ClassDiscAbsences","ClassDiscAssessments","ClassDiscMarks",
           ),
-          "ClassStudents"    => array("Classes"),
-          "ClassDiscs"       => array("Classes"),
-          "ClassMarks"       => array("Classes"),
-          "ClassAbsences"    => array("Classes"),
-          "ClassStatus"      => array("Classes"),
-          "ClassQuestions"      => array("Classes"),
-          "ClassObservations"      => array("Classes"),
+          "ClassStudents"     => array("Classes"),
+          "ClassDiscs"        => array("Classes"),
+          "ClassMarks"        => array("Classes"),
+          "ClassAbsences"     => array("Classes"),
+          "ClassStatus"       => array("Classes"),
+          "ClassQuestions"    => array("Classes"),
+          "ClassObservations" => array("Classes"),
 
-          "ClassDiscLessons" => array("Classes"),
+          "ClassDiscLessons"  => array("Classes"),
           "ClassDiscNLessons" => array("Classes"),
-          "ClassDiscWeights"      => array("Classes"),
+          "ClassDiscWeights"  => array("Classes"),
 
-          "ClassDiscContents" => array("Classes"),
-          "ClassDiscAbsences" => array("Classes"),
-          "ClassDiscAssessments"      => array("Classes"),
-          "ClassDiscMarks"      => array("Classes"),
+          "ClassDiscContents"    => array("Classes"),
+          "ClassDiscAbsences"    => array("Classes"),
+          "ClassDiscAssessments" => array("Classes"),
+          "ClassDiscMarks"       => array("Classes"),
+
+          "Logs"                 => array("Classes"),
        ),
        "SubModulesVars" => array
        (
@@ -110,6 +115,16 @@
              "SqlTable" => "People",
              "SqlDerivedData" => array("Name","Email"),
              "SqlFilter" => "#Name",
+          ),
+          "Logs" => array
+          (
+             "SqlObject" => "LogsObject",
+             "SqlClass" => "Logs",
+             "SqlFile" => "Logs.php",
+             "SqlHref" => TRUE,
+             "SqlTable" => "Logs",
+             "SqlDerivedData" => array("Message"),
+             "SqlFilter" => "#Message",
           ),
           "Clerks" => array
           (
@@ -219,8 +234,8 @@
              "SqlFile" => "Grade/Discs.php",
              "SqlHref" => TRUE,
              "SqlTable" => "GradeDiscs",
-             "SqlFilter" => "#Name",
-             "SqlDerivedData" => array("Name"),
+             "SqlFilter" => "#NickName, #GradePeriod",
+             "SqlDerivedData" => array("Name","NickName","GradePeriod"),
           ),
           "GradeQuestionaries" => array
           (
@@ -440,6 +455,9 @@
        "PermissionVars" => array
        (
           "Vars" => array(),
+          "Logs" => array
+          (
+          ),
           "People" => array
           (
           ),

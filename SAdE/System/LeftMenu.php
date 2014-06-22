@@ -44,7 +44,7 @@ array
          (
             'Name' => 'Recuperar Senha',
             'Href' => '?Unit=#Unit&Action=Recover',
-            'Public' => 1,
+            'Public' => 0,
             'Person' => 0,
             'Coordinator' => 0,
             'Secretary' => 0,
@@ -158,7 +158,24 @@ array
          'Receptionist' => 1,
          'Clerk' => 1,
          'Teacher' => 1,
-         '010_Grade' => array
+         '00_Log' => array
+         (
+            'Name' => 'Logs',
+            'Title' => 'Pesquisar Logs',
+            'Href' => '?Unit=#Unit&ModuleName=Logs&Action=Search',
+
+            'Public' => 0,
+            'Person' => 0,
+            'Medical' => 0,
+            'Nurse' => 0,
+            'Admin' => 1,
+            'Receptionist' => 0,
+            'Secretary' => 1,
+            'Coordinator' => 0,
+            'Clerk' => 0,
+            'Teacher' => 0,
+         ),
+         '01_Grade' => array
          (
             'Name' => 'Grades',
             //'Title' => 'Gerenciar Grades',

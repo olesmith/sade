@@ -11,6 +11,9 @@ class Log extends Mail
     var $Year,$Month,$Date;
     var $LogLevel=5;
 
+    var $LogGETVars=array();
+    var $LogPOSTVars=array();
+
     function Log()
     {
     }
@@ -52,6 +55,8 @@ class Log extends Mail
 
     function LogMessage($action,$msgs,$level=5)
     {
+        if (empty($this->AuthHash)) { return; }
+
         //Only log if loglevel
         if ($level<$this->LogLevel) { return; }
 
@@ -70,6 +75,24 @@ class Log extends Mail
             $msgs[$n]=preg_replace('/\t/'," ",$msgs[$n]);
         }
 
+        $getvars=array();
+        foreach ($this->LogGETVars as $getvar)
+        {
+            if (isset($_GET[ $getvar ]))
+            {
+                array_push($getvars,$getvar."=".$_GET[ $getvar ]);
+            }
+        }
+
+        $postvars=array();
+        foreach ($this->LogPOSTVars as $postvar)
+        {
+            if (isset($_POST[ $postvar ]))
+            {
+                array_push($postvars,$postvar."=".$_POST[ $postvar ]);
+            }
+        }
+
         $text=join
         (
             "\t",
@@ -81,9 +104,11 @@ class Log extends Mail
                 $_SERVER[ "REMOTE_ADDR" ],
                 $this->LoginData[ $this->AuthHash[ "IDField" ] ],
                 $this->LoginData[ $this->AuthHash[ "LoginField" ] ],
-                $this->LoginType,
+                $this->Profile,
                 $action,
-                join(" ",$msgs)
+                join(" ",$msgs),
+                join("&",$getvars),
+                join("&",$postvars)
             )
         );
 

@@ -6,9 +6,9 @@ array
       "SqlClass" => "Dates",
       "FieldMethod" => "MakeDayliesDateSelect",
 
-      "ShortName" => "Dia Limite #N",
-      "Name" => "Dias Limite, #N",
-      "Title" => "Limite do Trimestre #N",
+      "ShortName" => "Limite #N",
+      "Name" => "Data Limite, #N",
+      "Title" => "Data Limite do Trimestre #N",
 
       "Public"      => 1,
       "Person"      => 1,
@@ -46,7 +46,7 @@ array
 
       "ShortName" => "Data #N",
       "Name" => "Data Prof., #N",
-      "Name" => "Trimestre #N, Fechado Prof., Data",
+      "Title" => "Trimestre #N, Fechado Prof., Data",
 
       "Public"      => 1,
       "Person"      => 1,

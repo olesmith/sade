@@ -107,7 +107,7 @@ array
 
          "Clerk" => 0,
          "Teacher"     => 0,
-         "Secretary" => 1,
+         "Secretary" => 0,
       ),
       'Latex' => array
       (
@@ -264,6 +264,17 @@ array
          "Secretary" => 1,
          "Coordinator" => 1,
      ),
+      'Schedule' => array
+      (
+         'Public' => 0,
+         'Person' => 0,
+         'Admin' => 1,
+
+         "Clerk" => 1,
+         "Teacher"     => 1,
+         "Secretary" => 1,
+         "Coordinator" => 1,
+     ),
    ),
    'Menues' => array
    (
@@ -271,7 +282,6 @@ array
       (
          'Public' => array
          (
-            'Show' => 1,
          ),
          'Person' => array
          (
@@ -280,12 +290,14 @@ array
          (
             'Show' => 1,
             'Edit' => 1,
+            'Schedule' => 1,
             'Delete' => 1,
          ),
          'Clerk' => array
          (
             'Show' => 1,
             'Edit' => 1,
+            'Schedule' => 1,
          ),
          'Teacher' => array
          (
@@ -294,12 +306,14 @@ array
          (
             'Show' => 1,
             'Edit' => 1,
+            'Schedule' => 1,
             'Delete' => 1,
          ),
          'Coordinator' => array
          (
             'Show' => 1,
             'Edit' => 1,
+            'Schedule' => 1,
             'Delete' => 1,
          ),
       ),

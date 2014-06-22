@@ -3,14 +3,18 @@
 
 class PeriodsTrimester extends PeriodsGroups
 {
+    var $TrimesterDates=array();
+
     //*
-    //* function Trimester2DatesSqlWhere, Parameter list: $trimester,$period
+    //* function Trimester2DatesSqlWhere, Parameter list: $trimester,$period=array()
     //*
     //* Converts semester limit dates to an sql where (start/end, array).
     //*
 
-    function Trimester2DatesSqlWhere($trimester,$period)
+    function Trimester2DatesSqlWhere($trimester,$period=array())
     {
+        if (empty($period)) { $period=$this->ApplicationObj->Period; }
+
         $endkeys=$this->PeriodEndDates($period);
 
         $startkey=$endkeys[ $trimester-1 ];
@@ -18,8 +22,30 @@ class PeriodsTrimester extends PeriodsGroups
 
         $endkey=$endkeys[ $trimester ]+1;
 
-        return 
-            "SortKey>=".$startkey." AND SortKey<".$endkey;
+        return "SortKey>=".$startkey." AND SortKey<".$endkey;
+    }
+
+    //*
+    //* function TrimesterDates, Parameter list: $trimester,$period=array()
+    //*
+    //* Converts semester limit dates to an sql where (start/end, array).
+    //*
+
+    function TrimesterDates($trimester,$period=array())
+    {
+        if (empty($this->TrimesterDates[ $trimester ]))
+        {
+            $this->TrimesterDates[ $trimester ]=$this->ApplicationObj->DatesObject->MySqlUniqueColValues
+            (
+               "",
+               "ID",
+               $this->Trimester2DatesSqlWhere($trimester,$period),
+               "",
+               "SortKey"
+            );
+        }
+
+        return $this->TrimesterDates[ $trimester ];
     }
 
 
@@ -297,17 +323,17 @@ class PeriodsTrimester extends PeriodsGroups
     }
 
     //*
-    //* function TrimesterEditable, Parameter list: $trimester,$period=array()
+    //* function TrimesterEditable, Parameter list: $trimester,$hash=array()
     //*
     //* Returns true if semester is editable, false otherwise.
     //*
 
-    function TrimesterEditable($trimester,$period=array())
+    function TrimesterEditable($trimester,$hash=array())
     {
-        if (empty($period)) { $period=$this->ApplicationObj->Period; }
+        if (empty($hash)) { $hash=$this->ApplicationObj->Period; }
 
         $today=$this->TimeStamp2DateSort();
-        $limitdate=$this->GetDayliesLimitDateKey($period,$trimester);
+        $limitdate=$this->GetDayliesLimitDateKey($hash,$trimester);
 
         if ($today>$limitdate) { return TRUE; }
         else                   { return FALSE; }

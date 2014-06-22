@@ -15,23 +15,22 @@ class ClassesSelects extends ClassesLeftMenu
             return $item[ $data."_Name" ];
         }
 
-        $this->ApplicationObj->Periods=array();
-        $this->ApplicationObj->ReadSchoolPeriods(TRUE);
+        $periods=$this->ApplicationObj->PeriodsObject->GetAllPeriods();
 
-        $periods=array();
-        foreach ($this->ApplicationObj->Periods as $period)
+        $rperiods=array();
+        foreach ($periods as $period)
         {
-            array_push($periods,$period);
+            array_push($rperiods,$period);
         }
 
-        //$periods=array_reverse($periods);
+        $rperiods=array_reverse($rperiods);
 
         $ids=array(0);
         $names=array("");
-        foreach ($periods as $period)
+        foreach ($rperiods as $period)
         {
             array_push($ids,$period[ "ID" ]);
-            array_push($names,$period[ "Name" ]);
+            array_push($names,$this->ApplicationObj->PeriodsObject->GetPeriodTitle($period));
         }
 
         $value="";

@@ -115,7 +115,7 @@ class StudentsRemanageTrimesters extends StudentsRemanageTrimester
 
     function TrimestersNCols()
     {
-        return $this->ApplicationObj->Class[ "NAssessments" ]*$this->TrimesterNCols();
+        return $this->ApplicationObj->Class[ "NAssessments" ]*$this->TrimesterNCols()+1;
     }
 
     //*
@@ -141,6 +141,17 @@ class StudentsRemanageTrimesters extends StudentsRemanageTrimester
         {
             $this->TrimesterColsTitles($titles,$trimester);
         }
+
+        array_push
+        (
+           $titles[1],
+           ""
+        );
+        array_push
+        (
+           $titles[2],
+           $this->B($this->ApplicationObj->Sigma."F")
+        );
     }
 
     //*
@@ -163,6 +174,11 @@ class StudentsRemanageTrimesters extends StudentsRemanageTrimester
             );
         }
 
+        array_push
+        (
+           $row,
+           $this->StudentDiscTrimestersAbsences($disc)
+        );
         return $row;
     }
 

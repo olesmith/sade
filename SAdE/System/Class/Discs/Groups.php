@@ -6,14 +6,14 @@ array
       "Data" => array
       (
          "No","Edit","DeleteDisc","DiscMarks","DiscAbsences","DiscTotals","Dayly",
-         "Name",
+         "Name","Class",
          "Daylies","AssessmentType","AbsencesType",
          "CHS","CHT",
          "Teacher","Teacher1","Teacher2",
       ),
       "Admin" => 1,
       "Person" => 1,
-      "Public" => 1,
+      "Public" => 0,
    ),
    "Grade" => array
    (
@@ -28,7 +28,7 @@ array
       ),
       "Admin" => 1,
       "Person" => 1,
-      "Public" => 1,
+      "Public" => 0,
    ),
    "Teachers" => array
    (
@@ -42,7 +42,7 @@ array
       ),
       "Admin" => 1,
       "Person" => 1,
-      "Public" => 1,
+      "Public" => 0,
    ),
    /* "Daylies" => array */
    /* ( */
@@ -72,6 +72,6 @@ array
       ),
       "Admin" => 1,
       "Person" => 1,
-      "Public" => 1,
+      "Public" => 0,
    ),
 );

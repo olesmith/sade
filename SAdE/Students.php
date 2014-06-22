@@ -728,7 +728,14 @@ class Students extends StudentsAccess
         $values=array();
         foreach ($classregs as $classreg)
         {
-            $class=$this->ApplicationObj->Classes($classreg[ "Class" ]);
+            $class=$this->ApplicationObj->ClassesObject->MySqlItemValue
+            (
+               "",
+               "ID",
+               $classreg[ "Class" ],
+               "Name"
+             );
+
             array_push
             (
                $values,
@@ -747,8 +754,8 @@ class Students extends StudentsAccess
                         "Class" => $classreg[ "Class" ],
                       ) 
                   ),
-                  $class[ "Name" ],
-                  "Acessar Turma: ".$class[ "Name" ]
+                  $class,
+                  "Acessar Turma: ".$class
                )
             );
         }

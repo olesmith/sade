@@ -5,7 +5,7 @@ array
       "Title" => "Tipo de Avaliação",
       "Name" => "Avaliação",
       "Sql" => "ENUM",
-      "Search" => FALSE,
+      "Search" => TRUE,
       "Values" => array("Quantitativa","Qualitativa","Não"),
       //"Default" => 1,
       "Size" => 3,
@@ -79,7 +79,7 @@ array
       "Title" => "Av. Pesos",
       "Name" => "Pesos",
       "Sql" => "ENUM",
-      "Search" => FALSE,
+      "Search" => TRUE,
       "Values" => array("Iguais","Ponderados"),
       "Default" => 2,
 
@@ -113,7 +113,7 @@ array
    (
       "Name" => "Faltas",
       "Sql" => "ENUM",
-      "Search" => FALSE,
+      "Search" => TRUE,
       "Values" => array("Somente Totais","Sim","Não"),
       //"Default" => 2,
 

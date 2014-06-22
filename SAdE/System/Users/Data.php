@@ -5,7 +5,7 @@ array
       "Name" => "ID Antigo",
       "Size" => "10",
       "Sql" => "BIGINT",
-      "Search" => TRUE,
+      "Search" => FALSE,
 
       "Public"      => 0,
       "Person"      => 0,

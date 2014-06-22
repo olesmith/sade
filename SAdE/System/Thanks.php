@@ -38,6 +38,12 @@ array
    ),
    array
    (
+      "Maria das Graças Ferreira",
+      "Secretaria Municipal de Educação, Iporá-GO",
+      "",
+   ),
+   array
+   (
       "Lauzeni Pedro Timoteo",
       "Secretaria Municipal de Educação, Iporá-GO",
       "",

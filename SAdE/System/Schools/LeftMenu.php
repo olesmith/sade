@@ -8,32 +8,6 @@ array
          'Admin' => 1,
          'Clerk' => 1,
          'Teacher' => 1,
-          /* "01_ School" => array */
-          /* ( */
-          /*    "Name" => "Dados da Escola", */
-          /*    "Title" => "Editar Dados da Escola", */
-          /*    'Href' => '?Unit=#Unit&ModuleName=Schools&Action=Edit&School=#ID', */
-
-          /*    'Public'    => 0, */
-          /*    'Person'    => 0, */
-          /*    'Secretary' => 1, */
-          /*    'Admin'     => 1, */
-          /*    'Clerk'     => 0, */
-          /*    'Teacher'   => 0, */
-          /* ), */
-          /* "02_ School" => array */
-          /* ( */
-          /*    "Name" => "Dados da Escola", */
-          /*    "Title" => "Visualizar Dados da Escola", */
-          /*    'Href' => '?Unit=#Unit&ModuleName=Schools&Action=Show&School=#ID', */
-
-          /*    'Public'    => 0, */
-          /*    'Person'    => 0, */
-          /*    'Secretary' => 0, */
-          /*    'Admin'     => 0, */
-          /*    'Clerk'     => 1, */
-          /*    'Teacher'   => 1, */
-          /* ), */
          '0_Students' => array
          (
             'Name' => 'Cabeçalhos dos Impressos',
@@ -60,19 +34,6 @@ array
             'Clerk'     => 1,
             'Teacher'   => 0,
          ),
-         /* '2_Teachers' => array */
-         /* ( */
-         /*    'Name' => 'Professores da Escola', */
-         /*    'Title' => 'Gerenciar Professores da Escola', */
-         /*    'Href' => '?Unit=#Unit&ModuleName=Users&Teachers=1&Action=Search&School=#ID', */
-
-         /*    'Public' => 0, */
-         /*    'Person' => 0, */
-         /*    'Secretary' => 1, */
-         /*    'Admin'     => 1, */
-         /*    'Clerk'     => 1, */
-         /*    'Teacher'   => 0, */
-         /* ), */
          "3_Clerks" => array
          (
             "Name" => "Secretário(a)s Escolares",

@@ -77,15 +77,18 @@ class ClassesRead extends ClassesImport
     
 
    //*
-    //* function ReadClass, Parameter list :$readdiscs=TRUE
+    //* function ReadClass, Parameter list: $classid=""
     //*
     //* Reads class, id being GET Class.
     //* 
     //*
 
-    function ReadClass($readdiscs=TRUE)
+    function ReadClass($classid="")
     {
-        $classid=$this->GetGET("Class");
+        if (empty($classid))
+        {
+            $classid=$this->GetGET("Class");
+        }
         if (empty($classid))
         {
             $classid=$this->GetGET("ID");

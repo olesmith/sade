@@ -9,7 +9,6 @@ include_once("Class/Discs/Tables/Info.php");
 
 class ClassDiscsTables extends ClassDiscsTablesInfo
 {
-
     //*
     //* function DiscsNAssessments, Parameter list: 
     //*

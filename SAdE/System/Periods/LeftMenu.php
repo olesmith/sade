@@ -21,4 +21,17 @@ array
       'Clerk'     => 1,
       'Teacher'   => 0,
    ),
+   "2_Discs" => array
+   (
+      "Name" => "Disciplinas",
+      "Title" => "Gerenciar Disciplinas do Período",
+      'Href' => '?Unit=#Unit&School=#School&ModuleName=Periods&Action=Discs&Period=#ID',
+
+      'Public'    => 0,
+      'Person'    => 0,
+      'Secretary' => 1,
+      'Admin'     => 1,
+      'Clerk'     => 1,
+      'Teacher'   => 0,
+   ),
 );
