@@ -3,8 +3,6 @@
 
 class ClassDiscMarksRow extends ClassDiscMarksCells
 {
-    var $ResultNames=array(0 => "-",1 => "RE",2=>"AP");
-
     //*
     //* function DaylyMarksStudentRow, Parameter list: $edit,$n,$student,$assess,$include
     //*
@@ -27,7 +25,7 @@ class ClassDiscMarksRow extends ClassDiscMarksCells
             $row=array_merge
             (
                $row,
-               $this->DaylyMarksStudentSemestersCells($edit,$student,$assess,$studmarks,$include)
+               $this->DaylyMarksStudentTrimestersCells($edit,$student,$assess,$studmarks,$include)
              );
         }
 
@@ -38,7 +36,7 @@ class ClassDiscMarksRow extends ClassDiscMarksCells
                 $row=array_merge
                 (
                    $row,
-                   $this->DaylyMarksStudentSemesterResultCells($student,$assess,$studmarks)
+                   $this->DaylyMarksStudentTrimesterResultCells($student,$assess,$studmarks)
                 );
             }
 
@@ -59,6 +57,11 @@ class ClassDiscMarksRow extends ClassDiscMarksCells
                $row,
                $this->DaylyMarksStudentFinalResultCells($student,$assess,$studmarks)
             );
+        }
+
+        if (!$this->LatexMode())
+        {
+            array_push($row,$this->DaylyMarksStudentMessageCell($student));
         }
  
         return $row;

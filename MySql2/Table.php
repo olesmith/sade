@@ -63,7 +63,7 @@ class Table extends Menues
     //*
     //* function AddOrUpdate, Parameter list: $table,$where,&$item,$namekey="ID"
     //*
-    //* Testt whether $item should be added or updated:
+    //* Test whether $item should be added or updated:
     //* If $this->SelectUniqueHash() returns an empty set, adds -
     //* Otherwise updates.
     //* 
@@ -188,12 +188,12 @@ class Table extends Menues
 
 
     //*
-    //* function StartForm, Parameter list: $action="",$method="post",$enctype=0
+    //* function StartForm, Parameter list: $action="",$method="post",$enctype=0,$options=array(),$suppresscgis=array()
     //*
     //* Starts form with ModuleName GET variable set.
     //*
 
-    function StartForm($href="",$method="post",$enctype=0,$options=array())
+    function StartForm($href="",$method="post",$enctype=0,$options=array(),$suppresscgis=array())
     {
         $matches=preg_split('/\?/',$href);
         $script="";
@@ -207,7 +207,7 @@ class Table extends Menues
 
         $args=$this->Query2Hash($argstring,$rargs);
 
-        return parent::StartForm("?".$this->Hash2Query($args),$method,$enctype);
+        return parent::StartForm("?".$this->Hash2Query($args),$method,$enctype,$options,$suppresscgis);
     }
 
     //*
@@ -635,6 +635,9 @@ class Table extends Menues
 
   function HandleList($where="",$searchvarstable=TRUE,$edit=0,$group="",$omitvars=array(),$action="",$module="")
   {
+      $this->Singular=FALSE;
+      $this->Plural=TRUE;
+
       if ($this->GetGETOrPOST("LatexDoc")>0)
       {
           $this->HandlePrints($where);
@@ -682,7 +685,17 @@ class Table extends Menues
       }
 
       $this->DetectSort($group);
+      if ($output=="html")
+      {
+          if ($searchvarstable)
+          {
+              print 
+                  $this->SearchVarsTable($omitvars,"",$action,array(),array(),$module).
+                  $this->BR();
+          }
+      }
 
+      $hasitems=FALSE;
       if (count($this->ItemHashes)==0)
       {
           if ($where=="")
@@ -694,6 +707,8 @@ class Table extends Menues
               $this->ReadItems($where,$datas,FALSE,FALSE);
           }
       }
+
+      if (count($this->ItemHashes)>0) { $hasitems=TRUE; }
 
       $action=$this->DetectAction();
       if ($this->CGI2Edit()==2)
@@ -753,25 +768,12 @@ class Table extends Menues
           $datas=$this->AddSearchVarsToDataList($datas);
       }
 
-      if ($output=="html")
+      if ($hasitems && $edit)
       {
-          if ($searchvarstable)
-          {
-              print 
-                  $this->SearchVarsTable($omitvars,"",$action,array(),array(),$module).
-                  $this->BR();
-          }
-      }
-
-      if (count($this->ItemHashes)>0)
-      {
-          if ($edit)
-          {
-              print 
-                  $this->StartForm("?ModuleName=".$this->GetGET("ModuleName")."&Action=".$this->DetectAction()).
-                  $this->MakeHidden("Update",1).
-                  $this->Buttons();
-          }
+          print 
+              $this->StartForm("?ModuleName=".$this->GetGET("ModuleName")."&Action=".$this->DetectAction()).
+              $this->MakeHidden("Update",1).
+              $this->Buttons();
       }
 
       if (empty($table)) { $table=array(); }
@@ -779,30 +781,24 @@ class Table extends Menues
 
       if ($output=="html")
       {
-          $title=
-              $this->GetMessage($this->ItemDataMessages,"PluralTableTitle").": ".
-              $this->ItemDataGroups[ $group ][ "Name" ];
-
-          if (FALSE) //31/05/2013 !$this->ItemDataGroups[ $group ][ "NoTitleRow" ])
-          {   
-              array_unshift
-              (
-                 $table,
-                 $this->GetSortTitles($tdatas)
-              );
-          }
-
           if (!empty($this->ItemDataGroups[ $group ][ "TitleGenMethod" ]))
           {
               $method=$this->ItemDataGroups[ $group ][ "TitleGenMethod" ];
               array_unshift($table,array($this->$method()));
           }
 
-          print 
+          print
+              $this->PagingHorisontalMenu().
               $this->H
               (
                  3,
-                 preg_replace('/#ItemsName/',$this->ItemsName,$title)
+                 preg_replace
+                 (
+                    '/#ItemsName/',
+                    $this->ItemsName,
+                    $this->GetMessage($this->ItemDataMessages,"PluralTableTitle").": ".
+                    $this->ItemDataGroups[ $group ][ "Name" ]
+                 )
               ).
               $this->HTML_Table
               (
@@ -815,21 +811,19 @@ class Table extends Menues
               );
       }
 
-      if (count($this->ItemHashes)>0)
+      if ($hasitems &&$edit)
       {
-          if ($edit)
-          {
-              print 
-                  $this->MakeHiddenFields(TRUE).//include tabmovesdown hidden var
-                  $this->ItemGroupHidden($group).
-                  $this->ItemEditListHidden($edit).
-                  join("\n",$this->SearchVarsAsHiddens()).
-                  $this->MakeHidden("Update",1).
-                  $this->MakeHidden("EditList",1).
-                  $this->MakeHidden("__MTime__",time()).
-                  $this->Buttons().
-                  $this->EndForm();
-          }
+          print 
+              $this->MakeHiddenFields(TRUE).//include tabmovesdown hidden var
+              $this->ItemGroupHidden($group).
+              $this->ItemEditListHidden($edit).
+              $this->ItemPageHidden($edit).
+              join("\n",$this->SearchVarsAsHiddens()).
+              $this->MakeHidden("Update",1).
+              $this->MakeHidden("EditList",1).
+              $this->MakeHidden("__MTime__",time()).
+              $this->Buttons().
+              $this->EndForm();
       }
   }
 

@@ -148,7 +148,7 @@ class FieldFields extends ShowFields
 
         if ($edit==0)
         {
-            if ($this->LatexMode) {}
+            if ($this->LatexMode()) {}
             elseif (empty($this->ItemData[ $data ])) {}
             elseif ($this->ItemData[ $data ][ "HRef" ])
             {

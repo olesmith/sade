@@ -179,6 +179,75 @@ class ClassDiscContentsUpdate extends ClassDiscContentsCGI
 
         }
     }
+
+
+    //*
+    //* function UpdateAddContent, Parameter list: $disc=array(),$class=array()
+    //*
+    //* Adds content from AddContent form, if adequate.
+    //*
+
+    function UpdateAddContent($disc=array(),$class=array())
+    {
+        if (empty($disc))  { $disc=$this->ApplicationObj->Disc; }
+        if (empty($class)) { $class=$this->ApplicationObj->Class; }
+
+        $month=$this->CGI2Month();
+
+        if (empty($month) && empty($semester)) { $month=$this->CurrentMonth(); }
+
+        $dates=$this->ApplicationObj->PeriodsObject->GetPeriodMonthDates($month);
+
+        $adddate=intval($this->GetPOST("Date"));
+        $radddate=0;
+
+        $datehash=array();
+        foreach ($dates as $date)
+        {
+            if ($date[ "ID" ]==$adddate)
+            {
+                $radddate=$adddate;
+                $datehash=$date;
+            }
+        }
+
+        $query=$this->ScriptQueryHash();
+
+        $created=0;
+        if ($this->GetPOST("Add")==1 && $radddate>0)
+        {
+            $weight=intval($this->GetPOST("Weight"));
+            if ($weight>0)
+            {
+                $this->ApplicationObj->PeriodsObject->Date2Trimester($this->ApplicationObj->Period,$datehash);
+                $newcontent=array
+                (
+                   "Class" => $class[ "ID" ],
+                   "Disc" => $disc[ "ID" ],
+                   "Date" => $datehash[ "ID" ],
+                   "DateKey" => $datehash[ "SortKey" ],
+                   "Semester" => $datehash[ "Semester" ],
+                   "Month" => $datehash[ "Month" ],
+                   "Weight" => $weight,
+                   "Content" => "",
+                   "CTime" => time(),
+                   "MTime" => time(),
+                   "ATime" => time(),
+                );
+
+                $this->MySqlInsertItem("",$newcontent);
+                $query[ "Created" ]=$newcontent[ "ID" ];
+                //print $this->H(5,"Criado: ".$date[ "Name" ].", Aula com Peso ".$weight);
+                //exit();
+            }
+        }
+
+        $query=$this->Hash2Query($query);
+        $url=preg_replace('/DaylyAddContents/',"DaylyContents",$this->ScriptExec($query));
+        $url=preg_replace('/index.php/',"",$url);
+
+        header( 'Location: '.$url);
+    }
 }
 
 ?>

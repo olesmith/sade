@@ -1,7 +1,5 @@
 <?php
 
-include_once("Class/Questions/Tables.php");
-
 
 class ClassQuestionsRow extends ClassQuestionsTables
 {
@@ -25,7 +23,7 @@ class ClassQuestionsRow extends ClassQuestionsTables
            ),
         );
 
-        //if (!$this->LatexMode) { array_push($row,""); }
+        //if (!$this->LatexMode()) { array_push($row,""); }
 
 
         return $row;

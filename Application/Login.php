@@ -210,13 +210,24 @@ class Login extends LeftMenu
         $login=$this->GetCookieOrPOST("Login");
         $table=array
         (
-            array("<B>".
+            array
+            (
+               $this->B
+               (
                   $this->GetMessage($this->LoginMessages,"LoginDataTitle").
-                  ":</B>",
-                  $this->MakeInput("Login",$login,35)),
-            array("<B>".
+                  ":"
+               ),
+               $this->MakeInput("Login",$login,25)
+            ),
+            array
+            (
+               $this->B
+               (
                   $this->GetMessage($this->LoginMessages,"PasswordDataTitle").
-                  ":</B>",$this->MakePassword("Password","")),
+                  ":"
+               ),
+               $this->MakePassword("Password","",15)
+            ),
         );
 
         $premsg="";
@@ -246,7 +257,10 @@ class Login extends LeftMenu
             $this->H(3,$msg1).
             $this->H(4,$this->HtmlStatus).
             $this->StartForm("?Action=Logon").
-            $this->HTMLTable("",$table).
+            $this->FrameIt
+            (
+               $this->HTML_Table("",$table,array())
+            ).
             $this->MakeHidden("Logon",1).
             $this->Buttons($this->GetMessage($this->LoginMessages,"LoginSendButton")).
             $this->EndForm().

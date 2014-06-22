@@ -20,6 +20,7 @@ array
       "Sql" => "INT",
       "Search" => TRUE,
       "Compulsory" => TRUE,
+      "SearchFieldMethod" => "DebugSearchField",
 
       "Public"      => 0,
       "Person"      => 0,
@@ -30,12 +31,30 @@ array
       "Secretary" => 1,
       "Coordinator" => 0,
    ),
+   "IP" => array
+   (
+      "Name" => "IP",
+      "Sql" => "VARCHAR(16)",
+      "Search" => TRUE,
+      "Compulsory" => TRUE,
+      "Size" => 15,
+
+      "Public"      => 0,
+      "Person"      => 0,
+      "Admin"       => 2,
+
+      "Clerk" => 0,
+      "Teacher"     => 0,
+      "Secretary" => 1,
+      "Coordinator" => 0.
+   ),
    "Year" => array
    (
       "Name" => "Ano",
       "Sql" => "INT",
-      "Search" => TRUE,
+      "Search" => FALSE,
       "Compulsory" => TRUE,
+      //"SearchFieldMethod" => "YearSearchField",
 
       "Public"      => 0,
       "Person"      => 0,
@@ -52,6 +71,7 @@ array
       "Sql" => "INT",
       "Search" => TRUE,
       "Compulsory" => TRUE,
+      "SearchFieldMethod" => "MonthSearchField",
 
       "Public"      => 0,
       "Person"      => 0,
@@ -66,8 +86,9 @@ array
    (
       "Name" => "Data",
       "Sql" => "INT",
-      "Search" => TRUE,
+      "Search" => FALSE,
       "Compulsory" => TRUE,
+      "SearchFieldMethod" => "LogDateSearchField",
 
       "Public"      => 0,
       "Person"      => 0,
@@ -78,19 +99,21 @@ array
       "Secretary" => 1,
       "Coordinator" => 0,
    ),
-   "Login" => array
+   "Period" => array
    (
-      "Name" => "Usuário",
+      "Name" => "Período",
       "Sql" => "INT",
-      "SqlClass" => "Users",
+      "SqlClass" => "Periods",
       "Search" => TRUE,
-      "Compulsory" => TRUE,
+      "Compulsory" => FALSE,
+      //"SqlSortReverse" => TRUE,
+      "SearchFieldMethod" => "PeriodSearchField",
 
-      "Public"      => 0,
+      "Public"      => 1,
       "Person"      => 0,
       "Admin"       => 2,
 
-      "Clerk" => 0,
+      "Clerk" => 1,
       "Teacher"     => 0,
       "Secretary" => 1,
       "Coordinator" => 0,
@@ -99,90 +122,11 @@ array
    (
       "Name" => "Perfil",
       "Sql" => "VARCHAR(16)",
-      "Search" => TRUE,
-      "Compulsory" => TRUE,
-
-      "Public"      => 0,
-      "Person"      => 0,
-      "Admin"       => 2,
-
-      "Clerk" => 0,
-      "Teacher"     => 0,
-      "Secretary" => 1,
-      "Coordinator" => 0,
-   ),
-   "Message" => array
-   (
-      "Name" => "Mensagem",
-      "Sql" => "VARCHAR(1024)",
-      "Search" => TRUE,
-      "Compulsory" => FALSE,
-
-      "Public"      => 0,
-      "Person"      => 0,
-      "Admin"       => 2,
-
-      "Clerk" => 1,
-      "Teacher"     => 1,
-      "Secretary" => 1,
-      "Coordinator" => 1,
-   ),
-   "IP" => array
-   (
-      "Name" => "IP",
-      "Sql" => "VARCHAR(16)",
-      "Search" => TRUE,
-      "Compulsory" => TRUE,
-
-      "Public"      => 0,
-      "Person"      => 0,
-      "Admin"       => 2,
-
-      "Clerk" => 0,
-      "Teacher"     => 0,
-      "Secretary" => 1,
-      "Coordinator" => 0.
-   ),
-   "ModuleName" => array
-   (
-      "Name" => "Módulo",
-      "Sql" => "VARCHAR(255)",
-      "Search" => TRUE,
-      "Compulsory" => FALSE,
-
-      "Public"      => 0,
-      "Person"      => 0,
-      "Admin"       => 2,
-
-      "Clerk" => 0,
-      "Teacher"     => 0,
-      "Secretary" => 1,
-      "Coordinator" => 0,
-   ),
-   "Action" => array
-   (
-      "Name" => "Action",
-      "Sql" => "VARCHAR(255)",
-      "Search" => TRUE,
-      "Compulsory" => FALSE,
-
-      "Public"      => 0,
-      "Person"      => 0,
-      "Admin"       => 2,
-
-      "Clerk" => 0,
-      "Teacher"     => 0,
-      "Secretary" => 1,
-      "Coordinator" => 0,
-   ),
-   "Unit" => array
-   (
-      "Name" => "Unidade",
-      "Sql" => "INT",
       "Search" => FALSE,
-      "Compulsory" => FALSE,
+      "Compulsory" => TRUE,
+      "SearchFieldMethod" => "ProfileSearchField",
 
-      "Public"      => 1,
+      "Public"      => 0,
       "Person"      => 0,
       "Admin"       => 2,
 
@@ -208,19 +152,70 @@ array
       "Secretary" => 1,
       "Coordinator" => 0,
    ),
-   "Period" => array
+   "Login" => array
    (
-      "Name" => "Período",
+      "Name" => "Usuário",
       "Sql" => "INT",
-      "SqlClass" => "Periods",
-      "Search" => TRUE,
+      "SqlClass" => "Users",
+      "Search" => FALSE,
+      "Compulsory" => TRUE,
+      "SearchFieldMethod" => "LoginSearchField",
+
+      "Public"      => 0,
+      "Person"      => 0,
+      "Admin"       => 2,
+
+      "Clerk" => 0,
+      "Teacher"     => 0,
+      "Secretary" => 1,
+      "Coordinator" => 0,
+   ),
+   "ModuleName" => array
+   (
+      "Name" => "Módulo",
+      "Sql" => "VARCHAR(255)",
+      "Search" => FALSE,
+      "Compulsory" => FALSE,
+      "SearchFieldMethod" => "ModuleSearchField",
+
+      "Public"      => 0,
+      "Person"      => 0,
+      "Admin"       => 2,
+
+      "Clerk" => 0,
+      "Teacher"     => 0,
+      "Secretary" => 1,
+      "Coordinator" => 0,
+   ),
+   "Action" => array
+   (
+      "Name" => "Action",
+      "Sql" => "VARCHAR(255)",
+      "Search" => FALSE,
+      "Compulsory" => FALSE,
+      "SearchFieldMethod" => "ActionSearchField",
+
+      "Public"      => 0,
+      "Person"      => 0,
+      "Admin"       => 2,
+
+      "Clerk" => 0,
+      "Teacher"     => 0,
+      "Secretary" => 1,
+      "Coordinator" => 0,
+   ),
+   "Unit" => array
+   (
+      "Name" => "Unidade",
+      "Sql" => "INT",
+      "Search" => FALSE,
       "Compulsory" => FALSE,
 
       "Public"      => 1,
       "Person"      => 0,
       "Admin"       => 2,
 
-      "Clerk" => 1,
+      "Clerk" => 0,
       "Teacher"     => 0,
       "Secretary" => 1,
       "Coordinator" => 0,
@@ -297,7 +292,7 @@ array
    (
       "Name" => "Edit",
       "Sql" => "INT",
-      "Search" => TRUE,
+      "Search" => FALSE,
       "Compulsory" => FALSE,
 
       "Public"      => 1,
@@ -313,7 +308,7 @@ array
    (
       "Name" => "Update",
       "Sql" => "INT",
-      "Search" => TRUE,
+      "Search" => FALSE,
       "Compulsory" => FALSE,
 
       "Public"      => 1,
@@ -329,7 +324,7 @@ array
    (
       "Name" => "Update",
       "Sql" => "INT",
-      "Search" => TRUE,
+      "Search" => FALSE,
       "Compulsory" => FALSE,
 
       "Public"      => 1,
@@ -345,7 +340,7 @@ array
    (
       "Name" => "Save",
       "Sql" => "INT",
-      "Search" => TRUE,
+      "Search" => FALSE,
       "Compulsory" => FALSE,
 
       "Public"      => 1,
@@ -356,5 +351,21 @@ array
       "Teacher"     => 0,
       "Secretary" => 1,
       "Coordinator" => 0,
+   ),
+   "Message" => array
+   (
+      "Name" => "Mensagem",
+      "Sql" => "VARCHAR(1024)",
+      "Search" => TRUE,
+      "Compulsory" => FALSE,
+
+      "Public"      => 0,
+      "Person"      => 0,
+      "Admin"       => 2,
+
+      "Clerk" => 1,
+      "Teacher"     => 1,
+      "Secretary" => 1,
+      "Coordinator" => 1,
    ),
 );

@@ -1,7 +1,7 @@
 <?php
 
 
-class ClassDiscsImport extends Unique
+class ClassDiscsImport extends Common
 
 {    //*
     //* function Import, Parameter list: $item,$key,$diariosdir,$materiasdir,$rperiod,&$table

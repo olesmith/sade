@@ -33,7 +33,7 @@ array
        "Page" => array
        (
         "Name" => "Página",
-        "Name_UK" => "Page",
+        "Name_UK" => "Current",
        ),
        "Pages" => array
        (

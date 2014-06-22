@@ -74,12 +74,12 @@ class ClassDiscMarksUpdate extends ClassDiscMarksCalc
     }
 
     //*
-    //* function UpdateStudentSemesterMarks, Parameter list: $student,$trimester,&$studmarks
+    //* function UpdateStudentTrimesterMarks, Parameter list: $student,$trimester,&$studmarks
     //*
     //* Updates student semester cells.
     //*
 
-    function UpdateStudentSemesterMarks($student,$trimester,&$studmarks)
+    function UpdateStudentTrimesterMarks($student,$trimester,&$studmarks)
     {
         $updateds=0;
 
@@ -103,19 +103,19 @@ class ClassDiscMarksUpdate extends ClassDiscMarksCalc
 
         if ($updateds>0)
         {
-            $studmarks[ "Marks" ][ $trimester ]=$this->SemesterStudentMark($student,$this->Assessments[ $trimester ]);
+            $studmarks[ "Marks" ][ $trimester ]=$this->TrimesterStudentMark($student, $trimester);
         }
 
         return $updateds;
     }
 
     //*
-    //* function UpdateStudentSemestersMarks, Parameter list: $student,&$studmarks
+    //* function UpdateStudentTrimestersMarks, Parameter list: $student,&$studmarks
     //*
     //* Updates student semesters cells.
     //*
 
-    function UpdateStudentSemestersMarks($student,&$studmarks)
+    function UpdateStudentTrimestersMarks($student,&$studmarks)
     {
         $sem=$this->GetGET("Semester");
 
@@ -134,7 +134,7 @@ class ClassDiscMarksUpdate extends ClassDiscMarksCalc
             }
             if (!empty($sem) && $sem!=$trimester) { continue; }
 
-            $updateds+=$this->UpdateStudentSemesterMarks($student,$trimester,$studmarks);
+            $updateds+=$this->UpdateStudentTrimesterMarks($student,$trimester,$studmarks);
         }
 
         return $updateds;
@@ -173,7 +173,7 @@ class ClassDiscMarksUpdate extends ClassDiscMarksCalc
 
         if ($updateds>0)
         {
-            $studmarks[ "Marks" ][ $trimester ]=$this->SemesterStudentMark($student,$this->Assessments[ $trimester ]);
+            $studmarks[ "Marks" ][ $trimester ]=$this->TrimesterStudentMark($student,$this->Assessments[ $trimester ]);
         }
 
         return $updateds;
@@ -222,7 +222,7 @@ class ClassDiscMarksUpdate extends ClassDiscMarksCalc
 
     function UpdateStudentMarks($student,&$studmarks)
     {
-        $updateds=$this->UpdateStudentSemestersMarks($student,$studmarks);
+        $updateds=$this->UpdateStudentTrimestersMarks($student,$studmarks);
         $updateds+=$this->UpdateStudentRecoveriesMarks($student,$studmarks);
 
         if ($updateds>0)
@@ -232,9 +232,9 @@ class ClassDiscMarksUpdate extends ClassDiscMarksCalc
                $this->ApplicationObj->Disc,
                $studmarks[ "Marks" ]
             );
-
-            $this->UpdateStudentDiscMarks($student,$studmarks);
         }
+
+        $this->UpdateStudentDiscMarks($student,$studmarks);
     }
 
     //*
@@ -259,6 +259,7 @@ class ClassDiscMarksUpdate extends ClassDiscMarksCalc
                "ClassDisc"  => $disc[ "ID" ],
                "Student"    => $student[ "StudentHash" ][ "ID" ],
                "Assessment" => $trimester,
+               "SecEdit"    => 1,
             );
 
             $mark=$where;
@@ -283,6 +284,7 @@ class ClassDiscMarksUpdate extends ClassDiscMarksCalc
                "ClassDisc"  => $disc[ "ID" ],
                "Student"    => $student[ "StudentHash" ][ "ID" ],
                "Assessment" => $trimester,
+               "SecEdit"    => 1,
             );
 
             $mark=$where;
@@ -297,6 +299,28 @@ class ClassDiscMarksUpdate extends ClassDiscMarksCalc
         }
     }
 
-}
+    //*
+    //* function UpdateAllStudentsMarks, Parameter list: $disc=array(),$class=array()
+    //*
+    //* Updates all students marks, supposed to be invoked after updating of MaxVals has occurred.
+    //* That is, by: ClassDiscAssessments::UpdateDaylyAssessments.
+    //*
+
+    function UpdateAllStudentsMarks($disc=array(),$class=array())
+    {
+        if (empty($disc)) { $disc=$this->ApplicationObj->Disc; }
+        if (empty($class)) { $class=$this->ApplicationObj->Class; }
+
+        $this->ReadDaylyAssessments();
+
+        $this->ApplicationObj->ClassStudentsObject->ReadClassStudents($class[ "ID" ]);
+        foreach ($this->ApplicationObj->Students as $student)
+        {
+            $studmarks=$this->ReadDaylyStudent(123,$student);
+            $this->UpdateStudentDiscMarks($student,$studmarks,$disc,$class);
+        }
+    }
+
+ }
 
 ?>

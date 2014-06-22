@@ -148,7 +148,7 @@ class ClassDiscWeights extends Unique
 
     function WeightField($edit,$class,$disc,$n,$tab=1)
     {
-        if ($edit==1) { $edit=$this->ItemData[ "Weight" ][ "Coordinator" ]-1; }
+        //if ($edit==1) { $edit=$this->ItemData[ "Weight" ][ "Coordinator" ]-1; }
 
         if ($edit==0) { return $this->GetWeight($disc,$n); }
 
@@ -190,7 +190,7 @@ class ClassDiscWeights extends Unique
     //* Greates weight input titles.
     //*
 
-    function WeightsInputs($edit=0,$disc=array(),$showtotal=TRUE)
+    function WeightsInputs($edit=0,$disc=array(),$showtotal=TRUE,$colspan=1)
     {
         if (empty($disc)) { $disc=$this->ApplicationObj->Disc; }
         $showabsences=TRUE;
@@ -213,6 +213,8 @@ class ClassDiscWeights extends Unique
             {
                 $cell=$this->WeightField($edit,$this->ApplicationObj->Class,$disc,$n,$n+20);
             }
+
+            if ($colspan>1) { $cell=$this->MultiCell($cell,$colspan); }
 
             array_push($row,$cell);
         }

@@ -32,7 +32,7 @@ class ClassDiscsTablesDiscs extends ClassDiscsTablesInit
                )
             );
 
-            if (!$this->LatexMode && ($no%10)==0)
+            if (!$this->LatexMode() && ($no%10)==0)
             {
                 $table=array_merge($table,$this->MakeTitleRows(0,0,$this->ApplicationObj->Disc));
             }
@@ -56,7 +56,7 @@ class ClassDiscsTablesDiscs extends ClassDiscsTablesInit
         }
 
         $html="";
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $html=$this->LatexTable("",$table);
         }

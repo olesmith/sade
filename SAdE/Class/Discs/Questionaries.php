@@ -21,8 +21,7 @@ class  ClassDiscsQuestionaries extends ClassDiscsTitleRows
 
         if (empty($student)) { $student=$this->ApplicationObj->Student; }
 
-        $this->ApplicationObj->ClassQuestionsObject->LatexMode=$this->LatexMode;
-        $this->ApplicationObj->ClassObservationsObject->LatexMode=$this->LatexMode;
+        $this->ApplicationObj->SetLatexMode();
 
         $spec="|c|l|";
         for ($n=1;$n<=$this->ApplicationObj->Disc[ "NAssessments" ];$n++) { $spec.="p{0.5cm}|"; }
@@ -105,7 +104,7 @@ class  ClassDiscsQuestionaries extends ClassDiscsTitleRows
 
     function HandleQuestionaries($edit=0,$tedit=0,$action="StudentMarks")
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             //$this->InitLatexData();
             return $this->QuestionariesLatexTable();

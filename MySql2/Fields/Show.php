@@ -165,7 +165,7 @@ class ShowFields extends InputFields
             if ($value=="0")  { $value=""; }
 
             if (
-                  !$this->LatexMode
+                  !$this->LatexMode()
                   &&
                   isset($item[ $data ])
                   &&
@@ -212,7 +212,7 @@ class ShowFields extends InputFields
             else
             {
                 $value=$this->GetEnumValue($data,$item);
-                if (!$this->LatexMode && !empty($this->ItemData[ $data ][ "ValueColors" ]))
+                if (!$this->LatexMode() && !empty($this->ItemData[ $data ][ "ValueColors" ]))
                 {
                     $color=$this->ItemData[ $data ][ "ValueColors" ][ $item[ $data ]-1 ];
                     $value=$this->TextColor($color,$value);

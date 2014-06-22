@@ -19,12 +19,12 @@ class ClassMarksUpdate extends ClassMarksRead
     }
 
     //*
-    //* function MarkFieldSqlWhere, Parameter list: $classid,$discid,$studentid,$teacherid,$assessment
+    //* function MarkFieldSqlWhere, Parameter list: $class,$disc,$student,$assessment,$secedit=2
     //*
     //* Returns CGI key name of mark field.
     //*
 
-    function MarkFieldSqlWhere($class,$disc,$student,$assessment)
+    function MarkFieldSqlWhere($class,$disc,$student,$assessment,$secedit=2)
     {
         return array
         (
@@ -32,6 +32,7 @@ class ClassMarksUpdate extends ClassMarksRead
            "ClassDisc" => $disc[ "ID" ],
            "Student" => $student[ "StudentHash" ][ "ID" ],
            "Assessment" => $assessment,
+           "SecEdit" => $secedit,
         );
     }
 
@@ -63,10 +64,11 @@ class ClassMarksUpdate extends ClassMarksRead
             $value=preg_replace('/[^\d,\.]/',"",$newvalue);
             $value=preg_replace('/,/',".",$value);
 
-            $where=$this->MarkFieldSqlWhere($class,$disc,$student,$assessment);
+            $where=$this->MarkFieldSqlWhere($class,$disc,$student,$assessment,2);
 
             $mark=$where;
             $mark[ "Mark" ]=$value;
+            $mark[ "SecEdit" ]=2;
             //$mark[ "Teacher" ]=$teacherid;
 
             $this->AddOrUpdate("",$where,$mark);
@@ -82,7 +84,11 @@ class ClassMarksUpdate extends ClassMarksRead
 
     function UpdateMarkFields($class,$disc,$student)
     {
-        $keys=preg_grep('/^Mark_'.$class[ "ID" ].'_'.$disc[ "ID" ].'_'.$student[ "StudentHash" ][ "ID" ].'_/',array_keys($_POST));
+        $keys=preg_grep
+        (
+           '/^Mark_'.$class[ "ID" ].'_'.$disc[ "ID" ].'_'.$student[ "StudentHash" ][ "ID" ].'_/',
+           array_keys($_POST)
+        );
 
         $assessments=array();
         foreach ($keys as $key)

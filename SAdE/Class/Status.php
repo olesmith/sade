@@ -1,5 +1,9 @@
 <?php
 
+include_once("Class/Status/Calc.php");
+include_once("Class/Status/Update.php");
+include_once("Class/Status/TitleRows.php");
+include_once("Class/Status/Row.php");
 include_once("Class/Status/Tables.php");
 
 

@@ -344,43 +344,6 @@ class CGI extends SqlQuery
   }
 
 
-  function FindIconsPath()
-  {
-      //Set if not detected
-      if ($this->IconsPath=="")
-      {
-          $script=$_SERVER[ "SCRIPT_NAME" ];
-          $paths=preg_split('/[\/]/',$script);
-          array_pop($paths);
-
-          $spath="";
-          $found=0;
-          $n=0;
-          //Looping up through path, unitl spath/icons is found (max 10...)
-          //Paths in the filesystem!
-          while ($n<10 && $found==0)
-          {
-              if (is_dir($spath."icons")) { $found=1; }
-              else                        { $spath="../".$spath; }
-
-              $n++;
-          }
-
-          //Take Extra Path Information into consideration,
-          //since relative links changes using this feature
-          //One up (../)  per / in path info
-          $pathinfos=$this->GetExtraPathInfos();
-          for ($n=0;$n<count($pathinfos);$n++)
-          {
-              $spath="../".$spath;
-          }
-
-          $this->IconsPath=$spath."icons";
-      }
-      
-
-      return $this->IconsPath;
-  }
 
   function MakeHiddenFields($tabmovesdown=FALSE)
   {

@@ -55,24 +55,24 @@ class ClassDiscMarksTable extends ClassDiscMarksTitles
 
         $titles=$this->DaylyMarksTableTitleRows($assess,$include);
 
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $titles=array($titles[0],$titles[1],$titles[3]);
         }
 
-        if (!$this->LatexMode) { $nitemsperpage=2*count($this->ApplicationObj->Students); }
+        if (!$this->LatexMode()) { $nitemsperpage=2*count($this->ApplicationObj->Students); }
 
-
+        //List of table per students, break for max no of students
         $tables=array();
         $table=$titles;
 
         $n=1;
         foreach ($this->ApplicationObj->Students as $student)
         {
-            //Not matriculated - disappear from daylies
+            //Not matriculated - disappear from daylies!!!
             if (intval($student[ "StudentHash" ][ "Status" ])==8) { continue; }
 
-            if ( ($n % $nitemsperpage)==0)
+            if ($n>1 && ($n % $nitemsperpage)==1)
             {
                 array_push($tables,$table);
                 $table=$titles;
@@ -85,7 +85,7 @@ class ClassDiscMarksTable extends ClassDiscMarksTitles
             );
         }
 
-        //Table musto have more rows than just the titles.
+        //Table must have more rows than just the titles.
         if (count($table)>count($titles))
         {
             array_push($tables,$table);

@@ -22,7 +22,15 @@ class Filters extends Time
             if (is_string($item[ $data ]))
             {
                 $lines=preg_replace("/#$data\b/",$item[ $data ],$lines);
-            }
+                while (preg_match("/#{([^}]+)}$data/",$lines,$matches))
+                {
+                    $format=$matches[1];
+                    $value=sprintf($format,$item[ $data ]);
+
+                    $format=preg_replace('/%/',"\\%",$format);
+                    $lines=preg_replace('/'.$matches[0].'/',$value,$lines);
+                }
+             }
         }
 
         return $lines;

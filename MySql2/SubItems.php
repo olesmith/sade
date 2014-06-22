@@ -465,7 +465,7 @@ class SubItems extends Enums
     //* Create select field for subitems. Set $this->ItemData[ $data ][ "Values" ].
     //*
 
-    function CreateSubItemSelectField($data,$item,$id="",$ignoredefault=0,$rdata="",$fieldtitle="",$multiple=FALSE,$selectfield=FALSE)
+    function CreateSubItemSelectField($data,$item,$id="",$ignoredefault=0,$rdata="",$fieldtitle="",$multiple=FALSE,$searchfield=FALSE)
     {
         if ($rdata=="") { $rdata=$data; }
         if ($this->ItemData[ $data ][ "SqlObject" ]=="") { return; }
@@ -476,7 +476,6 @@ class SubItems extends Enums
 
         $ids=$names[1];
         $names=$names[0];
-
         if ($id=="" && isset($item[ $data ])) { $id=$item[ $data ]; }
  
         if ($id==0 &&  $ignoredefault==0 && isset($subobject->ItemData[ $data ][ "Default" ]))
@@ -531,7 +530,7 @@ class SubItems extends Enums
         $rnames=array();
         for ($n=0;$n<count($ids);$n++)
         {
-            if (! $selectfield || $ids[$n]==0 || !empty($rvalues[ $ids[ $n ] ]))
+            if ((!$searchfield) || $ids[$n]==0 || !empty($rvalues[ $ids[ $n ] ]))
             {
                 array_push($rids,$ids[ $n ]);
                 array_push($rnames,$names[ $n ]);
@@ -587,7 +586,7 @@ class SubItems extends Enums
             if (is_array($subitem) && count($subitem)>0)
             {
                 $value=$this->Filter($this->ItemData[ $data ][ "SqlFilter" ],$subitem);
-                if (!$this->LatexMode && $this->ItemData[ $data ][ "SqlHRefIt" ])
+                if (!$this->LatexMode() && $this->ItemData[ $data ][ "SqlHRefIt" ])
                 {
                     $value=$this->Href
                     (

@@ -24,11 +24,14 @@ class SearchTable extends SearchFields
 
         $omit=join("|",$omitvars);
         $tbl=array();
-        foreach ($this->GetSearchVars() as $var)
+
+        foreach (array_keys($this->ItemData) as $var)
         {
             //Search may have been disabled, since call to InitSearchVars - so check again
             if (!$this->ItemData[ $var ][ "Search" ]) { continue; }
             if ($this->ItemData[ $var ][ "NoSearchRow" ]) { continue; }
+
+            if (!$this->IsSearchVar($var)) { continue; }
 
             $rvar=$var;
             if ($this->CheckHashKeyValue($this->ItemData[ $var ],"Compound",1))

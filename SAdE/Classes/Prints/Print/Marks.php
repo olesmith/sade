@@ -12,13 +12,16 @@ class ClassesPrintsPrintMarks extends ClassesPrintsPrintDaylies
     {
         $no=$this->B("N&ordm;");
         $name=$this->B("NOME DO ACADÊMICO");
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $no="\\small{\\textbf{N$^o$}}";
             $name= "\\hspace{1.4cm} ".$name." \\hspace{1.4cm}";         
         }
 
         $row=array($no,$name);
+        $orientation=$this->GetPOST("DayliesOrientation");
+
+        $this->NMFields=$this->GetPOST("DayliesNMarkFields_".$orientation);
 
         for ($n=1;$n<=$this->NMFields;$n++)
         {
@@ -74,11 +77,13 @@ class ClassesPrintsPrintMarks extends ClassesPrintsPrintDaylies
 
     function StudentSignaturesTables($class,$disc)
     {
-        $nsigs=4;
+        $orientation=$this->GetPOST("DayliesOrientation");
+
+        $nsigs=$this->GetPOST("DayliesNSignaturesFields_".$orientation);
 
         $no=$this->B("N&ordm;");
         $name=$this->B("NOME DO ACADÊMICO");
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $no="\\small{\\textbf{N$^o$}}";
             $name= "\\hspace{1.4cm} ".$name." \\hspace{1.4cm}";         
@@ -88,14 +93,10 @@ class ClassesPrintsPrintMarks extends ClassesPrintsPrintDaylies
 
         for ($n=1;$n<=$nsigs;$n++)
         {
-            array_push($row,$this->B(""));
+            array_push($row,$this->B("Assinatura"));
         }
 
         $titles=array($row);
-
-       /* $month="02/2013"; */
-        /* $firstdate=$this->GetMonthFirstDate($month); */
-        /* $lastdate=$this->GetNextMonthFirstDate($month); */
 
         $tables=array();
         $table=$titles;

@@ -90,7 +90,7 @@ class ClassQuestionsTables extends Common
             for ($n=1;$n<=$class[ "NAssessments" ];$n++)
             {
                 $cell=$this->Latins[ $n ];
-                if ($this->LatexMode) { $cell="\\small{".$cell."}"; }
+                if ($this->LatexMode()) { $cell="\\small{".$cell."}"; }
 
                 array_push
                 (

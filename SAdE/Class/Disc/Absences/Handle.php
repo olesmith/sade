@@ -11,7 +11,7 @@ class ClassDiscAbsencesHandle extends ClassDiscAbsencesReads
 
     function HandleDaylyAbsences()
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $this->PrintAbsencesLatex();
             return;

@@ -31,19 +31,20 @@ class HtmlForm extends HtmlInput
 
 
     //*
-    //* function StartForm, Parameter list: $action,$method="post",$enctype=0
+    //* function StartForm, Parameter list: $action,$method="post",$enctype=0,$options=array(),$suppresscgis=array()
     //*
     //* Creates leading part of a FORM.
     //* 
     //*
 
-    function StartForm($action="",$method="post",$enctype=0,$options=array())
+    function StartForm($action="",$method="post",$enctype=0,$options=array(),$suppresscgis=array())
     {
         global $NForms;
         $NForms++;
 
         $args=$this->Query2Hash();
         $args=$this->Hidden2Hash($args);
+
         $query=$this->Hash2Query($args);
 
         $this->AddCommonArgs2Hash($args);
@@ -62,6 +63,8 @@ class HtmlForm extends HtmlInput
 
         $options[ "ID" ]="Form".$NForms;
         $options[ "METHOD" ]=$method;
+
+        foreach ($suppresscgis as $cgivar) { unset($args[ $cgivar ]); }
         $options[ "ACTION" ]="?".$this->Hash2Query($args);
         $options[ "ENCTYPE" ]="multipart/form-data";
         if ($enctype!=0)

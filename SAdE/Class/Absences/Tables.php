@@ -1,7 +1,5 @@
 <?php
 
-include_once("Class/Absences/TitleRows.php");
-
 
 class ClassAbsencesTables extends ClassAbsencesTitleRows
 {

@@ -104,12 +104,8 @@ class Classes extends ClassesAccess
         $this->ApplicationObj->ReadSchool();
         $this->ApplicationObj->LoadSubModule("Periods");
 
-        //$this->ApplicationObj->ReadSchoolPeriods();
-        foreach ($this->ApplicationObj->GradeObject->ModeVars as $data)
-        {
-            //$this->ItemData[ $data ][ $this->ApplicationObj->LoginType ]=1;
-            //$this->ItemData[ $data ][ $this->ApplicationObj->Profile ]=1;
-        }
+        $this->ApplicationObj->LoadSubModule("Teacher2Discs");
+        $this->ApplicationObj->Teacher2DiscsObject->UpdateTableStructure();
 
         $this->ApplicationObj->ReadClass();
         $this->Actions[ "Edit" ][ "HrefArgs" ]="Class=#ID";
@@ -297,7 +293,7 @@ class Classes extends ClassesAccess
         //Deactivate Absence related links, if absences off
         if (intval($this->ApplicationObj->Disc[ "AbsencesType" ])==$this->ApplicationObj->AbsencesNo)
         {
-            foreach (array("DaylyContentsDates","DaylyContents","DaylyAbsences") as $action)
+            foreach (array("DaylyContentsDates","DaylyContents","AddDaylyContents","DaylyAbsences") as $action)
             {
                 foreach (array($this->Profile,$this->LoginType) as $access)
                 {
@@ -490,9 +486,12 @@ class Classes extends ClassesAccess
         $table=$this->SqlTableName($table);
         if (preg_match('/^(\d+)_/',$table,$matches))
         {
-            $school=$matches[1];
+            $school=$this->GetGET("School");
             if ($this->IsSchool($school))
             {
+                $this->ApplicationObj->ReadSchool($school);
+                $table=$school."_Classes";
+                $this->SqlTable=$table;
                 parent::UpdateDBFields($table,$datas,$datadefs,$maycreate);
             }
         }
@@ -502,7 +501,7 @@ class Classes extends ClassesAccess
     //*
     //* function UpdateSubTablesStructure, Parameter list: $class,$modulename=""
     //*
-    //* Make sure that correct Discs and Students tables exists for$class .
+    //* Make sure that correct Discs and Students tables exists for $class .
     //*
 
     function UpdateSubTablesStructure($class=array(),$modulename="")
@@ -514,6 +513,7 @@ class Classes extends ClassesAccess
         {
             $this->PeriodsSet[ $class[ "Period" ] ]=TRUE;
         }
+
      }
 
     

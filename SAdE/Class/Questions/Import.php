@@ -1,6 +1,5 @@
 <?php
 
-include_once("Class/Questions/Update.php");
 
 
 class ClassQuestionsImport extends ClassQuestionsUpdate

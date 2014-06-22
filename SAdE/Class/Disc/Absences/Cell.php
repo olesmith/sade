@@ -89,7 +89,7 @@ class ClassDiscAbsencesCell extends Common
         else
         {
                 if ($checked)            { return "F"; }
-            elseif ($this->LatexMode)    { return "\$\\cdot\$"; }
+            elseif ($this->LatexMode())  { return "\$\\cdot\$"; }
             else                         { return "&bullet;"; }
         }
     }

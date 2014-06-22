@@ -89,15 +89,13 @@ class ClassDiscAssessmentsHandle extends ClassDiscAssessmentsRead
 
         $this->ReadDaylyAssessments();
 
-        if ($edit==1 && $this->GetPOST("Save")==1)
-        {
-            $this->UpdateDaylyNAssessments();
-            $this->UpdateDaylyAssessments();
-        }
-
-
         if ($edit==1)
         {
+            if ($this->GetPOST("Save")==1)
+            {
+                $this->UpdateDaylyAssessments();
+            }
+
             print
                 $this->H(2,"Lançar Avaliações").
                 $this->StartForm().

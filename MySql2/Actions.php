@@ -205,13 +205,6 @@ class Actions extends Profile
             unset($actionsdefined[ $action ]);
         }
 
-        /* if (count($actionsdefined)>0 && $this->ModuleName==$this->GetGET("ModuleName")) */
-        /* { */
-        /*     print "Warning! ". */
-        /*         $this->ModuleName." InitActions: Undefined Action permissions: ". */
-        /*         join(", ",array_keys($actionsdefined))."<BR>\n"; */
-        /* } */
-
         //If we are read only, prevent access to Actions with Edits==1.
         if ($this->ReadOnly)
         {
@@ -427,10 +420,10 @@ class Actions extends Profile
                  &&
                  $this->Actions[ $raction ][ "Singular" ]==1
                 )
-                ||
-                preg_grep('/^'.$raction.'$/',$this->ActionsSingular)
-                ||
-                preg_grep('/^'.$raction.'$/',$this->ActionsActionsSingular)
+                /* || */
+                /* preg_grep('/^'.$raction.'$/',$this->ActionsSingular) */
+                /* || */
+                /* preg_grep('/^'.$raction.'$/',$this->ActionsActionsSingular) */
                )
             {
                 $this->Singular=TRUE;
@@ -642,13 +635,13 @@ class Actions extends Profile
     }
 
     //*
-    //* function ActionEntry, Parameter list: $data,$item,$noicons=0,$class="",$args=array()
+    //* function ActionEntry, Parameter list: $data,$item=array(),$noicons=0,$class="",$args=array()
     //*
     //* Generates action menu entry, subject to specifications in
     //* $this->Actions [ $data ].
     //*
 
-    function ActionEntry($data,$item,$noicons=0,$class="",$rargs=array())
+    function ActionEntry($data,$item=array(),$noicons=0,$class="",$rargs=array())
     {
         $size=20;
         if ($this->IconsPath=="")
@@ -728,12 +721,12 @@ class Actions extends Profile
                     $text=
                        $this->IMG
                        (
-                          $this->IconsPath."/".$text,
+                          $this->Icons."/".
+                          $text,
                           $text,
                           $size,
                           $size
-                       )
-                        ;
+                       );
                 }
 
                 $action=$this->Href($action,$text,$title,$this->Actions[ $data ][ "Target" ],$class);
@@ -753,8 +746,9 @@ class Actions extends Profile
             {
                 return
                      $this->Center($this->IMG
-                    (
-                       $this->IconsPath."/".$this->Actions[ $data ][ "AltIcon" ],
+                     (
+                      //$this->IconsPath."/".
+                       $this->Actions[ $data ][ "AltIcon" ],
                        "Não Disponível",$size,$size
                      ));
             }

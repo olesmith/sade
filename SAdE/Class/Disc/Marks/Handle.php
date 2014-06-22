@@ -14,7 +14,7 @@ class ClassDiscMarksHandle extends ClassDiscMarksReads
         $edit=$this->ApplicationObj->ClassDiscsObject->CheckAccessEdit2Dayly();
         if ($print)
         {
-            $this->LatexMode=TRUE;
+            $this->ApplicationObj->SetLatexMode();
             $edit=0;
         }
 
@@ -30,7 +30,7 @@ class ClassDiscMarksHandle extends ClassDiscMarksReads
         $this->Assessments=$this->ApplicationObj->ClassDiscAssessmentsObject->Assessments;
 
         $this->ApplicationObj->ClassStudentsObject->ReadClassStudents($this->ApplicationObj->Class[ "ID" ]);
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $this->PrintMarksLatex();
             exit();

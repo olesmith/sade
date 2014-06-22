@@ -48,16 +48,22 @@ class ClassDiscsTablesStudents extends ClassDiscsTablesDiscs
                 $this->EndForm();
         }
 
+        $width=10;
+        $height=1.25;
+
 
         $ctable=$this->ApplicationObj->ClassObservationsObject->ObservationsTable
         (
            $this->ApplicationObj->Class,
            $this->ApplicationObj->Student,
            $edit,
-           $tedit
+           $tedit,
+           FALSE,
+           $width,
+           $height
         );
 
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             array_push($table,"");
             foreach ($ctable as $row)
@@ -90,10 +96,10 @@ class ClassDiscsTablesStudents extends ClassDiscsTablesDiscs
         if ($this->NoObservations) { $observations=FALSE; }
 
         $html="";
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
-            $scale=0.9;
-            if ($observations) { $scale=0.65; }
+            $scale=1.0;
+            //if ($observations) { $scale=0.75; }
 
             $html=
                 "\\scalebox{".$scale."}{".
@@ -103,12 +109,12 @@ class ClassDiscsTablesStudents extends ClassDiscsTablesDiscs
             if ($observations)
             {
                 $html.=
-                    "\\vspace{0.25cm}\n\n".
-                    $this->LatexTable("",$ctable,"|l|p{8cm}|p{8cm}|").
+                    //"\\vspace{0.1cm}\n\n".
+                    $this->LatexTable("",$ctable,"|l|p{10cm}|p{10cm}|").
                     "";
-            }
 
-            $html.=$this->ApplicationObj->ClassesObject->LatexResponsibleSignatureLine(3.0,1.0,1.5,7.0);
+                $html.=$this->ApplicationObj->ClassesObject->LatexResponsibleSignatureLine(3.0,1.0,1.5,7.0);
+            }
        }
         else
         {
@@ -142,9 +148,9 @@ class ClassDiscsTablesStudents extends ClassDiscsTablesDiscs
             $tables=$this->GenerateTable(0,0);
 
             $latex=
-                "\n\\hspace{0.5cm}\\vspace{-1cm}\n\n".
+                //"\n\\hspace{0.5cm}\\vspace{-1cm}\n\n".
                 $this->H(1,$this->GetDisplayTitle()).
-                "\n\\vspace{0.25cm}\n\n".
+                //"\n\\vspace{0.1cm}\n\n".
                 "";
 
             foreach ($tables as $table)

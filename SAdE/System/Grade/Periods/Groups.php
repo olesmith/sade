@@ -5,7 +5,7 @@ array
       "Name" => "Básicos",
       "Data" => array
       (
-         "No","Discs","Delete",
+         "No","Discs","CopyQuestionary","Delete",
          "Grade","Name","SortOrder","Year",
          "AssessmentType","NAssessments","AssessmentsWeights","MediaLimit","FinalMedia","AbsencesType","AbsencesLimit",
       ),
@@ -18,7 +18,7 @@ array
       "Name" => "Avaliações",
       "Data" => array
       (
-         "No","Discs","Delete",
+         "No","Discs","CopyQuestionary","Delete",
          "Name","SortOrder","Year","CHS","CHT",
          "AssessmentType","NAssessments","AssessmentsWeights","MediaLimit","NRecoveries","FinalMedia","AbsencesType","AbsencesLimit",
          "NDiscs","NDiscsTotal"

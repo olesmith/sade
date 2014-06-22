@@ -1,9 +1,9 @@
 <?php
 
+include_once("Grade/Questionaries/Copy.php");
 
-class GradeQuestionaries extends Common
+class GradeQuestionaries extends GradeQuestionariesCopy
 {
-
     //*
     //* Variables of GradeQuestionaries class:
     //*
@@ -59,6 +59,7 @@ class GradeQuestionaries extends Common
 
         return $item;
     }
+
 
     //*
     //* function ItemsTableRow, Parameter list: $grade,$period,&$table,$even
@@ -187,6 +188,8 @@ class GradeQuestionaries extends Common
         ); 
 
     }
+
+
 }
 
 ?>

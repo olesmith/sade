@@ -1,7 +1,5 @@
 <?php
 
-include_once("Class/Status/Calc.php");
-
 
 class ClassStatusUpdate extends ClassStatusCalc
 {

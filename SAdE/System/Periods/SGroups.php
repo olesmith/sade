@@ -5,7 +5,7 @@ array
       "Name" => "Básicos",
       "Data" => array
       (
-         "Type","Name","Year","Semester",
+         "Type","Active","Name","Year","Semester",
          "StartDate","EndDate",
          "NClasses",
        ),

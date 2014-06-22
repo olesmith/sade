@@ -212,7 +212,9 @@ class ClassesPrintsLatex extends ClassesPrintsTable
             ).
             "\n\n\\vspace{0.25cm}\n";
 
-        $tail=$this->LatexSignatureLine();
+        $tail=
+            $this->LatexSignatureLine().
+            "\n\\clearpage\n\n";
 
         $currentdate=$this->GetNextMonthFirstDate($month);
 

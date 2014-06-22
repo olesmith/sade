@@ -75,7 +75,7 @@ class ClassDiscsInfoTable extends ClassDiscsDayly
 
     function InfoTable($disc)
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return $this->DiscLatexInfoTable($disc);
         }
@@ -129,7 +129,7 @@ class ClassDiscsInfoTable extends ClassDiscsDayly
 
     function ClassInfoTable($class)
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return $this->DiscLatexInfoTable($class);
         }

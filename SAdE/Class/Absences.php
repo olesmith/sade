@@ -1,5 +1,9 @@
 <?php
 
+include_once("Class/Absences/Import.php");
+include_once("Class/Absences/Update.php");
+include_once("Class/Absences/Calc.php");
+include_once("Class/Absences/TitleRows.php");
 include_once("Class/Absences/Tables.php");
 
 

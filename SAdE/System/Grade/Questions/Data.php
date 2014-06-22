@@ -51,6 +51,7 @@ array
       "Compulsory" => TRUE,
       "Search" => TRUE,
       "SqlWhere" => "GradePeriod='#GradePeriod'",
+      "NumericalSort" => TRUE,
 
       "Public"      => 1,
       "Person"      => 1,
@@ -81,6 +82,7 @@ array
       "Name" => "No.",
       "Size" => "5",
       "Sql" => "VARCHAR(5)",
+      "NumericalSort" => TRUE,
 
       "Public"      => 1,
       "Person"      => 1,

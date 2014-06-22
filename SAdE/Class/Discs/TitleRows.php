@@ -12,7 +12,7 @@ class ClassDiscsTitleRows extends ClassDiscsRow
     function FirstRows($disc)
     {
         $row=array("No.");
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             array_push($row,"");
         }
@@ -140,6 +140,8 @@ class ClassDiscsTitleRows extends ClassDiscsRow
 
     function MarksTitleRows(&$rows,$edit=0,$tedit=0,$disc=array())
     {
+        $ncells=3;
+        if ($this->LatexMode()) { $ncells=1; }
         if ($this->ApplicationObj->ClassDiscsObject->ShowMarks)
         {
             $markstitles=$this->ApplicationObj->ClassMarksObject->MarksTitles($disc);
@@ -152,7 +154,8 @@ class ClassDiscsTitleRows extends ClassDiscsRow
                (
                   $tedit,
                   $disc,
-                  $this->ShowMarkSums
+                  $this->ShowMarkSums,
+                  $ncells
                ),
                array("")
             );

@@ -55,17 +55,55 @@ class StudentsMatriculateFields extends StudentsAdd
         (
            "",
            array("Period" => $period[ "ID" ]),
-           array("ID","Name","GradePeriod"),
+           array("ID","Name","GradePeriod","Grade"),
            FALSE,
            "Grade","GradePeriod","Name"
         );
 
-        $ids=array(0);
-        $names=array("");
+        $pclasses=array();
         foreach ($classes as $rclass)
         {
-            array_push($ids,$rclass[ "ID" ]);
-            array_push($names,$this->ApplicationObj->ClassesObject->ClassName($rclass));
+            $grade=$rclass[ "Grade" ];
+            if (!isset($pclasses[ $grade ])) { $pclasses[ $grade ]=array(); }
+
+            $gper=$rclass[ "GradePeriod" ];
+            if (!isset($pclasses[ $grade ][ $gper ])) { $pclasses[ $grade ][ $gper ]=array(); }
+
+            $cname=$rclass[ "Name" ].sprintf("%06d",$rclass[ "ID" ]);
+            $pclasses[ $grade ][ $gper ][ $cname ]=$rclass;
+        }        
+
+        $ids=array(0);
+        $names=array("");
+
+        $grades=array_keys($pclasses);
+        sort($grades,SORT_NUMERIC);
+        foreach ($grades as $grade)
+        {
+            $gradename=$this->ApplicationObj->GradeObject->MySqlItemValue("","ID",$grade,"Name");
+            array_push($ids,"disabled");
+            array_push($names,$gradename);
+
+            $gpers=array_keys($pclasses[ $grade ]);
+            sort($gpers,SORT_NUMERIC);
+            foreach ($gpers as $gper)
+            {
+                $gpername=$this->ApplicationObj->GradePeriodsObject->MySqlItemValue("","ID",$gper,"Name");
+                array_push($ids,"disabled");
+                array_push($names,$gpername);
+
+                $classes=array_keys($pclasses[ $grade ][ $gper ]);
+                sort($classes);
+                foreach ($classes as $cname)
+                {
+                    array_push($ids,$pclasses[ $grade ][ $gper ][ $cname ][ "ID" ]);
+                    array_push
+                    (
+                       $names,
+                       $this->ApplicationObj->ClassesObject->ClassName($pclasses[ $grade ][ $gper ][ $cname ])
+                    );
+                }
+            }
         }
 
         return $this->MakeSelectField

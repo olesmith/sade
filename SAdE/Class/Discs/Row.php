@@ -122,7 +122,7 @@ class ClassDiscsRow extends ClassDiscsEdit
     {
         $row=array($this->B(sprintf("%02d",$no)));
 
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             array_push($row,$this->StudentActionsEntries($disc,$dactions));
         }
@@ -176,7 +176,7 @@ class ClassDiscsRow extends ClassDiscsEdit
 
         $row=array($this->B(sprintf("%02d",$no)));
 
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             array_push($row,$this->DiscActionsEntries($student,$sactions));
         }
@@ -282,16 +282,7 @@ class ClassDiscsRow extends ClassDiscsEdit
         $row=array();
         if (!$this->PerDisc && $this->ShowNLessons)
         {
-             $redit=$tedit;
-            /* if ($disc[ "AbsencesType" ]==$this->ApplicationObj->OnlyTotals) */
-            /* { */
-            /*     //Only absence totals -reset $edit */
-            /*     if (!$this->PerDisc) */
-            /*     { */
-            /*         $redit=0; */
-            /*     } */
-            /* } */
-
+            $redit=$tedit;
             $row=array_merge
             (
                $row,
@@ -323,7 +314,7 @@ class ClassDiscsRow extends ClassDiscsEdit
             $row=array_merge
             (
                $row,
-               $this->ApplicationObj->ClassDiscWeightsObject->WeightsInputs(0,$disc,$this->ShowMarkWeightsTotals)
+               $this->ApplicationObj->ClassDiscWeightsObject->WeightsInputs($edit,$disc,$this->ShowMarkWeightsTotals)
             );
 
             if ($this->EmptyTableColumns) { array_push($row,""); }

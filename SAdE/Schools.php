@@ -331,19 +331,23 @@ class Schools extends SchoolsHandlers
 
 
     //*
-    //* function ReadSchool, Parameter list: $die=TRUE
+    //* function ReadSchool, Parameter list: $die=TRUE,$school=0
     //*
     //* Reads School ID from CGI GET, exits if nonexistent or inadeqaute
     //*
 
-    function ReadSchool($die=TRUE)
+    function ReadSchool($die=TRUE,$school=0)
     {
         if (!empty($this->ApplicationObj->School)) { return; }
 
         $mod=$this->ApplicationObj->Module;
         $modname=$this->ApplicationObj->ModuleName;
 
-        $school=intval($this->GetGET("School"));
+        if (empty($school))
+        {
+            $school=intval($this->GetGET("School"));
+        }
+
         if (empty($school) && $this->ApplicationObj->ModuleName=="Schools")
         {
             $school=intval($this->GetGET("ID"));
@@ -420,12 +424,12 @@ class Schools extends SchoolsHandlers
 
 
     //*
-    //* function ReadSchools, Parameter list: 
+    //* function ReadSchools, Parameter list: $schoolids=NULL
     //*
     //* Reads all permitted schools.
     //*
 
-    function ReadSchools()
+    function ReadSchools($schoolids=NULL)
     {
         if (!empty($this->ApplicationObj->Schools)) { return; }
 
@@ -639,6 +643,28 @@ class Schools extends SchoolsHandlers
         }
     }
 
+
+
+    //*
+    //* function DateIsLecturable, Parameter list: $date,$school=array()
+    //*
+    //* Calculates dates wek no.
+    //*
+
+    function DateIsLecturable($date,$school=array())
+    {
+        if (empty($school)) { $school=$this->ApplicationObj->School; }
+        $wday=$date[ "WeekDay" ];
+        if ($school[ "WeekDay".$wday]==1)
+        {
+            if ($date[ "Type" ]<=3)
+            {
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
 
 }
 

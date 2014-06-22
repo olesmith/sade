@@ -7,7 +7,7 @@ array
       "SqlDerivedData" => array(""),
       "Admin" => 1,
       "Public"      => 1,
-      "Person"      => 1,
+      "Person"      => 0,
       "Admin"       => 1,
 
       "Clerk" => 1,
@@ -23,12 +23,12 @@ array
       "Search" => TRUE,
       "Compulsory" => TRUE,
       "Public"      => 1,
-      "Person"      => 1,
+      "Person"      => 0,
       "Admin"       => 2,
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "Title" => array
@@ -39,12 +39,12 @@ array
       "Search" => TRUE,
       "Compulsory" => TRUE,
       "Public"      => 1,
-      "Person"      => 1,
+      "Person"      => 0,
       "Admin"       => 2,
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "Type" => array
@@ -58,12 +58,12 @@ array
       "Names" => array("Ano","Semestre"),     //"Trimestre","Bimestre","Mês"),
       "NSemesters" => array(4,2),             //,4,6,12),
       "Public"      => 1,
-      "Person"      => 1,
+      "Person"      => 0,
       "Admin"       => 2,
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "NPeriods" => array
@@ -75,12 +75,12 @@ array
       "Compulsory" => FALSE,
 
       "Public"      => 1,
-      "Person"      => 1,
+      "Person"      => 0,
       "Admin"       => 1,
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "Year" => array
@@ -91,12 +91,12 @@ array
       "Search" => TRUE,
       "Regex" => '^\d\d\d\d$',
       "Public"      => 1,
-      "Person"      => 1,
+      "Person"      => 0,
       "Admin"       => 2,
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "Semester" => array
@@ -108,12 +108,12 @@ array
       "EmptyName"         => "-",
       "Values" => array(1,2,3,4,5,6,7,8,9,10,11,12),
       "Public"      => 1,
-      "Person"      => 1,
+      "Person"      => 0,
       "Admin"       => 2,
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "StartDate" => array
@@ -124,7 +124,7 @@ array
       "SqlClass" => "Dates",
 
       "Public"      => 1,
-      "Person"      => 1,
+      "Person"      => 0,
       "Admin"       => 1,
 
       "Clerk" => 1,
@@ -140,7 +140,7 @@ array
       "SqlClass" => "Dates",
 
       "Public"      => 1,
-      "Person"      => 1,
+      "Person"      => 0,
       "Admin"       => 1,
 
       "Clerk" => 1,
@@ -163,7 +163,8 @@ array
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
+      "Coordinator" => 1,
    ),
    "ReadOnly" => array
    (
@@ -180,7 +181,7 @@ array
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "Period" => array
@@ -196,7 +197,7 @@ array
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "NextPeriod" => array
@@ -212,7 +213,7 @@ array
 
       "Clerk" => 1,
       "Teacher"     => 1,
-      "Secretary" => 1,
+      "Secretary" => 2,
       "Coordinator" => 1,
    ),
    "NClasses" => array

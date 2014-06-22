@@ -90,10 +90,10 @@ class ClassDiscs extends ClassDiscsStatusTable
         $this->Hash2Object($args);
         $this->AlwaysReadData=array
         (
-           "Grade","Class","Period","GradePeriod","GradeDisc",
+           "School","Grade","Class","Period","GradePeriod","GradeDisc",
            "Name","CHT","CHS",
            "AbsencesType","AssessmentType","NAssessments",
-           "Teacher","Daylies",
+           "Teacher","Teacher1","Teacher2","Daylies",
         );
         $this->Sort=array("AssessmentType","AbsencesType","Name");
 
@@ -304,7 +304,7 @@ class ClassDiscs extends ClassDiscsStatusTable
     function PostProcess($item)
     {
         $module=$this->GetGET("ModuleName");
-        if (!preg_match('/^Class/',$module))
+        if (!preg_match('/^Classes/',$module))
         {
             return $item;
         }
@@ -356,7 +356,7 @@ class ClassDiscs extends ClassDiscsStatusTable
             }
         }
 
-
+        //Revert only totals!
         if ($item[ "AbsencesType" ]==1)
         {
             $item[ "AbsencesType" ]=2;
@@ -381,7 +381,54 @@ class ClassDiscs extends ClassDiscsStatusTable
 
         $this->PostProcessDaylies($item);
 
+        $item=$this->MakeSureWeHaveRead
+        (
+           $sqltable,
+           $item,
+           array("School","Period","Teacher","Teacher1","Teacher2","Class","Grade","GradePeriod","GradeDisc")
+        );
+
+        $this->UpdateDisc2TeacherTable($item);
+
         return $item;
+    }
+
+    //*
+    //* function UpdateDisc2Teacher, Parameter list: &$disc
+    //*
+    //* Updates Teacher2Fiscs table.
+    //* 
+    //*
+
+    function UpdateDisc2TeacherTable(&$disc)
+    {
+        $teacher2discwhere=array
+        (
+           "School" => $disc[ "School" ],
+           "Period" => $disc[ "Period" ],
+           "Class"  => $disc[ "Class" ],
+           "Disc"   => $disc[ "ID" ],
+        );
+        $teacher2disc=array
+        (
+           "School"      => $disc[ "School" ],
+           "Period"      => $disc[ "Period" ],
+           "Class"       => $disc[ "Class" ],
+           "Disc"        => $disc[ "ID" ],
+           "Teacher"     => $disc[ "Teacher" ],
+           "Teacher1"    => $disc[ "Teacher1" ],
+           "Teacher2"    => $disc[ "Teacher2" ],
+           "Grade"       => $disc[ "Grade" ],
+           "GradePeriod" => $disc[ "GradePeriod" ],
+           "GradeDisc"   => $disc[ "GradeDisc" ],
+        );
+
+        $this->ApplicationObj->Teacher2DiscsObject->AddOrUpdate
+        (
+           "",
+           $teacher2discwhere,
+           $teacher2disc
+        );
     }
 
 

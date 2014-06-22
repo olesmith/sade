@@ -13,7 +13,7 @@ class HtmlList extends HtmlTags
     {
         if (count($list)==0) { return ""; }
 
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             if ($ul=="UL") { $ul="itemize"; }
             else           { $ul="enumerate"; }

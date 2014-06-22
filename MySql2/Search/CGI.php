@@ -115,7 +115,7 @@ class SearchCGI extends SearchOptions
             }
             else
             {
-                $value=$this->HtmlDateInputValue($data,TRUE);
+                $value=$this->HtmlDateInputValue($data,TRUE,FALSE);
             }
 
             return $value;
@@ -206,6 +206,30 @@ class SearchCGI extends SearchOptions
 
         return $hiddens;
     }
+    //*
+    //* function SearchVarsAsHash, Parameter list: $hash=array()
+    //*
+    //* Creates hash according to search vars defined.
+    //*
+
+    function SearchVarsAsHash($hash=array())
+    {
+        foreach ($this->GetSearchVars() as $data)
+        {
+            if ($this->GetDataAccessType($data)>=1)
+            {
+                $rdata=$this->GetSearchVarCGIName($data);
+                $value=$this->GetSearchVarCGIValue($data);
+
+                if ($value!="" && !is_array($value) && !preg_match('/^0$/',$value))
+                {
+                    $hash[ $rdata ]=$value;
+                }
+            }
+        }
+
+        return $hash;
+    }
 
     //*
     //* function SearchVarsURL, Parameter list: 
@@ -232,6 +256,43 @@ class SearchCGI extends SearchOptions
 
         return join("&",$hiddens);
     }
+
+    //*
+    //* function CGI2IncludeAll, Parameter list:
+    //*
+    //* Retrieves CGI POST value of $this->ModuleName."_IncludeAll",
+    //* setting on as default.
+    //*
+
+    function CGI2IncludeAll()
+    {
+        $val=$this->GetCGIVarValue($this->ModuleName."_IncludeAll");
+
+        $default=1;
+        if ($this->IncludeAllDefault) { $default=2; }
+        if ($val=="") { $val=$default; }
+
+        return $val;
+    }
+
+    //*
+    //* function CGI2Edit, Parameter list:
+    //*
+    //* Retrieves CGI POST value of $this->ModuleName."_IncludeAll",
+    //* setting on as default.
+    //*
+
+    function CGI2Edit()
+    {
+        $val=$this->GetCGIVarValue($this->ModuleName."_Edit");
+
+        $default=1;
+        if ($val=="") { $val=$default; }
+
+        return $val;
+    }
+
+
 }
 
 

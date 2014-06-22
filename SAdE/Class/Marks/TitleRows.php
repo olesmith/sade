@@ -16,13 +16,33 @@ class ClassMarksTitleRows extends ClassMarksCalc
         {
             for ($n=1;$n<=$disc[ "NAssessments" ];$n++)
             {
-                array_push($row,$this->Sub("N",$n));
+                $stitle=$this->Sub("S",$n);
+                $ttitle=$this->Sub("N",$n);
+                $ftitle=$this->Sub("M",$n);
+                if (!$this->LatexMode())
+                {
+                    $stitle=$this->Span($stitle,array("TITLE" => "Origim Secretaria"));
+                    $ttitle=$this->Span($ttitle,array("TITLE" => "Origim Professor"));
+                    $ftitle=$this->Span($ftitle,array("TITLE" => "Média Final"));
+                }
+
+                if (!$this->LatexMode())
+                {
+                    array_push($row,$stitle,$ttitle);
+                }
+                array_push($row,$ftitle);
             }
         }
 
         if ($this->ApplicationObj->ClassDiscsObject->ShowMarkSums)
         {
-            array_push($row,$this->ApplicationObj->Sigma."N");
+            array_push
+            (
+               $row,
+               $this->ApplicationObj->Sigma.
+               $this->SUB("p","i")."*".
+               $this->SUB("M","i")
+            );
         }
 
         if ($this->ApplicationObj->ClassDiscsObject->ShowMarksTotals)

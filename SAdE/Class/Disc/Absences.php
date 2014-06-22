@@ -24,7 +24,7 @@ class ClassDiscAbsences extends ClassDiscAbsencesHandle
     var $StudentLatexData=array("Matricula","Name","Status");
 
     //Default number of contents/dates cells in Latex output.
-    var $NDatesPerPage=20;
+    var $NDatesPerPage=15;
 
     //Default number of students per page in Latex output.
     var $NStudentsPerPage=25;
@@ -53,7 +53,7 @@ class ClassDiscAbsences extends ClassDiscAbsencesHandle
     //*
     //* function GetStudentStatus, Parameter list: $student,$month,$date=""
     //*
-    //* Handles Dayly Absences pages.
+    //* Returns student status.
     //*
 
     function GetStudentStatusType($student,$month,$date="")
@@ -78,6 +78,7 @@ class ClassDiscAbsences extends ClassDiscAbsencesHandle
                 $res=2;
             }
         }
+
 
         return $res;
     }

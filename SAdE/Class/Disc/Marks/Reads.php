@@ -4,13 +4,32 @@
 class ClassDiscMarksReads extends ClassDiscMarksLatex
 {
     //*
-    //* function ReadDaylyStudent, Parameter list: $assess,$student
+    //* function ReadDaylyAssessments, Parameter list: 
+    //*
+    //* Reads Assessments, calling  ClassDiscAssessmentsObject.
+    //*
+
+    function ReadDaylyAssessments()
+    {
+        if (empty($this->ApplicationObj->ClassDiscAssessmentsObject->Assessments))
+        {
+            $this->ApplicationObj->ClassDiscAssessmentsObject->ReadDaylyAssessments();
+        }
+
+        $this->Assessments=$this->ApplicationObj->ClassDiscAssessmentsObject->Assessments;
+    }
+
+    //*
+    //* function ReadDaylyStudent, Parameter list: $assess,$student,$disc=array(),$class=array()
     //*
     //* Reads $student Dayly totals from DB.
     //*
 
-    function ReadDaylyStudent($assess,$student)
+    function ReadDaylyStudent($assess,$student,$disc=array(),$class=array())
     {
+        if (empty($disc)) { $disc=$this->ApplicationObj->Disc; }
+        if (empty($class)) { $class=$this->ApplicationObj->Class; }
+
         $studmarks=array
         (
            "Period" => 0,
@@ -23,12 +42,13 @@ class ClassDiscMarksReads extends ClassDiscMarksLatex
            "",
            array
            (
-              "Class" => $this->ApplicationObj->Class[ "ID" ],
-              "Disc" => $this->ApplicationObj->Disc[ "ID" ],
+              "Class" => $class[ "ID" ],
+              "Disc" => $disc[ "ID" ],
               "Student" => $student[ "StudentHash" ][ "ID" ],
            ),
            array("ID","Assessment","Mark")
         );
+
 
         foreach ($marks as $mark)
         {
@@ -39,7 +59,7 @@ class ClassDiscMarksReads extends ClassDiscMarksLatex
                FALSE,
                array("ID","Semester","Number","MaxVal")
             );
-
+ 
             $number=$assessment[ "Number" ];
             $semester=$assessment[ "Semester" ];
             if (!isset($studmarks[ "Semester" ][ $semester ]))
@@ -52,13 +72,13 @@ class ClassDiscMarksReads extends ClassDiscMarksLatex
             $studmarks[ "Marks" ][ $semester ]="";
             if (!empty($this->Assessments[ $semester ]))
             {
-                $studmarks[ "Marks" ][ $semester ]=$this->SemesterStudentMark($student,$this->Assessments[ $semester ]);
+                $studmarks[ "Marks" ][ $semester ]=$this->TrimesterStudentMark($student,$semester);
             }
         }
 
         $studmarks[ "MarksHash" ]=$this->ApplicationObj->ClassMarksObject->CalcStudentDiscMarks
         (
-           $this->ApplicationObj->Disc,
+           $disc,
            $studmarks[ "Marks" ]
         );
 

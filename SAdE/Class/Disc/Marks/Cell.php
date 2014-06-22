@@ -24,7 +24,8 @@ class ClassDiscMarksCell extends ClassDiscMarksUpdate
                   "TITLE" => 
                     "Nota Invalida! ".
                     sprintf("%.1f",$mark).">".
-                    sprintf("%.1f",$assessment[ "MaxVal" ])
+                   sprintf("%.1f",$assessment[ "MaxVal" ]),
+                  "STYLE" => 'color: red;'
                )
             );
         }

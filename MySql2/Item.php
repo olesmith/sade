@@ -120,6 +120,10 @@ class Item extends ItemUpdate
                 {
                     if (!isset($item[ $this->ItemNamer ]))
                     {
+                        $this->ItemNamer="Name";
+                    }
+                    if (!isset($item[ $this->ItemNamer ]))
+                    {
                         if (!isset($this->ItemData[ $this->ItemNamer ]))
                         {
                             print "Item: ".$this->ModuleName.": Invalid Itemnamer: ".$this->ItemNamer."<BR>";
@@ -137,75 +141,6 @@ class Item extends ItemUpdate
         return $name;
     }
 
-    //*
-    //* Returns full (relative) upload path: UploadPath/Module.
-    //*
-
-    function GetUploadPath()
-    {
-        $path=preg_replace('/#Module/',$this->ModuleName,$this->UploadPath);
-
-        if ($path=="") { return; }
-
-        $path=$this->FilterObject($path);
-
-        $comps=preg_split('/\/+/',$path);
-        if (!preg_grep('/'.$this->ModuleName.'/',$comps))
-        {
-            array_push($comps,$this->ModuleName);
-        }
-
-
-        $path="";
-        for ($n=0;$n<count($comps);$n++)
-        {
-            if ($path!="")
-            {
-                $path.="/";
-            }
-
-            $path.=$comps[$n];
-
-            if (!is_dir($path))
-            {
-                var_dump($path);
-                mkdir($path);
-            }
-            
-        }
-
-        touch($path."/index.php");
-        return $path;
-    }
-
-    //*
-    //* Returns full (relative) name of uploaded file pertaining to $data.
-    //*
-
-    function GetUploadedFileName($data,$item,$ext)
-    {
-        $uploadpath=$this->GetUploadPath();
-
-        //Make sure we have an index.php, so no-one may list the files
-        $index=$uploadpath."/index.php";
-        if (!file_exists($index))
-        {
-            if (is_writable($index))
-            {
-
-                $this->MyWriteFile($index,array());
-            }
-        }
-
-        $uploadpath.="/";
-        if ($this->UploadFilesHidden)
-        {
-            $uploadpath.=".";
-        }
-
-        //Make files hidden
-        return $uploadpath.$data."_".$item[ "ID" ].".".$ext;
-    }
 
     //*
     //* function TreatDataAsLatex, Parameter list: $value

@@ -4,9 +4,34 @@
 class ClassDiscAssessmentsUpdate extends ClassDiscAssessmentsTables
 {
     //*
+    //* function UpdateDaylyAssessments, Parameter list: $disc=array(),$class=array()
+    //*
+    //* Updates the (max values) of the individual marks - all trimesters.
+    //*
+
+    function UpdateDaylyAssessments($disc=array(),$class=array())
+    {
+        if (empty($disc)) { $disc=$this->ApplicationObj->Disc; }
+        if (empty($class)) { $class=$this->ApplicationObj->Class; }
+
+        if ($this->GetPOST("Save")==1)
+        {
+            $updated1=$this->UpdateDaylyNAssessments($disc,$class);
+            $updated2=$this->UpdateDaylyAssessmentsData($disc,$class);
+
+            if ($updated1 || $updated2)
+            {
+                $this->ApplicationObj->ClassDiscMarksObject->UpdateAllStudentsMarks();
+            }
+
+        }
+
+    }
+
+     //*
     //* function UpdateDaylyNAssessments, Parameter list: $disc=array(),$class=array()
     //*
-    //* Generates a table, resuming number of assessments per semester.
+    //* Updates number of assessments of all trimesters.
     //*
 
     function UpdateDaylyNAssessments($disc=array(),$class=array())
@@ -14,20 +39,21 @@ class ClassDiscAssessmentsUpdate extends ClassDiscAssessmentsTables
         if (empty($disc)) { $disc=$this->ApplicationObj->Disc; }
         if (empty($class)) { $class=$this->ApplicationObj->Class; }
 
-        foreach ($this->Assessments as $semester => $assessments)
+        $updated=FALSE;
+        foreach ($this->Assessments as $trimester => $assessments)
         {
-            $row=array($this->B($semester));
+            $row=array($this->B($trimester));
 
             $where=array
             (
                "Class" => $this->ApplicationObj->Class[ "ID" ],
                "Disc" => $this->ApplicationObj->Disc[ "ID" ],
-               "Semester" => $semester,
+               "Semester" => $trimester,
             );
 
             $nentries=$this->MySqlNEntries("",$where);
 
-            $nnew=$this->GetPOST("NAssessments_".$semester);
+            $nnew=$this->GetPOST("NAssessments_".$trimester);
 
             if ($nnew>$nentries)
             {
@@ -40,29 +66,29 @@ class ClassDiscAssessmentsUpdate extends ClassDiscAssessmentsTables
                    "Number"
                 );
 
+                //Renumber
                 $n=1;
                 foreach ($assessements as $id => $assessment)
                 {
                     unset($_POST[ $assessment[ "ID" ]."_Number" ]);
-                    $this->Assessments[ $semester ][ $id  ][ "Number" ]=$n;
+                    $this->Assessments[ $trimester ][ $id  ][ "Number" ]=$n;
                     $this->MySqlSetItemValue("","ID",$assessment[ "ID" ],"Number",$n++);
-
                 }
 
                 for (;$n<=$nnew;$n++)
                 {
                     $text="Nota";
 
-                    $no=$semester;
-                    if ($semester>$disc[ "NAssessments" ])
+                    $no=$trimester;
+                    if ($trimester>$disc[ "NAssessments" ])
                     {
                         $text="Recup.";
-                        $no=$semester-$disc[ "NAssessments" ];
+                        $no=$trimester-$disc[ "NAssessments" ];
                     }
 
                     $newass=$where;
-                    $newass[ "Name" ]=$text." ".$n;
-                    $newass[ "Number" ]=$n;
+                    $newass[ "Name" ]=$text." ".$no;
+                    $newass[ "Number" ]=$no;
                     $newass[ "MaxVal" ]=1.0;                    
                     $newass[ "CTime" ]=time();                    
                     $newass[ "ATime" ]=time();                    
@@ -70,35 +96,39 @@ class ClassDiscAssessmentsUpdate extends ClassDiscAssessmentsTables
 
                     $msg=$this->MySqlInsertItem("",$newass);
                 }
+                $updated=TRUE;
             }
         }
 
         $this->ReadDaylyAssessments();
+
+        return $updated;
     }
 
     
 
     //*
-    //* function UpdateDaylyAssessments, Parameter list: $disc=array(),$class=array()
+    //* function UpdateDaylyAssessmentsData, Parameter list: $disc=array(),$class=array()
     //*
-    //* Generates a table, resuming number of assessments per semester.
+    //* Updates the (max values) of the individual marks - all trimesters.
     //*
 
-    function UpdateDaylyAssessments($disc=array(),$class=array())
+    function UpdateDaylyAssessmentsData($disc=array(),$class=array())
     {
-        if (empty($disc)) { $disc=$this->ApplicationObj->Disc; }
+        if (empty($disc))  { $disc=$this->ApplicationObj->Disc; }
         if (empty($class)) { $class=$this->ApplicationObj->Class; }
 
-        foreach ($this->Assessments as $semester => $assessments)
+        $updated=FALSE;
+        foreach ($this->Assessments as $trimester => $assessments)
         {
-            $row=array($this->B($semester));
+            $row=array($this->B($trimester));
             foreach ($assessments as $id => $assessment)
             {
                 if ($this->GetPOST("Delete_".$assessment[ "ID" ])==1)
                 {
                     $this->MySqlDeleteItem("",$assessment[ "ID" ]);
 
-                    unset($this->Assessments[ $semester ][ $id  ]);
+                    unset($this->Assessments[ $trimester ][ $id  ]);
                     continue;
                 }
 
@@ -113,7 +143,7 @@ class ClassDiscAssessmentsUpdate extends ClassDiscAssessmentsTables
 
                         if ($assessment[ $data ]!=$cgivalue)
                         {
-                            $this->Assessments[ $semester ][ $id  ][ $data ]=$cgivalue;
+                            $this->Assessments[ $trimester ][ $id  ][ $data ]=$cgivalue;
                             array_push($updatedatas,$data);
                         }
                     }
@@ -121,10 +151,22 @@ class ClassDiscAssessmentsUpdate extends ClassDiscAssessmentsTables
 
                 if (count($updatedatas)>0)
                 {
-                    $this->MySqlSetItemValues("",$updatedatas,$this->Assessments[ $semester ][ $id  ]);
+                    $this->MySqlSetItemValues
+                    (
+                       "",
+                       $updatedatas,
+                       $this->Assessments[ $trimester ][ $id  ]
+                    );
+                }
+
+                if (preg_grep('/^MaxVal$/',$updatedatas))
+                {
+                    $updated=TRUE;
                 }
             }
         }
+
+        return $updated;
     }
 }
 

@@ -129,6 +129,8 @@ class Mail extends Zip
 
   function SendGMail($to,$subject,$body,$cc="",$bcc="",$replyto="",$attachments=array(),$nostatus=FALSE)
   {
+      if (empty($to)) { return FALSE; }
+
       $subject=$this->FilterHash($subject,$this->CompanyHash);
       $body=$this->FilterHash($body,$this->CompanyHash);
 

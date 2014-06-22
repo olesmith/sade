@@ -28,6 +28,7 @@ class ProfileInit extends CGI
 
     function InitProfile($module="")
     {
+        if (empty($module)) { $module=$this->ModuleName; }
         $modfile=$this->ModuleProfileFile($module);
         if (!file_exists($modfile))
         {

@@ -11,15 +11,34 @@ class ClassDiscMarksCalc extends Common
 
     function GetStudentMarkHash($student,$assessment)
     {
-        $markhash=$this->SelectUniqueHash
-        (
-           "",
-           $this->StudentMarkSqlWhere($student,$assessment),
-           TRUE, //no echo, may be absent
-           array("ID","Mark")
-        );
+        /* $markhash=$this->SelectUniqueHash */
+        /* ( */
+        /*    "", */
+        /*    $this->StudentMarkSqlWhere($student,$assessment), */
+        /*    TRUE, //no echo, may be absent */
+        /*    array("ID","Mark") */
+        /* ); */
 
-        if (!empty($markhash)) { return $markhash; }
+        $marks=$this->SelectHashesFromTable("",$this->StudentMarkSqlWhere($student,$assessment),array("ID","Mark"),FALSE,"ID");
+
+        $rmarks=array();
+        foreach ($marks as $mark)
+        {
+            if (!empty($mark[ "Mark" ]) && $mark[ "Mark" ]>0.0) { array_push($rmarks,$mark); }
+        }
+
+        $markhash=array();
+            if (count($rmarks)>0) { $markhash=array_pop($rmarks); }
+        elseif (count($marks)>0)  { $markhash=array_pop($marks); }
+
+/*           if ($student[ "StudentHash" ][ "ID" ]==276){ */
+
+/*               $marks=$this->SelectHashesFromTable("",$this->StudentMarkSqlWhere($student,$assessment)); */
+/*               var_dump($this->StudentMarkSqlWhere($student,$assessment)); */
+/*               var_dump($marks); */
+
+/* } */
+       if (!empty($markhash)) { return $markhash; }
 
         return array();
     }
@@ -40,19 +59,34 @@ class ClassDiscMarksCalc extends Common
     }
 
     //*
-    //* function SemesterStudentMark, Parameter list: $student,$assessments
+    //* function TrimesterStudentMark, Parameter list: $student,,$semester
     //*
     //* Reads semester ind. marks and calculates semester media.
     //*
 
-    function SemesterStudentMark($student,$assessments)
+    function TrimesterStudentMark($student,$semester)
     {
         $hasmedia=FALSE;
         $weight=0.0;
         $media=0.0;
-        foreach ($assessments as $assessment)
+        $secmark=$this->ApplicationObj->ClassMarksObject->ReadStudentDiscMark
+        (
+           $this->ApplicationObj->Class,
+           $this->ApplicationObj->Disc,
+           $student,
+           $semester,
+           2
+        );
+
+        if (preg_match('/^\d+(\.\d)?$/',$secmark))
+        {
+            $media+=$secmark;
+        }
+
+        foreach ($this->Assessments[ $semester ] as $assessment)
         {
             $mmedia=$this->GetStudentMarkValue($student,$assessment);
+          
             if (!empty($mmedia) || preg_match('/^0\.?0*$/',$mmedia))
             {
                 $mmedia=$this->Min($mmedia,$assessment[ "MaxVal" ]);
@@ -64,13 +98,16 @@ class ClassDiscMarksCalc extends Common
             $weight+=$assessment[ "MaxVal" ];
         }
 
+
         if ($weight>0.0)
         {
             $media*=10.0/$weight;
         }
 
+
         if ($hasmedia)
         {
+            $media=$this->Min($media,10.0);
             $media=sprintf("%.1f",$media+0.01);
         }
         else
@@ -94,7 +131,7 @@ class ClassDiscMarksCalc extends Common
         $media=0.0;
         for ($semester=1;$semester<=$this->ApplicationObj->Disc[ "NAssessments" ];$semester++)
         {
-            $mmedia=$this->SemesterStudentMark($student,$this->Assessments[ $semester ]);
+            $mmedia=$this->TrimesterStudentMark($student,$this->Assessments[ $semester ],$semester);
             if (!empty($mmedia) || preg_match('/^0\.?0*$/',$mmedia))
             {
                 $rweight=$this->ApplicationObj->Disc[ "Weights" ][ $semester-1 ][ "Weight" ];
@@ -119,12 +156,12 @@ class ClassDiscMarksCalc extends Common
     }
 
     //*
-    //* function SemesterWeights, Parameter list: $assessments
+    //* function TrimesterWeights, Parameter list: $assessments
     //*
     //* Sums semester ind. marks weights
     //*
 
-    function SemesterWeights($assessments)
+    function TrimesterWeights($assessments)
     {
         $weight=0.0;
         foreach ($assessments as $assessment)

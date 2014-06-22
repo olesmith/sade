@@ -37,6 +37,7 @@ class ClassDiscAbsencesLatexStudents extends ClassDiscAbsencesLatexTitles
         }
 
         $head=
+            "\\hspace{0.5cm}\\vspace{-1.25cm}\n\n".
             "\\LARGE{\\textbf{Relatório de Freqüências}}\n\n".
             $this->ApplicationObj->ClassesObject->LatexTable
             (
@@ -56,7 +57,7 @@ class ClassDiscAbsencesLatexStudents extends ClassDiscAbsencesLatexTitles
             "\n\n\\vspace{0.25cm}\n";
 
         $tail=
-            "\\vspace{1cm}\n".
+            "\\vspace{0.05cm}\n".
             $this->ApplicationObj->ClassesObject->LatexSignatureLine();
 
         $n=1;
@@ -64,7 +65,7 @@ class ClassDiscAbsencesLatexStudents extends ClassDiscAbsencesLatexTitles
         $students=array(0 => array());
         foreach ($this->ApplicationObj->Students as $student)
         {
-            if ($n+1>$this->NStudentsPerPage)
+            if ($n>$this->NStudentsPerPage)
             {
                 $n=1;
                 $rpageno++;
@@ -83,14 +84,15 @@ class ClassDiscAbsencesLatexStudents extends ClassDiscAbsencesLatexTitles
             $latex.=
                 $this->LatexOnePage
                 (
-                   "\\cfoot{".$pageno."}\n".
+                 // "\\cfoot{".($pageno++)."}\n".
                    $head.
                    $this->AbsencesLatexStudentsPage($disc,$chs,$page,$pstudents,$nstud,$rch,$lastpage).
                    $tail
                 ).
                 "\n\\clearpage\n\n";
 
-            $pageno++;
+
+            $nstud+=count($pstudents);
         }
 
         return $latex;

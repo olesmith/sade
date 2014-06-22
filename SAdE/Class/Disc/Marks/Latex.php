@@ -29,9 +29,9 @@ class ClassDiscMarksLatex extends ClassDiscMarksTables
             "\n\n\\vspace{0.25cm}\n";
 
         $tail=
-            "\\vspace{1cm}\n".
+            //"\\vspace{0.25cm}\n".
             $this->ApplicationObj->ClassesObject->LatexSignatureLine().
-            "\\vspace{0.25cm}\n".
+            //"\\vspace{0.25cm}\n".
             $this->ApplicationObj->ClassMarksObject->DiscMarkLatexLegend($disc).
             "";
 

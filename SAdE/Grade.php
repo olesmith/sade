@@ -144,18 +144,19 @@ class Grade extends Common
 
     function NextGradeSelect($data,$item,$edit=0)
     {
+        //var_dump($this->ItemHashes);
         $this->ReadGrades();
         if ($edit==0)
         {
             foreach ($this->ApplicationObj->Grades as $grade)
             {
-                if ($grade[ "ID" ]==$item[ $data ])
+                if (!empty($item[ $data ]) && $grade[ "ID" ]==$item[ $data ])
                 {
                     return $grade[ "Name" ];
                 }
             }
 
-            return ;
+            return "";
         }
 
         $ids=array(0);
@@ -166,8 +167,9 @@ class Grade extends Common
             array_push($names,$grade[ "Name" ]);
         }
 
-         $value="";
+        $value="";
         if (!empty($item[ $data ])) { $value=$item[ $data ]; }
+
         return $this->MakeSelectField($data,$ids,$names,$value);
     }
 
@@ -222,9 +224,10 @@ class Grade extends Common
 
     function ReadGrades()
     {
-        if (!empty($this->Grades)) { return; }
+        if (!empty($this->ApplicationObj->Grades)) { return; }
 
         $this->ApplicationObj->Grades=$this->SelectHashesFromTable();
+        $this->ItemHashes=array();
     }
 
     //*
@@ -412,6 +415,22 @@ class Grade extends Common
        );
    }
 
+    //*
+    //* function HandleCopyQuestionaries, Parameter list:
+    //*
+    //* Creates form for copying Questionaries. 
+    //* 
+    //*
+
+    function HandleCopyQuestionaries()
+    {
+        $srcgradeid=intval($this->GetGET("GID"));
+        if ($srcgradeid>0)
+        {
+            $this->ReadGrade($srcgradeid);
+            $this->ApplicationObj->GradePeriodsObject->HandleCopyQuestionaries();
+        }
+    }
 }
 
 ?>

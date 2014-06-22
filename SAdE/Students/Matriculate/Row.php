@@ -40,7 +40,7 @@ class StudentsMatriculateRow extends StudentsMatriculateFields
         $cell1="";
         $cell2="";
         $cell3="-";
-        if ($hasrecords)
+        if ($hasrecords && !empty($classstudent))
         {
             $cell1=$this->ApplicationObj->ClassesObject->ClassName($class);
             $cell2="Sim";

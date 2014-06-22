@@ -22,27 +22,28 @@ class ClassDiscsDayly extends ClassDiscsDaylyStudents
         $this->CheckAccess2Dayly();
         $this->UpdateDayliesSqlTables();
 
-        if ($this->GetGET("Latex")!=1)
+        $action=$this->GetGET("Action");
+        if ($this->GetGET("Latex")!=1 && !preg_match('/^DaylyAddContents$/',$action))
         {
             print 
                 $this->H(1,"Diários Eletrônicos").
                 $this->FrameIt
                 (
-                $this->Html_Table
-                (
-                   "",
-                   $this->DaylyInfoTable(),
-                   array
+                   $this->Html_Table
                    (
-                      "ALIGN" => 'center',
+                      "",
+                      $this->DaylyInfoTable(),
+                      array
+                      (
+                         "ALIGN" => 'center',
+                      )
                    )
-                )).
+                ).
                 "<BR>";
 
             $this->ApplicationObj->ClassesObject->DoTinterfaceMenu(FALSE,$this->ApplicationObj->Class[ "ID" ]);
         }
 
-        $action=$this->GetGET("Action");
         if (preg_match('/^DaylyPrints$/',$action))
         {
             $this->DaylyPrint();
@@ -55,9 +56,9 @@ class ClassDiscsDayly extends ClassDiscsDaylyStudents
         {
             $this->ApplicationObj->ClassDiscContentsObject->HandleCalendar();
         }
-        elseif (preg_match('/^DaylyContents/',$action))
+        elseif (preg_match('/^Dayly(Add)?Contents/',$action))
         {
-            if ($this->GetGET("Latex")!=1)
+            if ($this->GetGET("Latex")!=1 && !preg_match('/^DaylyAddContents$/',$action))
             {
                 $this->ApplicationObj->ClassDiscContentsObject->MakeContentsMenu($this->ApplicationObj->Disc);
             }
@@ -66,14 +67,17 @@ class ClassDiscsDayly extends ClassDiscsDaylyStudents
             {
                 $this->ApplicationObj->ClassDiscContentsObject->HandleDaylyContentsDates();
             }
+            elseif (preg_match('/^DaylyAddContents$/',$action))
+            {
+                $this->ApplicationObj->ClassDiscContentsObject->HandleDaylyAddContents();
+            }
             elseif (preg_match('/^DaylyContents$/',$action))
             {
                 $this->ApplicationObj->ClassDiscContentsObject->HandleDaylyContents();
             }
             elseif (preg_match('/^DaylyContentsPrint$/',$action))
             {
-                $this->LatexMode=TRUE;
-                $this->ApplicationObj->ClassDiscContentsObject->LatexMode=TRUE;
+                $this->ApplicationObj->SetLatexMode();
                 $this->ApplicationObj->ClassDiscContentsObject->HandleDaylyContents();
             }
         }
@@ -94,9 +98,7 @@ class ClassDiscsDayly extends ClassDiscsDaylyStudents
             }
             elseif (preg_match('/^DaylyAbsencesPrint$/',$action))
             {
-                $this->LatexMode=TRUE;
-                $this->ApplicationObj->ClassDiscContentsObject->LatexMode=TRUE;
-                $this->ApplicationObj->ClassDiscAbsencesObject->LatexMode=TRUE;
+                $this->ApplicationObj->SetLatexMode();
                 $this->ApplicationObj->ClassDiscAbsencesObject->HandleDaylyAbsences();
             }
 
@@ -109,8 +111,7 @@ class ClassDiscsDayly extends ClassDiscsDaylyStudents
             }
             elseif (preg_match('/^DaylyAssessmentsPrint$/',$action))
             {
-                $this->LatexMode=TRUE;
-                $this->ApplicationObj->ClassDiscMarksObject->LatexMode=TRUE;
+                $this->ApplicationObj->SetLatexMode();
                 $this->ApplicationObj->ClassDiscAssessmentsObject->HandleDaylyAssessments();
             }
         }
@@ -128,7 +129,8 @@ class ClassDiscsDayly extends ClassDiscsDaylyStudents
             }
             elseif (preg_match('/^DaylyMarksPrint$/',$action))
             {
-               $this->ApplicationObj->ClassDiscMarksObject->HandleDaylyMarks(TRUE);
+                $this->ApplicationObj->SetLatexMode();
+                $this->ApplicationObj->ClassDiscMarksObject->HandleDaylyMarks(TRUE);
             }
         }
         else
@@ -202,26 +204,35 @@ class ClassDiscsDayly extends ClassDiscsDaylyStudents
     {
         if (empty($disc)) { $disc=$this->ApplicationObj->Disc; }
 
-        $this->ApplicationObj->Teacher=array("Name" => "-");
         $cells=array
         (
-           array("Name","Teacher","Daylies"),
+           array("",           "Name",  ""),
+           array("Grade",      "Teacher",  "Daylies"),
            array("GradePeriod","Teacher1","AbsencesType"),
-           array("Class","Teacher2","AssessmentType"),
+           array("Class",      "Teacher2","AssessmentType"),
         );
 
-        $table=array();
+        $table=array
+        (
+         //$this->B($this->U($this->I("Disciplina: ").$disc[ "Name" ]))
+        );
+
         foreach ($cells as $crow)
         {
             $row=array();
             foreach ($crow as $data)
             {
-                array_push
-                (
-                   $row,
-                   $this->B($this->GetDataTitle($data).":"),
-                   $this->MakeShowField($data,$disc)
-                );
+                if (!empty($data))
+                {
+                    array_push
+                    (
+                       $row,
+                       $this->B($this->GetDataTitle($data).":"),
+                       $this->MakeShowField($data,$disc)
+                    );
+                }
+                else { array_push($row,"",""); }
+
             }
             array_push($table,$row);
         }

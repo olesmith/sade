@@ -1,6 +1,5 @@
 <?php
 
-include_once("Class/Absences/Calc.php");
 
 
 class ClassAbsencesTitleRows extends ClassAbsencesCalc
@@ -73,6 +72,10 @@ class ClassAbsencesTitleRows extends ClassAbsencesCalc
             array_push($row,$this->B($this->ApplicationObj->Sigma));
         }
 
+        if ($this->ApplicationObj->ClassDiscsObject->ShowNLessonsPercent)
+        {
+            array_push($row,$this->B($this->ApplicationObj->Percent));
+        }
         return $row;
     }
 

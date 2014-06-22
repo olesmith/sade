@@ -95,6 +95,8 @@ class PeriodsDiscs extends PeriodsPeriod
             $this->ApplicationObj->PeriodsObject->GetPeriodTitle();
 
         $this->ApplicationObj->ClassDiscsObject->ItemHashes=array();
+
+        //For Group Daylies, uses ClassDiscs::DiscsStatusTable to generate table.
         $this->ApplicationObj->ClassDiscsObject->HandleList("",TRUE,$edit);
     }
 }

@@ -264,6 +264,15 @@ class DataGroups extends HashesData
     }
 
     //*
+    //* Return object data group CGI Var var.
+    //*
+
+    function GroupDataPageVar()
+    {
+        return $this->ModuleName."_Page";
+    }
+
+    //*
     //* Return object data group var, that is:
     //* ItemDataSGroups if Singular, elsewise ItemDataGroups
     //*
@@ -383,6 +392,7 @@ class DataGroups extends HashesData
         if ($group=="") { return array(); }
 
         $groups=$this->GetDataGroups($single);
+
         $groupscommon=array();
         if (!$single) { $groupscommon=$this->GetDataGroupsCommon(); }
 
@@ -397,6 +407,7 @@ class DataGroups extends HashesData
 
         if (!isset($groups[ $group ]) || !is_array($groups[ $group ]))
         {
+            //$this->PrintCallStack();
             print $this->ModuleName." Warning: Group $group undefined";exit();
             $this->AddMsg("Warning: Group $group undefined");
             return;
@@ -571,6 +582,15 @@ class DataGroups extends HashesData
     function ItemEditListHidden($edit)
     {
         return $this->MakeHidden($this->GroupDataEditListVar(),2);
+    }
+
+    function ItemPageHidden($edit)
+    {
+        return $this->MakeHidden
+        (
+           $this->GroupDataPageVar(),
+           $this->GetPOST($this->GroupDataPageVar())
+        );
     }
 
     //*

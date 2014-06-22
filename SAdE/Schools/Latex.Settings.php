@@ -52,12 +52,14 @@ class SchoolsLatexSettings extends Places
        "School","Class","Teacher","Disc","Month","Period",
        "Grade","GradePeriod","Teacher1","Teacher2",
        "Unit","Shift",
+       "Year","Semester",
     );
     var $VarNames=array
     (
        "Escola","Turma","Professor(a)","Disciplina","Mes","Ano/Sem",
        "Grade","Periodo","Prof. Apoio","Prof. Recursos",
        "Entidade","Turno",
+       "Ano","Semester",
     );
 
 
@@ -290,10 +292,16 @@ class SchoolsLatexSettings extends Places
             $this->UpdatePrintHeadTableForm($this->ApplicationObj->School);
         }
 
+        $edit=0;
+        if (preg_match('/(Admin|Secretary)/',$this->ApplicationObj->Profile))
+        {
+            $edit=1;
+        }
+
         print
             $this->H(1,"Tabela Cabeçalho dos Impressos Gerados pelo Sistema").
             $this->StartForm().
-            $this->PrintHeadTableForm(1,$this->ApplicationObj->School).
+            $this->PrintHeadTableForm($edit,$this->ApplicationObj->School).
             $this->MakeHidden($this->UpdateAction,1).
             $this->Buttons().
             $this->EndForm().
@@ -326,10 +334,13 @@ class SchoolsLatexSettings extends Places
                     $title=$school[ $key."_Name" ];
                     $var=$this->VarTypes[ $varno-1 ];
 
+                    if (empty($month) && $var=="Month") { continue; }
+
                     $titlecell="\\textbf{".$title."}";
                     $titlevar=$this->LatexPageTableCell($var,$school,$class,$disc,$month);
                 }
 
+                if (empty($titlevar)) { $titlevar="-"; }
                 $table[ $m-1 ][ 2*($n-1) ]=$titlecell;
                 $table[ $m-1 ][ 2*$n-1   ]=$titlevar;
             }
@@ -388,6 +399,14 @@ class SchoolsLatexSettings extends Places
         {
             $value=$this->ApplicationObj->ClassesObject->GetEnumValue("Shift",$class);
         }
+        elseif ($var=="Year")
+        {
+            $value=$class[ "Year" ];
+        }
+        elseif ($var=="Semester")
+        {
+            $value=$class[ "Semester" ];
+        }
         elseif (preg_match('/^Teacher[12]?/',$var))
         {
             $value="";
@@ -405,7 +424,7 @@ class SchoolsLatexSettings extends Places
         {
             $value=$disc[ "Name" ];
         }
-         elseif ($var=="Month")
+        elseif ($var=="Month")
         {
             $value=$month;
             $value=preg_replace('/\d\d\d\d/',"",$value);
@@ -415,7 +434,6 @@ class SchoolsLatexSettings extends Places
             {
                 $value=$this->Months[ $value-1 ];
             }
-            //$value=$this->ApplicationObj->Month[ "Name" ];
         }
         elseif ($var=="Period")
         {

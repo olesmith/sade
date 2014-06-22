@@ -61,7 +61,10 @@ class SubModules extends Session
         $this->$object->InitProfile();
 
         $this->$object->InitData($initstructure);
-        $this->Module->$object=$this->$object;
+        if ($this->Module)
+        {
+            $this->Module->$object=$this->$object;
+        }
 
         $this->SetModulePermsSqlWhere($class,$this->$object);
 
@@ -83,9 +86,10 @@ class SubModules extends Session
         $setupdefs=$this->ReadPHPArray($this->SetupPath."/Globals.Defs.php");
         $setupdefs=$this->ReadPHPArray($this->SetupPath."/Modules.Defs.php",$setupdefs);
         if (empty($module->ModuleName))
-            {
-                //   var_dump($this->SubModulesVars);
-            }
+        {
+            //   var_dump($this->SubModulesVars);
+        }
+
         $object=$this->SubModulesVars[ $module->ModuleName ][ "SqlObject" ];
         $setupdefs=$this->ReadPHPArray
         (

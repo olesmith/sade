@@ -4,190 +4,211 @@
 class Paging extends Items
 {
 
-    ###*
-    ###* Variables of Items class:
+    //
+    // Variables of Items class:
 
-    var $Page,$NItemsPerPage=15,$NumberOfItems=0;
+    var $Page,$PageURL="",
+        $NItemsPerPage=15,
+        $NumberOfItems=0,
+        $FirstItemNo=1,
+        $LastItemNo=0,
+        $OffSet=0;
+
+
+    var $NPagesInMenu=5,$NIntermediatePages=20;
+    var $PageFirstNames=array();
+
     var $ActiveID=0;
-    var $PresetPage="";
+    var $PresetPage="",$PageNo=0,$NPages=0;
     var $PagingFormWritten=FALSE;
     var $PagingMessages="Paging.php";
 
+    //*
+    //* function , Parameter list: 
+    //*
+    //* 
+    //*
+
     function InitPaging($hash=array())
     {
-    }
+        $query=$this->ScriptQueryHash();
+        unset($query[ "Page" ]);
 
-    function GetNItemsPerPage()
-    {
-        $nitemspp=$this->GetCGIVarValue($this->ModuleName."_NItemsPerPage");
-        if ($nitemspp=="") { $nitemspp=$this->NItemsPerPage; }
+        $query=$this->SearchVarsAsHash($query);
 
-        return $nitemspp;
-    }
+        $this->PageURL=$this->ScriptExec($this->Hash2Query($query));
 
-    function GetPageNo($nitems)
-    {
-        $pageno=$this->PresetPage;
-        if ($pageno=="") { $pageno=$this->GetPOST($this->ModuleName."_Page"); }
-
-        if ($pageno=="" || $pageno>$this->GetNPages($nitems)) { $pageno=1; }
-
-        return $pageno;
-    }
-
-    function GetNPages($nitems)
-    {
-        $nitemspp=$this->GetNItemsPerPage();
-        if ($nitems>$nitemspp)
+        $this->NumberOfItems=count($this->ItemHashes);
+        foreach (array_keys($this->ItemHashes) as $id)
         {
-            $npages=$nitems/$nitemspp;
-            $npages=(int) $npages;
-            $res=$nitems % $nitemspp;
-            if ($res>0) { $npages++; }
+            $name="";
+            if (!empty($this->ItemHashes[ $id ][ $this->ItemNamer ]))
+            {
+                $name=$this->ItemHashes[ $id ][ $this->ItemNamer ];
+            }
+            if (!empty($this->ItemHashes[ $id ][ "Name" ]))
+            {
+                $name=$this->ItemHashes[ $id ][ "Name" ];
+            }
+
+            $this->PageFirstNames[ $id ]=$name;
+        }
+
+        $this->SetNItemsPerPage();
+        $this->SetNPages();
+        $this->SetPageNo();
+        $this->PageNo2ItemNos();
+    }
+
+    //*
+    //* function , Parameter list: 
+    //*
+    //* Updates $this->NItemsPerPage.
+    //*
+
+    function SetNItemsPerPage()
+    {
+        $val=$this->GetCGIVarValue($this->ModuleName."_NItemsPerPage");;
+        if (!empty($val) && preg_match('/^\d+$/',$val))
+        {
+            $this->NItemsPerPage=$val;
+        }
+    }
+
+    //*
+    //* function , Parameter list: 
+    //*
+    //* Updates $this->NPages.
+    //*
+
+    function SetNPages()
+    {
+        if ($this->NumberOfItems>$this->NItemsPerPage)
+        {
+            $this->NPages=intval($this->NumberOfItems/$this->NItemsPerPage);
+            $res=$this->NumberOfItems % $this->NItemsPerPage;
+            if ($res>0) { $this->NPages++; }
+        }
+        elseif ($this->NumberOfItems>0)
+        {
+            $this->NPages=1;
         }
         else
         {
-            $npages=1;
+            $this->NPages=0;
+        }
+    }
+
+    //*
+    //* function GetPageNo, Parameter list: 
+    //*
+    //* Returns value of pageno, as from CGI.
+    //*
+
+    function GetPageNo()
+    {
+        $this->PageNo=$this->GetPOST($this->ModuleName."_Page");
+        if (empty($this->PageNo))
+        {
+            $this->PageNo=$this->GetGET("Page");
         }
 
-        return $npages;
+        if (empty($this->PageNo)) { $this->PageNo=1; }
+
+        return $this->PageNo;
     }
 
 
-    function PageNo2ItemNos($nitems,$items=array())
-    {
-        if (count($items)==0)     { $items=$this->ItemHashes; }
-        $nitemspp=$this->GetNItemsPerPage();
+    //*
+    //* function SetPageNo, Parameter list: 
+    //*
+    //* Updates $this->PageNo.
+    //*
 
-        if ($nitems>$nitemspp)
+    function SetPageNo()
+    {
+        //$this->PageNo=$this->PresetPage;
+        if (empty($this->PageNo))
+        {
+            $this->PageNo=$this->GetPOST($this->ModuleName."_Page");
+            if (empty($this->PageNo))
+            {
+                $this->PageNo=$this->GetGET("Page");
+            }
+        }
+
+        if (empty($this->PageNo) || $this->PageNo>$this->NPages) { $this->PageNo=1; }
+    }
+
+
+    //*
+    //* function PageNo2ItemNos, Parameter list: 
+    //*
+    //* Updates $this->FirstItemNo, $this->LastItemNo and $this->OffSet.
+    //*
+
+    function PageNo2ItemNos()
+    {
+        if ($this->NumberOfItems>$this->NItemsPerPage)
         {
             if ($this->ActiveID && $this->ActiveID>0)
             {
-                $firstitem=0;
+                $this->FirstItemNo=0;
                 foreach ($items as $id => $item)
                 {
                     if ($item[ "ID" ]==$this->ActiveID)
                     {
-                        $firstitem=$id;
-                        $offset=$nitems;
+                        $this->FirstItemNo=$id;
+                        $this->OffSet=$this->NumberOfItems;
                     }
                 }
             }
             else
             {
-                $pageno=$this->GetPageNo($nitems);
-
-                if ($pageno==0)
+                if ($this->PageNo==0)
                 {
-                    $firstitem=0;
-                    $offset=$nitems;
+                    $this->FirstItemNo=0;
+                    $this->OffSet=$this->NumberOfItems;
                 }
-                elseif (preg_match('/\d+/',$pageno) && $pageno>0)
+                elseif (preg_match('/\d+/',$this->PageNo) && $this->PageNo>0)
                 {
-                    $res=$nitemspp % $nitems;
+                    $res=$this->NItemsPerPage % $this->NumberOfItems;
 
-                    $firstitem=($pageno-1)*$nitemspp;
-                    $offset=$res;
+                    $this->FirstItemNo=($this->PageNo-1)*$this->NItemsPerPage;
+                    $this->OffSet=$res;
                 }
                 else
                 {
-                    $firstitem=0;
-                    $offset=0;
+                    $this->FirstItemNo=0;
+                    $this->OffSet=0;
                 }
             }
         }
         else
         {
-            $firstitem=0;
-            $offset=$nitems;
+            $this->FirstItemNo=0;
+            $this->OffSet=$this->NumberOfItems;
         }
 
-        return array($firstitem,$offset);
+        $this->LastItemNo=$this->FirstItemNo+$this->OffSet;
+
+        //return array($this->FirstItemNo,$this->OffSet);
      }
 
 
 
-    function PagingSelects()
+    //*
+    //* function PagingFormPagingRow, Parameter list: 
+    //*
+    //* Creates the Search Form Pagin Row.
+    //* Includes field for user to input desired pageno.
+    //*
+
+    function PagingFormPagingRow()
     {
-        $nitems=$this->NumberOfItems;
-        $page=$this->GetPageNo($this->NumberOfItems);
-        $npages=$this->GetNPages($this->NumberOfItems);
-        $nitemspp=$this->GetNItemsPerPage();
-
-        $page=$this->GetPOST($this->ModuleName."_Page");
-        if ($page=="") { $page=1; }
-
-        $table=array();
-        if ($this->NumberOfItems>=0)
-        {
-            $values=array();
-            $names=array();
-
-            if ($npages>=0)
-            {
-                $values=array(0);
-                $names=array($this->GetMessage($this->PagingMessages,"All"));
-            }
-
-            $start=1;
-            for ($i=1;$i<=$npages;$i++)
-            {
-                $end=$start+$nitemspp-1;
-                if ($end>$nitems) { $end=$nitems; }
-
-                array_push($values,$i);
-                array_push
-                (
-                   $names,
-                   "p. ".$i.": (".
-                   $start." ".$this->GetMessage($this->PagingMessages,"To")." ".$end.")"
-                );
-
-                $start=$end+1;
-            }
-
-            $start=($page-1)*$nitemspp+1;
-            $end=$page*$nitemspp;
-            if ($end>$nitems) { $end=$nitems; }
-            array_push
-            (
-                $table,
-                array
-                (
-                   $this->B($this->GetMessage($this->PagingMessages,"Page").": "),
-                   $this->MakeSelectField($this->ModuleName."_Page",$values,$names,$page)." ",
-                   $this->B($this->GetMessage($this->PagingMessages,"Total").": "),
-                   $npages,
-                )
-            );
-        }
-
-        return $table;
-    }
-
-    function PagingFormPagingRow($nitemspp)
-    {
-        $nitems=$this->NumberOfItems;
-        $page=$this->GetPageNo($this->NumberOfItems);
-        $npages=$this->GetNPages($this->NumberOfItems);
-        $nitemspp=$this->GetNItemsPerPage();
-
         $rows=array();
         if ($this->NumberOfItems>=0)
         {
-            if ($page>0)
-            {
-                $start=($page-1)*$nitemspp+1;
-                $end=$page*$nitemspp;
-            }
-            else
-            {
-                $start=1;
-                $end=$nitems;
-            }
-
-            if ($end>$nitems) { $end=$nitems; }
-
             $rows=array
             (
                array
@@ -199,25 +220,15 @@ class Paging extends Items
                   $this->MakeInput
                   (
                      $this->ModuleName."_NItemsPerPage",
-                     $this->GetNItemsPerPage(),
+                     $this->NItemsPerPage,
                      2
                   ).
                   $this->ItemsName." ".
                   $this->GetMessage($this->PagingMessages,"PerPage"),
-                  $this->B($this->ItemsName.": "),
-                  count($this->ItemHashes).": ".
-                  $start." ".
-                  $this->GetMessage($this->PagingMessages,"To")." ".
-                  $end." ".
-                  $this->GetMessage($this->PagingMessages,"Of")." ".
-                  $this->NumberOfItems
+                  $this->B($this->GetMessage($this->PagingMessages,"Page").": "),
+                  $this->MakeInput($this->ModuleName."_Page",$this->GetPageNo(),3)
                )
             );
-
-            foreach ($this->PagingSelects() as $row)
-            {
-                array_push($rows,$row);
-            }
         }
         else
         {
@@ -238,6 +249,157 @@ class Paging extends Items
         }
 
         return $rows;
+    }
+
+
+    //*
+    //* function PagingFirstPages, Parameter list: 
+    //*
+    //* Returns hash with keys being the pagenos in the firsts secion.
+    //*
+
+    function PagingFirstPages()
+    {
+        if ($this->NPages==0) { return array("Nenhum(a) ".$this->ItemName." Selecionado"); }
+
+        $first=1;
+        $last=$this->NPagesInMenu;
+        if ($first<$this->PageNo && $this->PageNo<=$last) { $last+=$this->NPagesInMenu/2; }
+
+        $last=$this->Min($last,$this->NPages);
+
+        $pages=array();
+        for ($n=$first;$n<=$last;$n++)
+        {
+            $pages[ $n ]=1;
+        }
+
+
+        return $pages;
+    }
+
+    //*
+    //* function PagingActivePages, Parameter list: &$pages
+    //*
+    //* Adds pages surrounding the active page to $pages.
+    //*
+
+    function PagingActivePages(&$pages)
+    {
+        if ($this->NPages<=$this->NPagesInMenu) { return; }
+
+        $nps=$this->NPagesInMenu/2;
+
+        for ($n=$this->PageNo-$nps;$n<$this->PageNo;$n++)
+        {
+            $pages[ $n ]=1;
+        }
+
+        $pages[ $this->PageNo ]=1;
+
+        for ($n=$this->PageNo+1;$n<=$this->PageNo+$nps;$n++)
+        {
+            $pages[ $n ]=1;
+        }
+
+        for ($n=$this->NIntermediatePages;$n<=$this->NPages;$n+=$this->NIntermediatePages)
+        {
+            $pages[ $n ]=1;
+        }
+    }
+
+    //*
+    //* function PagingLastPages, Parameter list: &$pages
+    //*
+    //* Adds last pages to $pages.
+    //*
+
+    function PagingLastPages(&$pages)
+    {
+        if ($this->NPages<=$this->NPagesInMenu) { return; }
+
+        $first=$this->NPages-$this->NPagesInMenu+1;
+        $last=$this->NPages;
+        if ($first<$this->PageNo && $this->PageNo<=$last) { $first+=$this->NPagesInMenu/2; }
+
+        $first=$this->Min($first,$this->NPages-$this->NPagesInMenu+1);
+
+
+        for ($n=$first;$n<=$last;$n++)
+        {
+            $pages[ $n ]=1;
+        }
+    }
+
+
+    //*
+    //* function PagingHorisontalMenu, Parameter list: 
+    //*
+    //* Creates paging horisontal menu of links.
+    //*
+
+    function PagingHorisontalMenu()
+    {
+        if ($this->NPages==0) { return ""; }
+
+        $pages=$this->PagingFirstPages();
+        $this->PagingActivePages($pages);
+        $this->PagingLastPages($pages);
+
+        $pages=array_keys($pages);
+        sort($pages,SORT_NUMERIC);
+
+        $last=0;
+        $rpages=array();
+        $rpagetitles=array();
+        foreach ($pages as $page)
+        {
+            if ($page<=0) { continue; }
+
+            if ($page-$last>1)
+            {
+                array_push($rpages,"...");
+                array_push($rpagetitles,"");
+            }
+
+            if ($page==$this->PageNo)
+            {
+                array_push($rpages,$page);
+            }
+            else
+            {
+                $start=($page-1)*$this->NItemsPerPage+1;
+                $end=$this->Min($page*$this->NItemsPerPage,$this->NumberOfItems);
+                $name="";
+                if (!empty($this->PageFirstNames[ $start-1 ])) { $name=$this->PageFirstNames[ $start-1 ]; }
+                if (!empty($name)) { $name=": ".$name; }
+
+                array_push
+                (
+                   $rpages,
+                   $this->Href
+                   (
+                      $this->PageURL."&Page=".$page,
+                      $page,
+                      "Página ".$page.", ".$start."-".$end.$name
+                   )
+                );
+            }
+
+            array_push($rpagetitles,"Página ".$page);
+
+            $last=$page;
+        }
+
+        return 
+            $this->HRefMenu
+            (
+               "Páginas: ",
+               $rpages,
+               array(),
+               array(),
+               count($rpages)
+            );
     }
 }
 ?>

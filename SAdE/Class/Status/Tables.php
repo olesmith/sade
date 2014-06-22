@@ -1,6 +1,5 @@
 <?php
 
-include_once("Class/Status/Row.php");
 
 class ClassStatusTables extends ClassStatusRow
 {
@@ -106,7 +105,7 @@ class ClassStatusTables extends ClassStatusRow
 
     function ResultAllDiscs($class,$infotable)
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $this->ApplicationObj->Sigma="\$\\Sigma\$";
             $this->ApplicationObj->Mu="\$\\mu\$";
@@ -121,7 +120,7 @@ class ClassStatusTables extends ClassStatusRow
             $this->ApplicationObj->Disc=$disc;
             $this->ApplicationObj->ClassDiscsObject->ReadTable($disc[ "ID" ]);
 
-            if ($this->LatexMode)
+            if ($this->LatexMode())
             {
                 $output.=
                     "\n\n\\clearpage\n\n".
@@ -162,7 +161,7 @@ class ClassStatusTables extends ClassStatusRow
 
     function ResultAllStudents($class,$infotable)
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $this->ApplicationObj->Sigma="\$\\Sigma\$";
             $this->ApplicationObj->Mu="\$\\mu\$";
@@ -178,7 +177,7 @@ class ClassStatusTables extends ClassStatusRow
             $this->ApplicationObj->ClassDiscsObject->ReadTable($student[ "ID" ]);
 
 
-            if ($this->LatexMode)
+            if ($this->LatexMode())
             {
                 $output.=
                     "\n\n\\clearpage\n\n".
@@ -254,7 +253,7 @@ class ClassStatusTables extends ClassStatusRow
         $latex=$this->GetGETOrPOST("Latex");
         if ($latex==1)
         {
-            $this->LatexMode=TRUE;
+            $this->ApplicationObj->SetLatexMode();
             $this->ApplicationObj->ClassMarksObject->LatexMode=TRUE;
             $this->ApplicationObj->ClassAbsencesObject->LatexMode=TRUE;
             $this->ApplicationObj->ClassesObject->LatexMode=TRUE;
@@ -278,7 +277,7 @@ class ClassStatusTables extends ClassStatusRow
         $infotable=$this->ApplicationObj->ClassesObject->ClassHtmlInfoTable($this->ApplicationObj->Class);
         array_pop($infotable);
 
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $infotable=$this->LatexTable("",$infotable);
         }
@@ -290,13 +289,13 @@ class ClassStatusTables extends ClassStatusRow
         $this->ReadResultSettings();
 
         $table=array();
-        if ($this->IncludeResult || !$this->LatexMode)
+        if ($this->IncludeResult || !$this->LatexMode())
         {
             $table=$this->ResultsTable($class,$discs);
         }
         
 
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $latex=
                 $this->ApplicationObj->ClassesObject->LatexHeadLand();

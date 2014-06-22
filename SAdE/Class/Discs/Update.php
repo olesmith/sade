@@ -76,7 +76,7 @@ class ClassDiscsUpdate extends ClassDiscsImport
         $absenceshash=$this->ApplicationObj->ClassAbsencesObject->CalcStudentDiscAbsences
         (
            $disc,
-           $this->ApplicationObj->ClassAbsencesObject->ReadStudentAbsences
+           $this->ApplicationObj->ClassAbsencesObject->ReadStudentDiscAbsences
            (
               $class,
               $disc,

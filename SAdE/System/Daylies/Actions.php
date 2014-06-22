@@ -75,6 +75,27 @@ array
       //"Target"   => "_Classes",
       "Singular"   => TRUE,
    ),
+   "DaylyAddContents" => array
+   (
+      "Href"     => "",
+      "HrefArgs" => "ModuleName=Classes&Action=DaylyAddContents&Class=#ID",
+      "Name"    => "Conteúdos",
+      "Title"     => "Lançar Aula",
+      "Public"   => 0,
+      "Person"   => 0,
+      "Admin"   => 0,
+      "Handler"   => "",
+      "Icon"   => "copy_light.png",
+      "Handler"   => "HandleClass",
+      //"Target"   => "_Classes",
+      "Singular"   => TRUE,
+      "NoHeads"   => 1,
+      "NoInterfaceMenu"   => 1,
+         "Clerk" => 1,
+         "Teacher"     => 1,
+         "Secretary" => 1,
+         "Coordinator" => 1,
+   ),
    "DaylyContents" => array
    (
       "Href"     => "",

@@ -328,7 +328,7 @@ class Session extends Login
                    $this->GetSessionsTable(),
                    $session,$where
                 );
-                $this->SessionAddMsg("Removing bad session: $session");
+                $this->SessionAddMsg("Removing bad session: ".$session[ "Login" ]);
             }
         }
         else

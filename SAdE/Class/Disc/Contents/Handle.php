@@ -70,9 +70,13 @@ class ClassDiscContentsHandle extends ClassDiscContentsUpdate
         if (empty($month) && empty($semester)) { $month=$this->CurrentMonth(); }
 
         $dates=$this->ApplicationObj->PeriodsObject->GetPeriodMonthDates($month);
-
-        $adddate=intval($this->GetPOST("Date"));
-        $radddate=0;
+        foreach (array_keys($dates) as $id)
+        {
+            if (!$this->ApplicationObj->SchoolsObject-> DateIsLecturable($dates[ $id ]))
+            {
+                unset($dates[ $id ]);
+            }
+        }
 
         $ids=array(0);
         $names=array("");
@@ -80,35 +84,34 @@ class ClassDiscContentsHandle extends ClassDiscContentsUpdate
         foreach ($dates as $date)
         {
             array_push($ids,$date[ "ID" ]);
-            array_push($names,$this->ApplicationObj->DatesObject->DateID2Name($date[ "ID" ]));
 
-            if ($date[ "ID" ]==$adddate) { $radddate=$adddate; $datehash=$date; }
-        }
+            $contents=$this->SelectHashesFromTable
+            (
+               "",
+               array
+               (
+                  "Class" => $this->ApplicationObj->Class[ "ID" ],
+                  "Disc"  => $this->ApplicationObj->Disc[ "ID" ],
+                  "Date"  => $date[ "ID" ]
+               ),
+               array("Weight")
+            );
 
-        if ($this->GetPOST("Add")==1 && $radddate>0)
-        {
-            $weight=intval($this->GetPOST("Weight"));
-            if ($weight>0)
+            $ch=0;
+            foreach ($contents as $content) { $ch+=$content[ "Weight" ]; }
+
+            $info="";
+            if (count($contents)>0)
             {
-                $this->ApplicationObj->PeriodsObject->Date2Trimester($this->ApplicationObj->Period,$datehash);
-                $newcontent=array
-                (
-                   "Class" => $this->ApplicationObj->Class[ "ID" ],
-                   "Disc" => $this->ApplicationObj->Disc[ "ID" ],
-                   "Date" => $datehash[ "ID" ],
-                   "DateKey" => $datehash[ "SortKey" ],
-                   "Semester" => $datehash[ "Semester" ],
-                   "Month" => $datehash[ "Month" ],
-                   "Weight" => $weight,
-                   "Content" => "",
-                   "CTime" => time(),
-                   "MTime" => time(),
-                   "ATime" => time(),
-                );
-
-                $this->MySqlInsertItem("",$newcontent);
-                print $this->H(5,"Criado: ".$date[ "Name" ].", Aula com Peso ".$weight);
+                $info=" (".count($contents)."/".$ch.")";
             }
+
+            array_push
+            (
+               $names,
+               $this->ApplicationObj->DatesObject->DateID2Name($date[ "ID" ]).
+               $info
+            );
         }
 
         return $this->MakeSelectField("Date",$ids,$names,0);
@@ -123,7 +126,7 @@ class ClassDiscContentsHandle extends ClassDiscContentsUpdate
     function AddContentForm()
     {
         return 
-            $this->StartForm().
+            $this->StartForm("?ModuleName=Classes&Action=DaylyAddContents&Created=0").
             $this->Html_Table
             (
                "",
@@ -169,7 +172,7 @@ class ClassDiscContentsHandle extends ClassDiscContentsUpdate
 
     function HandleDaylyContents()
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $this->PrintContentsLatex();
             return;
@@ -259,10 +262,34 @@ class ClassDiscContentsHandle extends ClassDiscContentsUpdate
             return;
         }
 
+        $addeddate=intval($this->GetGET("Created"));
+        if (!empty($addeddate))
+        {
+            $addedcontent=$this->SelectUniqueHash
+            (
+               "",
+               array
+               (
+                  "ID" => $addeddate,
+                  
+               ),
+               TRUE
+            );
+
+            print 
+                $this->H
+                (
+                   5,
+                   "Adicionada Aula: ".
+                   $this->ApplicationObj->DatesObject->DateID2Name($addedcontent[ "Date" ]).
+                   " com Carga Horário: ".$addedcontent[ "Weight" ]
+                ); 
+        }
+
         if ($edit==1)
         {
             print
-                $this->StartForm().
+                $this->StartForm("?ModuleName=Classes&Created=0").
                 $this->Buttons().
                 "";
         }
@@ -288,6 +315,54 @@ class ClassDiscContentsHandle extends ClassDiscContentsUpdate
             $this->EndForm().
                 "";
         }
+    }
+
+    //*
+    //* function HandleDaylyAddContents, Parameter list: 
+    //*
+    //* Generates dayly contents editing form.
+    //*
+
+    function HandleDaylyAddContents()
+    {
+        $edit=0;
+        if (preg_match('/(Admin|Secretary|Clerk|Teacher)/',$this->Profile))
+        {
+            $edit=1;
+        }
+
+        $args=$this->ScriptQueryHash();
+
+        $month="";
+        $semester="";
+
+        $month=$this->CGI2Month();
+
+        $semester=$this->GetGET("Semester");
+
+        if (empty($month) && empty($semester)) { $month=$this->CurrentMonth(); }
+        $where=$this->CGI2ContentsWhere();
+        if (empty($where)) { return; }
+
+        $sumtabletype=0;
+
+        $subtitle="";
+        if (!empty($where[ "DateKey" ]))
+        {
+            $subtitle="Mês de ".$this->ApplicationObj->PeriodsObject->GetMonthName($month);
+            $sumtabletype=1;
+        }
+        elseif (!empty($where[ "Semester" ]))
+        {
+           $subtitle=$semester."º ".$this->ApplicationObj->PeriodsObject->PeriodSubPeriodsTitle();
+           $sumtabletype=2;
+        }
+
+        $contents=$this->CGI2Contents();
+        $dates=$this->ReadContentDates($contents);
+
+        //Update and redirect!
+        $this->UpdateAddContent();
     }
 
 

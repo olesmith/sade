@@ -130,13 +130,67 @@ array
       "Secretary" => 1,
       "Coordinator" => 1,
    ),
-   "DayliesNMarkFields" => array
+   "DayliesNMarkFields_1" => array
    (
       "Name" => "No. de Colunas (datas) nas Fichas de Nota",
-      "Title" => "No. de Colunas (datas) nas Fichas de Nota",
+      "Title" => "No. de Colunas (datas) nas Fichas de Nota, Paisagem",
+      "Size" => "2",
+      "Sql" => "INT",
+      "Default" => 20,
+      "Search" => FALSE,
+
+      "Public"      => 1,
+      "Person"      => 1,
+      "Admin"       => 2,
+
+      "Clerk" => 2,
+      "Teacher"     => 1,
+      "Secretary" => 1,
+      "Coordinator" => 1,
+   ),
+   "DayliesNMarkFields_2" => array
+   (
+      "Name" => "No. de Colunas (datas) nas Fichas de Nota",
+      "Title" => "No. de Colunas (datas) nas Fichas de Nota, Retrato",
       "Size" => "2",
       "Sql" => "INT",
       "Default" => 10,
+      "Search" => FALSE,
+
+      "Public"      => 1,
+      "Person"      => 1,
+      "Admin"       => 2,
+
+      "Clerk" => 2,
+      "Teacher"     => 1,
+      "Secretary" => 1,
+      "Coordinator" => 1,
+   ),
+   "DayliesNSignaturesFields_1" => array
+   (
+      "Name" => "No. de Assinaturas nas Lista de Assinaturas",
+      "Title" => "No. de Assinaturas nas Lista de Assinaturas, Paisagem",
+      "Size" => "2",
+      "Sql" => "INT",
+      "Default" => 4,
+      "Search" => FALSE,
+
+      "Public"      => 1,
+      "Person"      => 1,
+      "Admin"       => 2,
+
+      "Clerk" => 2,
+      "Teacher"     => 1,
+      "Secretary" => 1,
+      "Coordinator" => 1,
+   ),
+   "DayliesNSignaturesFields_2" => array
+   (
+      "Name" => "No. de Assinaturas nas Lista de Assinaturas",
+      "Title" => "No. de Assinaturas nas Lista de Assinaturas, Retrato",
+      "Size" => "2",
+      "Sql" => "INT",
+      "Default" => 2,
       "Search" => FALSE,
 
       "Public"      => 1,

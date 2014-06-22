@@ -1,12 +1,14 @@
 <?php
 
-include_once("../MySql2/Table.php");
+//include_once("../MySql2/Table.php");
 
 //This class is common to all SAdE modules.
 //Created for overriding LatexHead, LatexHeadLand.
 
-class Common extends Table
+class Common extends Unique
 {
+    //use Icons;
+
     //*
     //* function IsSchool, Parameter list: $schoolid
     //*

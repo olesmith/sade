@@ -1,7 +1,5 @@
 <?php
 
-include_once("Class/Questions/Row.php");
-
 
 class ClassQuestionsLegend extends ClassQuestionsRow
 {

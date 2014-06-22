@@ -117,7 +117,7 @@ class SearchWheres extends SearchTable
             }
         }
 
-        return $wheres;
+       return $wheres;
     }
 }
 

@@ -194,13 +194,15 @@ class ItemsTable extends ItemsRead
             $showall=TRUE;
         }
 
-        if (!$showall)
-        {
-            $nitems=count($items);
-            $itemnos=$this->PageNo2ItemNos($nitems,$items);
-            $nn=$itemnos[0]+1;
-        }
-        else { $nn=1; }
+        /* if (!$showall) */
+        /* { */
+        /*     $nitems=count($items); */
+        /*     $itemnos=$this->PageNo2ItemNos($nitems,$items); */
+        /*     $nn=$itemnos[0]+1; */
+        /* } */
+        /* else { $nn=1; } */
+
+        $nn=$this->FirstItemNo+1;
 
         $actions=array();
         if (is_array($this->ItemActions)) { $actions=$this->ItemActions; }

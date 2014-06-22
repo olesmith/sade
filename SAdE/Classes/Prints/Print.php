@@ -39,6 +39,7 @@ class ClassesPrintsPrint extends ClassesPrintsPrintMarks
 
         if (empty($generate))
         {
+            $this->ApplicationObj->LatexMode=FALSE;
             $this->LatexMode=FALSE;
             $this->PrintDocHeadsAndLeftMenu();
             print $this->H(4,"Nenhuma Disciplina/Mes/Avaliação Selecionado!");
@@ -68,7 +69,7 @@ class ClassesPrintsPrint extends ClassesPrintsPrintMarks
 
         if (count($generated)==0) { return; }
 
-        $this->LatexMode=TRUE;
+        $this->ApplicationObj->SetLatexMode();
 
         $latex="";
         if ($class[ "DayliesOrientation" ]==1)

@@ -8,7 +8,7 @@ class Language extends File
     var $Language=FALSE;
     var $LanguageID=FALSE;
     var $MessagePath="Messages";
-    var $MessagePaths=array("../Base/","../MySql2/","../Application/");
+    var $MessagePaths=array("./","../Base/","../MySql2/","../Application/");
 
     //*
     //* function Language, Parameter list: 
@@ -215,12 +215,6 @@ class Language extends File
                     $val=$this->Messages[ $file ][ $key ][ $subkey."_".$language ];
                 }
             }
-
-            //if (!is_array($val))
-            //{
-            //    $val=preg_replace('/#ItemName/',$this->ItemName,$val);
-            //    $val=preg_replace('/#ItemsName/',$this->ItemsName,$val);
-            //}
 
             return $val;
         }

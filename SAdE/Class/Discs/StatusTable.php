@@ -81,6 +81,7 @@ class ClassDiscsStatusTable extends ClassDiscsStatusTableTitles
         $n=1;
         foreach ($this->ItemHashes as $disc)
         {
+            $this->ApplicationObj->ClassDiscsObject->UpdateDisc2TeacherTable($disc);
             $table=array_merge
             (
                $table,

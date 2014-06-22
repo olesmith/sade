@@ -14,7 +14,8 @@ class ClassesPrintsPrintSpecForm extends ClassesPrintsPrintSpecTable
        array("Paisagem","Retrato"),
        array("DayliesNFields_1","DayliesNFields_2"),
        array("DayliesNStudentsPP_1","DayliesNStudentsPP_2"),
-       "DayliesNMarkFields",
+       array("DayliesNMarkFields_1","DayliesNMarkFields_2"),
+       array("DayliesNSignaturesFields_1","DayliesNSignaturesFields_2"),
     );
 
 
@@ -39,9 +40,18 @@ class ClassesPrintsPrintSpecForm extends ClassesPrintsPrintSpecTable
 
     function PrintsSpecInputCell($data,$class)
     {
-        if (empty($this->ItemData[ $data ]) || !isset($class[ $data ])) { return $this->B($data); }
+        //if (empty($this->ItemData[ $data ]) || !isset($class[ $data ])) { return $this->B($data); }
+        if (empty($this->ItemData[ $data ])) { return $this->B($data); }
 
-        return $this->MakeInputField($data,$class,$class[ $data ]);
+        $cdata="";
+        if (isset($class[ $data ])) { $cdata=$class[ $data ]; }
+        if (
+              empty($cdata)
+              &&
+              !empty($this->ItemData[ $data ][ "Default" ])
+            ) { $cdata=$this->ItemData[ $data ][ "Default" ]; }
+
+        return $this->MakeInputField($data,$class,$cdata);
     }
 
 
@@ -129,6 +139,12 @@ class ClassesPrintsPrintSpecForm extends ClassesPrintsPrintSpecTable
                 }
             }
         }
+
+        if (
+              empty($cdata)
+              &&
+              !empty($this->ItemData[ $data ][ "Default" ])
+            ) { $class[ $data ]=$this->ItemData[ $data ][ "Default" ]; }
 
         if ($value!=$class[ $data ])
         {

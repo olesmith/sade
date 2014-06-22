@@ -3,17 +3,20 @@
 
 class HtmlTable extends HtmlList
 {
+    var $BoldColSpans=TRUE;
 
     //*
-    //* function FrameIt, Parameter list: $content
+    //* function FrameIt, Parameter list: $content,$options=array()
     //*
     //* Frames content.
     //*
 
-    function FrameIt($content)
+    function FrameIt($content,$options=array())
     {
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
+            $options[ "ALIGN" ]='center';
+            $options[ "FRAME" ]='border';
             $content=$this->HtmlTags
             (
                "TABLE",
@@ -22,7 +25,7 @@ class HtmlTable extends HtmlList
                   "TR",
                   $this->HtmlTags("TD",$content)
                ),
-               array("ALIGN" => 'center',"FRAME" => 'border')
+               $options
             );
         }
 
@@ -36,7 +39,7 @@ class HtmlTable extends HtmlList
 
     function MultiCell($text,$colspan,$align="c")
     {
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             return array
             (
@@ -394,7 +397,7 @@ function Html_Table($titles,$rows,$options=array(),$troptions=array(),$tdoptions
             $cell=$cell[ "Text" ];
         }
 
-        if (!empty($options[ "COLSPAN" ]))
+        if ($this->BoldColSpans && !empty($options[ "COLSPAN" ]))
         {
             $this->AddCSSClass("Bold",$options);
         }

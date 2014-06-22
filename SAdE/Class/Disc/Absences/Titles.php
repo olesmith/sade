@@ -15,7 +15,7 @@ class ClassDiscAbsencesTitles extends ClassDiscAbsencesRow
     {
         $row=array("No.");
 
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             $action="";
             if (preg_match('/^(Admin|Clerk|Secretary)$/',$this->ApplicationObj->Profile))
@@ -143,7 +143,14 @@ class ClassDiscAbsencesTitles extends ClassDiscAbsencesRow
                 array_push
                 (
                    $table[2],
-                   $this->B($content[ "Weight" ])
+                   $this->B
+                   (
+                      $content[ "Weight" ],
+                      array
+                      (
+                         "TITLE" => $content[ "Content" ]
+                      )
+                   )
                 );
 
                 $cht+=$content[ "Weight" ];

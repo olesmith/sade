@@ -12,7 +12,7 @@ class HtmlHref extends HtmlTable
 
 function HRef($href,$name="",$title="",$target="",$class="",$noqueryargs=FALSE,$options=array())
 {
-    if ($this->LatexMode) { return $name; }
+    if ($this->LatexMode()) { return $name; }
     $comps=preg_split('/\?/',$href);
 
     $href="";
@@ -78,6 +78,8 @@ function HRef($href,$name="",$title="",$target="",$class="",$noqueryargs=FALSE,$
 
 function HRefList($links,$titles,$btitles=array(),$class="menuitem",$inactiveclass="menuinactive",$current="")
 {
+    if (empty($btitles)) { $btitles=$titles; }
+
     $rlinks=array();
     for ($n=0;$n<count($links);$n++)
     {
@@ -91,7 +93,7 @@ function HRefList($links,$titles,$btitles=array(),$class="menuitem",$inactivecla
             }
             else
             {
-                $rlinks[$n]=$this->SPAN($titles[$n],array("CLASS" => $inactiveclass));
+                $rlinks[$n]=$this->SPAN($btitles[$n],array("CLASS" => $inactiveclass));
             }
         }
     }

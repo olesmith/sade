@@ -87,7 +87,7 @@ class ClassDiscContents extends ClassDiscContentsHandle
 
         $this->ApplicationObj->Contents=$this->CGI2Contents
         (
-           array("ID","Date","DateKey","Weight","Month","Semester")
+           array("ID","Date","DateKey","Weight","Month","Semester","Content")
         );
 
 

@@ -1,5 +1,10 @@
 <?php
 
+include_once("Class/Questions/Tables.php");
+include_once("Class/Questions/Row.php");
+include_once("Class/Questions/Legend.php");
+include_once("Class/Questions/Field.php");
+include_once("Class/Questions/Update.php");
 include_once("Class/Questions/Import.php");
 
 

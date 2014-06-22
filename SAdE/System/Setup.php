@@ -48,6 +48,8 @@
           "ClassStatus",
           "ClassQuestions",
           "ClassObservations",
+
+          "Teacher2Discs",
        ),
        "ModuleDependencies" => array
        (
@@ -73,12 +75,14 @@
           "Students"   => array("Schools","Classes","Matriculas",),
           "Matriculas" => array("Units","Schools"),
           "Users"      => array("Schools",),
+          "Teacher2Discs"      => array("Schools","Periods","Users","Classes","ClassDiscs","Grade","GradePeriods","GradeDiscs",),
 
           "Classes" => array
           (
              "Schools","Periods",
              "Grade","GradePeriods",
              "GradeDiscs","Students","Users",
+             "Teacher2Discs",
              "ClassDiscs","ClassDiscLessons",
              "ClassStudents","ClassDiscWeights","ClassDiscNLessons",
              "ClassMarks","ClassAbsences","ClassStatus",
@@ -86,7 +90,7 @@
              "ClassDiscContents","ClassDiscAbsences","ClassDiscAssessments","ClassDiscMarks",
           ),
           "ClassStudents"     => array("Classes"),
-          "ClassDiscs"        => array("Classes"),
+          "ClassDiscs"        => array("Classes",),
           "ClassMarks"        => array("Classes"),
           "ClassAbsences"     => array("Classes"),
           "ClassStatus"       => array("Classes"),
@@ -204,8 +208,8 @@
              "SqlFile" => "Periods.php",
              "SqlHref" => TRUE,
              "SqlTable" => "Periods",
-             "SqlFilter" => "#Name",
-             "SqlDerivedData" => array("Name"),
+             "SqlFilter" => "#Title",
+             "SqlDerivedData" => array("Name","Title"),
            ),
           "Grade" => array
           (
@@ -244,7 +248,7 @@
              "SqlFile" => "Grade/Questionaries.php",
              "SqlHref" => TRUE,
              "SqlTable" => "GradeQuestionaries",
-             "SqlFilter" => "#Number: #Name",
+             "SqlFilter" => "#{%02d}Number: #Name",
              "SqlDerivedData" => array("Number","Name"),
           ),
           "GradeQuestions" => array
@@ -254,7 +258,7 @@
              "SqlFile" => "Grade/Questions.php",
              "SqlHref" => TRUE,
              "SqlTable" => "GradeQuestions",
-             "SqlFilter" => "#Number: #Name",
+             "SqlFilter" => "#{%02d}Number: #Name",
              "SqlDerivedData" => array("Number","Name"),
           ),
 
@@ -278,6 +282,16 @@
              "SqlTable" => "People",
              "SqlFilter" => "#Name",
              "SqlDerivedData" => array("Name","Email"),
+           ),
+          "Teacher2Discs" => array
+          (
+             "SqlObject" => "Teacher2DiscsObject",
+             "SqlClass" => "Teacher2Discs",
+             "SqlFile" => "Teacher2Discs.php",
+             "SqlHref" => TRUE,
+             "SqlTable" => "Teacher2Discs",
+             "SqlFilter" => "#ID",
+             "SqlDerivedData" => array("ID"),
            ),
           "Students" => array
           (

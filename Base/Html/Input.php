@@ -206,7 +206,7 @@ function MakeTextArea($name,$rows,$cols,$value,$wrap="physical",$options=array()
 
 function HtmlDateInputField($name,$date="",$options=array())
 {
-    if (empty($date)) { $date=$this->TimeStamp2DateSort(); }
+    //if (empty($date) && $this->ItemData[ $date ][ "Default" ]=="today") { $date=$this->TimeStamp2DateSort(); }
 
     if (empty($options[ "TITLE" ]))
     {
@@ -238,7 +238,7 @@ function HtmlDateInputField($name,$date="",$options=array())
 //* yyyymmdd for storage.
 //*
 
-function HtmlDateInputValue($name,$search=FALSE)
+function HtmlDateInputValue($name,$search=FALSE,$default=TRUE)
 {
     if ($search)
     {
@@ -246,7 +246,7 @@ function HtmlDateInputValue($name,$search=FALSE)
     }
 
     $date=$this->GetCGIVarValue($name);
-    if (empty($date))
+    if ($default && empty($date))
     {
         $date=sprintf
         (

@@ -294,7 +294,21 @@ array
          "Secretary" => 1,
           "Coordinator" => 1,
      ),
-   ),
+      'CopyQuestionary' => array
+      (
+         'Public' => 0,
+         'Person' => 0,
+         'Admin' => 1,
+
+         "Clerk" => 0,
+         "Teacher"     => 0,
+         "Secretary" => 1,
+         "Medical" => 0,
+         "Nurse" => 0,
+         "Receptionist" => 0,
+         "Coordinator" => 0,
+      ),
+    ),
    'Menues' => array
    (
       'Singular' => array

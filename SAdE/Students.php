@@ -30,6 +30,13 @@ class Students extends StudentsAccess
        "Licença","Desistente","Não Matriculado",
        "Terminado"
     );
+    var $StatusesResultNames=array
+    (
+       "","INA",
+       "TRA","CAN","TRC",
+       "LIC","DES","N/M",
+       "TER"
+    );
 
     //*
     //*
@@ -600,18 +607,18 @@ class Students extends StudentsAccess
               $this->B("Naturalidade:"),
               $this->ApplicationObj->StudentsObject->MakeShowField
               (
-                 "City",
+                 "BirthCity",
                  $student[ "StudentHash" ]
                )."-".
               $this->ApplicationObj->StudentsObject->MakeShowField
               (
-                 "State",
+                 "BirthState",
                  $student[ "StudentHash" ]
               ),
            )
         );
 
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return
                 $this->LatexTable("",$table);

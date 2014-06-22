@@ -6,6 +6,49 @@ class SearchVars extends SearchInit
     protected $SearchVars=array();
 
     //*
+    //* function IsSearchVar, Parameter list: $data
+    //*
+    //* Returns TRUE if $data is a search var.
+    //*
+
+    function IsSearchVar($data)
+    {
+        if (isset($this->ItemData[ $data ][ "Search" ]) && $this->ItemData[ $data ][ "Search" ])
+        {
+            if ($this->GetDataAccessType($data)>=1)
+            {
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
+
+    //*
+    //* function AddSearchVar, Parameter list: $data
+    //*
+    //* Marks $data as search var.
+    //*
+
+    function AddSearchVar($data)
+    {
+        $this->ItemData[ $data ][ "Search" ]=TRUE;
+        if (!preg_grep('/^'.$data.'$/',$this->SearchVars)) { array_push($this->SearchVars,$data); }
+    }
+
+    //*
+    //* function RemovesSearchVar, Parameter list: $data
+    //*
+    //* UnMarks $data as search var.
+    //*
+
+    function RemoveSearchVar($data)
+    {
+        $this->ItemData[ $data ][ "Search" ]=FALSE;
+        $this->SearchVars=preg_grep('/^'.$data.'$/',$this->SearchVars,PREG_GREP_INVERT);
+    }
+
+    //*
     //* function GetSearchVars, Parameter list: 
     //*
     //* Returns list of vars indicated with Search TRUE.
@@ -18,12 +61,9 @@ class SearchVars extends SearchInit
             $this->SearchVars=array();
             foreach (array_keys($this->ItemData) as $data)
             {
-                if (isset($this->ItemData[ $data ][ "Search" ]) && $this->ItemData[ $data ][ "Search" ])
+                if ($this->IsSearchVar($data))
                 {
-                    if ($this->GetDataAccessType($data)>=1)
-                    {
-                        array_push($this->SearchVars,$data);
-                    }
+                    array_push($this->SearchVars,$data);
                 }
             }
         }

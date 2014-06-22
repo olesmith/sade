@@ -114,7 +114,7 @@ class Profiles extends Perms
             }
         }
 
-       //No profile yet? The use Public
+       //No profile yet? Use Public
         if ($this->Profile=="")
         {
             $this->Profile="Public";

@@ -99,7 +99,7 @@ class Enums extends DataGroups
             return $value;
         }
 
-        if ($this->LatexMode) { $latex=TRUE; }
+        if ($this->LatexMode()) { $latex=TRUE; }
 
 
         $value=$item[ $data ];        

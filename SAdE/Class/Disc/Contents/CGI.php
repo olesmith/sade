@@ -32,7 +32,7 @@ class ClassDiscContentsCGI extends ClassDiscContentsLatex
     function CGI2ContentsWhere()
     {
         //Always print all
-        if ($this->LatexMode) { return array(); }
+        if ($this->LatexMode()) { return array(); }
 
         $where=array();
         $month=$this->CGI2Month();
@@ -78,14 +78,14 @@ class ClassDiscContentsCGI extends ClassDiscContentsLatex
         if (empty($disc))  { $disc =$this->ApplicationObj->Disc; }
 
         $where=$this->CGI2ContentsWhere();
-        if ($this->LatexMode || !empty($where))
+        if ($this->LatexMode() || !empty($where))
         {
             $where[ "Class" ]=$class[ "ID" ];
             $where[ "Disc" ]=$disc[ "ID" ];
 
             $contents=$this->SelectHashesFromTable("",$where,$datas,FALSE,"DateKey,ID");
 
-            if ($this->LatexMode || $latex)
+            if ($this->LatexMode() || $latex)
             {
                 foreach (array_keys($contents) as $id)
                 {

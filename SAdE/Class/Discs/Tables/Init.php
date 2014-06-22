@@ -74,39 +74,69 @@ class ClassDiscsTablesInit extends ClassDiscsQuestionaries
 
     function InitDisplayTable($edit=0,$tedit=0)
     {
-        $this->ShowAbsencesTotals=FALSE;
-        $this->ShowMarksTotals=FALSE;
+        foreach (
+                   array
+                   (
+                      "ShowStatus","ShowFinal",
+                      "ShowAbsences","ShowAbsencesTotals","ShowAbsenceFinal","ShowAbsencesPercent",
+                      "ShowNLessons","ShowNLessonsTotals","ShowNLessonsPercent",
+                      "ShowMarkWeights","ShowMarkWeightsTotals",
+                      "ShowMarks","ShowMarksTotals","ShowMarkSums","ShowMediaFinal",
+                      "ShowRecoveries",
+                   )
+                   as $key)
+        {
+            $this->$key=FALSE;
+        }
 
         if ($this->TableType=="Marks")
         {
-            $this->ShowAbsences=FALSE;
+            $this->ShowMarks=TRUE;
             $this->ShowMediaFinal=TRUE;
-            $this->ShowAbsenceFinal=TRUE;
+
             $this->ShowMarkWeights=TRUE;
             $this->ShowMarkSums=TRUE;
             $this->ShowMarksTotals=TRUE;
+
+            $this->ShowRecoveries=TRUE;
+
+            $this->ShowAbsencesFinal=TRUE;
         }
         elseif ($this->TableType=="Absences")
         {
-            $this->ShowMarks=FALSE;
-            $this->ShowRecoveries=FALSE;
-            $this->ShowAbsenceFinal=TRUE;
-            $this->ShowNLessons=TRUE;
+            $this->ShowAbsences=TRUE;
+            $this->ShowAbsencesFinal=TRUE;
+
             $this->ShowMediaFinal=TRUE;
+
+
+            $this->ShowNLessons=TRUE;
+            $this->ShowNLessonsTotals=TRUE;
+            $this->ShowNLessonsPercent=TRUE;
         }
         elseif ($this->TableType=="Totals")
         {
-            $this->ShowMarkWeights=FALSE;
-            $this->ShowNLessons=TRUE;
+            $this->ShowMarks=TRUE;
+            $this->ShowMediaFinal=TRUE;
             $this->ShowMarksTotals=TRUE;
+
+            $this->ShowRecoveries=TRUE;
+
+            $this->ShowAbsences=TRUE;
             $this->ShowAbsencesTotals=TRUE;
+            $this->ShowAbsenceFinal=TRUE;
         }
         elseif ($this->TableType=="Print")
         {
-            $this->ShowMarkWeights=FALSE;
-            $this->ShowNLessons=TRUE;
+            $this->ShowMarks=TRUE;
+            $this->ShowMediaFinal=TRUE;
             $this->ShowMarksTotals=TRUE;
+
+            $this->ShowRecoveries=TRUE;
+
+            $this->ShowAbsences=TRUE;
             $this->ShowAbsencesTotals=TRUE;
+            $this->ShowAbsenceFinal=TRUE;
         }
 
         if ($this->ApplicationObj->Class[ "AbsencesType" ]==$this->ApplicationObj->OnlyTotals)

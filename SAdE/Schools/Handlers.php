@@ -163,12 +163,20 @@ class SchoolsHandlers extends SchoolsLatexSettings
             {
                 $this->ItemDataSGroups[ $group ][ "Admin" ]=1;
                 $this->ItemDataSGroups[ $group ][ "Secretary" ]=1;
-
+                $this->ItemDataSGroups[ $group ][ "Clerk" ]=1;
+                $this->ItemDataSGroups[ $group ][ "Coordinator" ]=1;
                 $this->ItemDataSGroups[ $group ][ "Single" ]=TRUE;
             }
         }
 
-        parent::HandleEdit();
+        if (preg_match('/(Admin|Secretary)/',$this->ApplicationObj->Profile))
+        {
+            parent::HandleEdit();
+        }
+        else
+        {
+            parent::HandleShow();
+        }
     }
     //*
     //* function HandleHtmlTitles, Parameter list: 

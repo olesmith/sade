@@ -24,7 +24,7 @@ class Latex extends CSV
     //*
     function Bold($text,$html=TRUE)
     {
-        if ($html && !$this->LatexMode)
+        if ($html && !$this->LatexMode())
         {
            $text="<B>".$text."</B>";
         }
@@ -41,7 +41,7 @@ class Latex extends CSV
     //*
     function Italic($text,$html=TRUE)
     {
-        if ($html && !$this->LatexMode)
+        if ($html && !$this->LatexMode())
         {
            $text="<I>".$text."</I>";
         }
@@ -76,7 +76,7 @@ class Latex extends CSV
     function NewLine($html=TRUE)
     {
         $text="\n\n";
-        if ($html && !$this->LatexMode)
+        if ($html && !$this->LatexMode())
         {
            $text="<BR>";
         }
@@ -608,6 +608,7 @@ function LatexTable($titles,$rows,$tablespec=0,$footnumbers=FALSE,$hlines=TRUE,$
     function RunLatex($texfilename,$latex,$runbibtex=FALSE)
     {
         $cwd=getcwd();
+        $texfilename=$this->Html2Sort($texfilename);
 
         $path=$this->LatexTmpPath();
 

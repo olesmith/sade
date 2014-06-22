@@ -150,6 +150,14 @@ class PeriodsRead extends PeriodsTrimester
                "Year,Name","NClasses"
             );
 
+            foreach (array_keys($this->ApplicationObj->Periods) as  $id)
+            {
+                if ($this->ApplicationObj->Periods[ $id ][ "Active" ]!=1)
+                {
+                    unset($this->ApplicationObj->Periods[ $id ]);
+                }
+            }
+
             $this->ApplicationObj->Periods=array_reverse($this->ApplicationObj->Periods);
         }
     }

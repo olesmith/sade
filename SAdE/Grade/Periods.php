@@ -373,6 +373,28 @@ class GradePeriods extends Common
 
     }
 
+    //*
+    //* function HandleCopyQuestionaries, Parameter list:
+    //*
+    //* Creates form for copying Questionaries. 
+    //* 
+    //*
+
+    function HandleCopyQuestionaries()
+    {
+        $srcgradeperiodid=intval($this->GetGET("PID"));
+        if ($srcgradeperiodid>0)
+        {
+            $this->ReadItem($srcgradeperiodid);
+
+            if ($this->ItemHash[ "AssessmentType" ]!=2)
+            {
+                die("Period has not Qualitaqtive Assessment");
+            }
+
+            $this->ApplicationObj->GradeQuestionariesObject->CopyQuestionariesForm($this->ItemHash);
+        }
+    }
 
 }
 

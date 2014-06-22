@@ -20,10 +20,19 @@ class ClassDiscMarks extends ClassDiscMarksHandle
     //*
 
     var $Assessments=array();
-    var $StudentData=array("Matricula","MatriculaDate","Name","Status","StatusDate1");
+    var $StudentData=array
+    (
+       "Matricula",
+       //"MatriculaDate",
+       "Name",
+       //"Status",
+       //"StatusDate1"
+    );
 
     //Default number of mark cells on Latex output.
-    var $NMarkCells=15;
+    var $NMarkCells=20;
+    var $ResultNames=array(0 => "-",1 => "RN",2=>"AN");
+
 
     //*
     //*

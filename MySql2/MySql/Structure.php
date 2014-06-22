@@ -435,6 +435,7 @@ function GetDBTableFields($table="")
               if (isset($this->TableFields[ $data ]))
               {
                   $this->UpdateDBField($table,$data,$datadefs[ $data ]);
+              if ($data=="DayliesNMarkFields") { var_dump($table); }
               }
               else
               {

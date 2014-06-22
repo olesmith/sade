@@ -1,7 +1,5 @@
 <?php
 
-include_once("Class/Absences/Update.php");
-
 
 class ClassAbsencesCalc extends ClassAbsencesUpdate
 {

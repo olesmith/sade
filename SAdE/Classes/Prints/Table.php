@@ -68,7 +68,7 @@ class ClassesPrintsTable extends ClassesPrintsDaylies
         $statdate=$student[ "StudentHash" ][ "StatusDate1" ];
         if ($statdate==0) { $statdate="-"; }
 
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             array_push
             (
@@ -123,7 +123,7 @@ class ClassesPrintsTable extends ClassesPrintsDaylies
 
             $row[0]="";
 
-            if ($this->LatexMode) { $active=FALSE; }
+            if ($this->LatexMode()) { $active=FALSE; }
         }
 
         if ($active)
@@ -152,7 +152,7 @@ class ClassesPrintsTable extends ClassesPrintsDaylies
         $statdate=$student[ "StudentHash" ][ "StatusDate1" ];
         if ($statdate==0) { $statdate="-"; }
 
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             array_push
             (
@@ -165,7 +165,11 @@ class ClassesPrintsTable extends ClassesPrintsDaylies
 
         if ($this->ApplicationObj->ClassStudentsObject->StudentMatriculatedAtDate($student,$lastdate))
         {
-            $row=array_merge($row,$this->MEmpties);
+            for ($k=1;$k<=$this->NMFields;$k++)
+            {
+                array_push($row,"");
+            }
+
             array_push($table,$row);
         }
     }

@@ -30,9 +30,9 @@ class ClassDiscsTablesInfo extends ClassDiscsTablesDisplay
                 $per="Disciplina";
             }
 
-            if ($this->LatexMode) { return "Relatório de Notas"; }
+            if ($this->LatexMode()) { return "Relatório de Notas"; }
         }
-        elseif ($this->LatexMode)
+        elseif ($this->LatexMode())
         {
             return "Ficha de Notas";
         }
@@ -61,7 +61,7 @@ class ClassDiscsTablesInfo extends ClassDiscsTablesDisplay
         $table=array();
         if ($this->PerDisc)
         {
-            if (!$this->LatexMode)
+            if (!$this->LatexMode())
             {
                 array_push
                 (
@@ -79,7 +79,7 @@ class ClassDiscsTablesInfo extends ClassDiscsTablesDisplay
                )
             );
 
-            if (!$this->LatexMode)
+            if (!$this->LatexMode())
             {
                 $table=array_merge
                 (
@@ -90,7 +90,7 @@ class ClassDiscsTablesInfo extends ClassDiscsTablesDisplay
         }
         else
         {
-            if (!$this->LatexMode && $form)
+            if (!$this->LatexMode() && $form)
             {
                array_push
                 (
@@ -108,7 +108,7 @@ class ClassDiscsTablesInfo extends ClassDiscsTablesDisplay
                )
             );
 
-            if (!$this->LatexMode)
+            if (!$this->LatexMode())
             {
                 $table=array_merge
                 (
@@ -119,7 +119,7 @@ class ClassDiscsTablesInfo extends ClassDiscsTablesDisplay
 
         }
 
-        if ($this->LatexMode) 
+        if ($this->LatexMode()) 
         {
             array_push($table,"\n\\vspace{0.25cm}\n\n");
         }

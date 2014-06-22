@@ -5,6 +5,6 @@ array
    'ItemPostProcessor' => 'PostProcess',
    'ItemName' => 'Período',
    'ItemsName' => 'Períodos',
-   'ItemNamer' => 'Name',
+   'ItemNamer' => 'Title',
    'Masculine' => '1',
 );

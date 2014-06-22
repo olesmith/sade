@@ -6,21 +6,18 @@ class HtmlRadioButton extends HtmlCheckButton
 
 
 //*
-//* sub MakeRadio, Parameter list: name,$value,$checked
+//* sub MakeRadio, Parameter list: name,$value,$checked,$disabled=0,$options=array()
 //*
 //* Create Radio button of name $name. The button is checked if argument
 //* $checked is defined.
 //*
 //*
 
-function MakeRadio($name,$value,$checked=0,$disabled=0)
+function MakeRadio($name,$value,$checked=0,$disabled=0,$options=array())
 {
-    $options=array
-    (
-       "TYPE" => "radio",
-       "VALUE" => $value,
-       "NAME" => $name,
-    );
+    $options[ "TYPE" ]="radio";
+    $options[ "VALUE" ]=$value;
+    $options[ "NAME" ]=$name;
 
     if ($checked!=0)  { $options[ "CHECKED" ]=""; }
     if ($disabled!=0) { $options[ "CHECKED" ]=""; }
@@ -48,7 +45,7 @@ function MakeRadioSet($name,$values,$titles,$selected=-1)
   for ($n=0;$n<count($values);$n++)
   {
     $checked=0;
-    if (preg_match("/^$selected$/",$values[$n]) || count($values)==1)
+    if (intval($selected)>0 && preg_match("/^$selected$/",$values[$n]) || count($values)==1)
     {
       $checked=1;
     }

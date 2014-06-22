@@ -21,11 +21,6 @@ class SAdEInfoTable extends SAdEClass
     function InfoTable()
     {
         $table=array();
-        /* if (!empty($this->Unit)) */
-        /* { */
-        /*     $this->Unit2InfoTable($table); */
-        /* } */
-
         if (!empty($this->School))
         {
             /* $this->School2InfoTable($table); */

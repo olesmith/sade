@@ -1,7 +1,5 @@
 <?php
 
-include_once("Class/Status/TitleRows.php");
-
 
 class ClassStatusRow extends ClassStatusTitleRows
 { 

@@ -10,14 +10,7 @@ class ClassDiscsTablesDisplay extends ClassDiscsTablesGenerate
 
     function DisplayLatexTable()
     {
-        $this->LatexMode=TRUE;
-        $this->ApplicationObj->ClassMarksObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassAbsencesObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassStatusObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassObservationsObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassStudentsObject->LatexMode=TRUE;
-        $this->ApplicationObj->StudentsObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassesObject->LatexMode=TRUE;
+        $this->ApplicationObj->SetLatexMode();
         $this->ApplicationObj->Sigma="\$\\Sigma\$";
         $this->ApplicationObj->Mu="\$\\mu\$";
         $this->ApplicationObj->Percent="\\%";

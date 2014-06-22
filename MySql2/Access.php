@@ -234,6 +234,8 @@ class Access extends MySql
 
       //header( 'Location: '.$newlink);
       print "Action $raction not allowed - ciao...";
+
+      print $this->PrintCallStack();
       exit();
   }
 

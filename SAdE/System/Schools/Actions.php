@@ -3,7 +3,7 @@ array
       "HeadTable" => array
       (
         "Href"     => "",
-        "HrefArgs" => "ModuleName=Schools&Action=&HeadTable&School=".$this->ApplicationObj->GetSchoolID(),
+        "HrefArgs" => "ModuleName=Schools&Action=HeadTable&School=".$this->ApplicationObj->GetSchoolID(),
         "Name"    => "Cabeçalhos dos Impressos",
         "Title"     => "Cabeçalhos dos Impressos",
         "Public"   => 0,
@@ -19,7 +19,7 @@ array
       "Periods" => array
       (
         "Href"     => "",
-        "HrefArgs" => "ModuleName=Schools&Action=&Periods&School=".$this->ApplicationObj->GetSchoolID(),
+        "HrefArgs" => "ModuleName=Schools&Action=Periods&School=".$this->ApplicationObj->GetSchoolID(),
         "Name"    => "Periodos",
         "Title"     => "Periodos da Escola",
         "Public"   => 0,

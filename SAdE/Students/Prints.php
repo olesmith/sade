@@ -196,10 +196,7 @@ class StudentsPrints extends StudentsImport
 
     function PrintStudents($class=array())
     {
-        $this->LatexMode=TRUE;
-        $this->ApplicationObj->ClassStudentsObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassesObject->LatexMode=TRUE;
-        $this->ApplicationObj->PeriodsObject->LatexMode=TRUE;
+        $this->ApplicationObj->SetLatexMode();
 
         $nitemspp=0;
         $latexhead="";

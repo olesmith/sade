@@ -59,7 +59,11 @@ class ClassDiscsStatusTableRow extends ClassDiscsStatusTableTrimesters
             }
         }
 
-        
+        if (empty($rows))
+        {
+            array_push($row,"Nenhum Trimestre indicado...");
+            array_push($rows,$row);
+        }
 
         return $rows;
     }

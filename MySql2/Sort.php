@@ -193,7 +193,7 @@ class Sort extends Search
 
             $img=$this->IMG
             (
-               $this->FindIconsPath()."/nosort.png",
+               $this->Icons."/nosort.png",
                "Reversar",
                0,0,
                array
@@ -228,7 +228,7 @@ class Sort extends Search
 
             $img=$this->IMG
             (
-               $this->FindIconsPath().$img,
+               $this->Icons.$img,
                "Reversar",
                0,0,
                array
@@ -311,9 +311,10 @@ class Sort extends Search
                     $object=$this->ItemData[ $key ][ "SqlObject" ];
                     $rvalue=$this->ApplicationObj->$object->GetItemName($rvalue);
                 }
+
                 if (
-                    $this->ItemData[ $key ][ "Sql" ]=="ENUM"
-                    &&
+                    //$this->ItemData[ $key ][ "Sql" ]=="ENUM"
+                    //&&
                     isset($this->ItemData[ $key ][ "NumericalSort" ])
                     &&
                     $this->ItemData[ $key ][ "NumericalSort" ]==TRUE)
@@ -324,11 +325,11 @@ class Sort extends Search
                         $this->ItemData[ $key ][ "SortReverse" ]==TRUE
                        )
                     {
-                        $rvalue=sprintf("%6d",100000-$hash[ $key ]);
+                        $rvalue=sprintf("%06d",100000-$hash[ $key ]);
                     }
                     else
                     {
-                        $rvalue=sprintf("%6d",$hash[ $key ]);
+                        $rvalue=sprintf("%06d",$hash[ $key ]);
                     }
                 }
                 elseif (isset($this->ItemData[ $key ][ "SqlTable" ]))

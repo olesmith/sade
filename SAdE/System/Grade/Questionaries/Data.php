@@ -66,6 +66,7 @@ array
       "Size" => "5",
       "Sql" => "VARCHAR(5)",
       "Compulsory" => FALSE,
+      "NumericalSort" => TRUE,
 
       "Public"      => 1,
       "Person"      => 1,

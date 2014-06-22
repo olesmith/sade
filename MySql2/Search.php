@@ -53,7 +53,7 @@ class Search extends SearchVars
             $include=1;
             foreach ($searchvars as $data => $value)
             {
-                if ($include==0)
+                if ($include==0 || empty($value))
                 {
                     continue;
                 }

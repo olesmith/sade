@@ -156,7 +156,7 @@ class ItemTests extends ItemBackRefs
 
     function ItemDataIsUnique($item,$data)
     {
-        if (!empty($item[ $data ]))
+        if (!empty($item[ $data ]) && empty($this->ItemData[ $data ][ "Derived" ]))
         {
             $nitems=$this->MySqlNEntries("",array($data => $item[ $data ]));
             if ($nitems>1)

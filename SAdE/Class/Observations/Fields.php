@@ -62,12 +62,12 @@ class ClassObservationsFields extends ClassObservationsImport
 
 
     //*
-    //* function ObservationField, Parameter list: $class,$student,$edit=0,$tedit=0
+    //* function ObservationField, Parameter list: $class,$student,$edit=0,$tedit=0,$weight=8,$height=2.5
     //*
     //* Creates the row with question, one for each 
     //*
 
-    function ObservationField($class,$student,$n,$edit=0,$tedit=0)
+    function ObservationField($class,$student,$n,$edit=0,$tedit=0,$weight=8,$height=2.5)
     {        
         $data="Value";
         $item=$this->ReadObservation($class,$student,$n);
@@ -76,9 +76,9 @@ class ClassObservationsFields extends ClassObservationsImport
         $item[ $data ]=preg_replace('/\s$/',"",$item[ $data ]);
 
         $field=$this->MakeField($edit,$item,$data,TRUE);
-        if (!preg_match('/\S/',$item[ $data ]) && $this->LatexMode)
+        if (!preg_match('/\S/',$item[ $data ]) && $this->LatexMode())
         {
-            $field="\\mbox{\\begin{minipage}[t]{8cm}\\hspace{1cm}\\vspace{2.5cm}\\end{minipage}}\n";
+            $field="\\mbox{\\begin{minipage}[t]{".$weight."cm}\\hspace{1cm}\\vspace{".$height."cm}\\end{minipage}}\n";
         }
 
         return preg_replace
@@ -92,12 +92,12 @@ class ClassObservationsFields extends ClassObservationsImport
     }
 
     //*
-    //* function ResponsibleObservationField, Parameter list: $class,$student,$edit=0,$tedit=0
+    //* function ResponsibleObservationField, Parameter list: $class,$student,$edit=0,$tedit=0,$weight=8,$height=2.5
     //*
     //* Creates the row with question, one for each 
     //*
 
-    function ResponsibleObservationField($class,$student,$n,$edit=0,$tedit=0)
+    function ResponsibleObservationField($class,$student,$n,$edit=0,$tedit=0,$weight=8,$height=2.5)
     {        
         $data="ResponsibleValue";
         $item=$this->ReadObservation($class,$student,$n);
@@ -108,9 +108,9 @@ class ClassObservationsFields extends ClassObservationsImport
         if ($edit!=1) { return $item[ $data ]; }
 
         $field=$this->MakeField($edit,$item,$data,TRUE);
-        if (!preg_match('/\S/',$item[ $data ]) && $this->LatexMode)
+        if (!preg_match('/\S/',$item[ $data ]) && $this->LatexMode())
         {
-            $field="\\mbox{\\begin{minipage}[t]{8cm}\\hspace{1cm}\\vspace{2.5cm}\\end{minipage}}\n";
+            $field="\\mbox{\\begin{minipage}[t]{".$weight."cm}\\hspace{1cm}\\vspace{".$height."cm}\\end{minipage}}\n";
         }
 
         return preg_replace

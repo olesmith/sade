@@ -30,6 +30,8 @@ class ItemsRead extends ItemsLatex
 
         if ($this->NoSearches) { $nosearches=TRUE; }
         if ($this->NoPaging) { $nopaging=TRUE; }
+        $this->NoPaging=$nopaging;
+        $this->NoSearches=$nosearches;
 
         if ($this->IncludeAll) { $includeall=2; }
         if ($includeall==1)
@@ -51,7 +53,6 @@ class ItemsRead extends ItemsLatex
         if (!empty($rwhere) || count($rsearchvars)>0 || $includeall==2 || !empty($this->OnlyReadIDs))
         {
             $rwhere=$this->GetRealWhereClause($rwhere);
-
             if ($this->OnlyReadIDs)
             {
                 $rrwhere="ID IN ('".join("','",$this->OnlyReadIDs)."')";
@@ -93,9 +94,8 @@ class ItemsRead extends ItemsLatex
         }
 
         $this->SkipNonAllowedItems();
-        $this->ReadItemsDerivedData($rdatas);
 
-        //Search items
+       //Search items
         if (!$nosearches && $includeall!=2)
         {
            $this->SearchItems();
@@ -110,17 +110,17 @@ class ItemsRead extends ItemsLatex
 
         if (!$nopaging)
         {
-            $no=1;
-            foreach (array_keys($this->ItemHashes) as $id)
-            {
-                $this->ItemHashes[ $id ][ "No" ]=$no;
-                $no++;
-            }
-            $itemnos=$this->PageNo2ItemNos(count($this->ItemHashes),$this->ItemHashes);
+            $this->InitPaging();
 
-            $this->ItemHashes=array_splice($this->ItemHashes,$itemnos[0],$itemnos[1]);
+            $this->ItemHashes=array_splice
+            (
+               $this->ItemHashes,
+               $this->FirstItemNo,
+               $this->OffSet
+            );
         }
 
+        $this->ReadItemsDerivedData($rdatas);
         $this->SetItemsDefaults($rdatas);
         $this->TrimItems($rdatas);
         $this->PostProcessItems();

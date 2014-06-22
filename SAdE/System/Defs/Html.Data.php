@@ -18,8 +18,8 @@ array
    'ApplicationName' => 'SAdE',
    'ApplicationVersion' => '2.0',
    'BodyArgs' => ' ',
-   'ApplicationIcon' => '../icons/sade_owl.png',
-   'TailIcon_Left'   => '../icons/sade_owl.png',
-   'TailIcon_Right'  => '../icons/sade_owl.png',
+   'ApplicationIcon' => 'icons/sade_owl.png',
+   'TailIcon_Left'   => 'icons/sade_owl.png',
+   'TailIcon_Right'  => 'icons/sade_owl.png',
    'SupportEmail' => 'sade@ipredes.com.br',
 );

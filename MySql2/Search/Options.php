@@ -3,42 +3,6 @@
 
 class SearchOptions extends Paging
 {
-    //*
-    //* function CGI2IncludeAll, Parameter list:
-    //*
-    //* Retrieves CGI POST value of $this->ModuleName."_IncludeAll",
-    //* setting on as default.
-    //*
-
-    function CGI2IncludeAll()
-    {
-        $val=$this->GetCGIVarValue($this->ModuleName."_IncludeAll");
-
-        $default=1;
-        if ($this->IncludeAllDefault) { $default=2; }
-        if ($val=="") { $val=$default; }
-
-        return $val;
-    }
-
-    //*
-    //* function CGI2Edit, Parameter list:
-    //*
-    //* Retrieves CGI POST value of $this->ModuleName."_IncludeAll",
-    //* setting on as default.
-    //*
-
-    function CGI2Edit()
-    {
-        $val=$this->GetCGIVarValue($this->ModuleName."_Edit");
-
-        $default=1;
-        if ($val=="") { $val=$default; }
-
-        return $val;
-    }
-
-
 
 
     //*
@@ -50,9 +14,6 @@ class SearchOptions extends Paging
 
     function AddSearchOptionFields($omitvars,&$table)
     {
-        $allradiotitles=$this->GetMessage($this->SearchDataMessages,"NoYes");
-        $nitemspp=$this->GetCGIVarValue($this->ModuleName."_NItemsPerPage");
-
         $row1=array();
         $row2=array();
         $row3=array();
@@ -65,20 +26,29 @@ class SearchOptions extends Paging
                (
                   $this->GetMessage($this->SearchDataMessages,"ShowAll").":"
                ),
-               $this->MakeSelectField
+               $this->MakeRadioSet //($name,$values,$titles,$selected=-1)
                (
                   $this->ModuleName."_IncludeAll",
                   array(1,2),
-                  $allradiotitles,
-                  $this->CGI2IncludeAll(),
-                  array(),
-                  $this->GetMessage($this->SearchDataMessages,"ShowAllTitles"),
-                  $this->GetMessage($this->SearchDataMessages,"ShowAllTitle")
-               )
+                  $this->GetMessage($this->SearchDataMessages,"NoYes"),
+                  $this->CGI2IncludeAll()
+               ).
+               /* $this->MakeSelectField */
+               /* ( */
+               /*    $this->ModuleName."_IncludeAll", */
+               /*    array(1,2), */
+               /*    $this->GetMessage($this->SearchDataMessages,"NoYes"), */
+               /*    $this->CGI2IncludeAll(), */
+               /*    array(), */
+               /*    $this->GetMessage($this->SearchDataMessages,"ShowAllTitles"), */
+               /*    $this->GetMessage($this->SearchDataMessages,"ShowAllTitle") */
+               /* ). */
+               ""
              );
         }
 
 
+        $nitemspp=$this->GetCGIVarValue($this->ModuleName."_NItemsPerPage");
         if (!preg_grep('/^Paging/',$omitvars))
         {
             $val=$this->GetCGIVarValue($this->ModuleName."_Paging");

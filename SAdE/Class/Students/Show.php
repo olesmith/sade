@@ -81,7 +81,7 @@ class ClassStudentsShow extends ClassStudentsImport
 
         $this->ApplicationObj->Students=$this->ItemHashes;
 
-        if ($this->LatexMode || $latex)
+        if ($this->LatexMode() || $latex)
         {
             $this->ApplicationObj->ClassStudentsObject->LatexStudents();
         }

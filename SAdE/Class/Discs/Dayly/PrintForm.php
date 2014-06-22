@@ -150,7 +150,7 @@ class ClassDiscsPrintForm extends ClassDiscsCGI
               $this->ComponentCGIValue("All",$class,$disc)==1
            )
         {
-            $this->ApplicationObj->ClassDiscContentsObject->LatexMode=TRUE;
+            $this->ApplicationObj->SetLatexMode();
             $latex.=$this->ApplicationObj->ClassDiscContentsObject->ContentsLatex($class,$disc);
         }
 
@@ -160,7 +160,7 @@ class ClassDiscsPrintForm extends ClassDiscsCGI
               $this->ComponentCGIValue("All",$class,$disc)==1
            )
         {
-            $this->ApplicationObj->ClassDiscAbsencesObject->LatexMode=TRUE;
+            $this->ApplicationObj->SetLatexMode();
             $latex.=$this->ApplicationObj->ClassDiscAbsencesObject->AbsencesLatex($class,$disc);
         }
 
@@ -174,7 +174,7 @@ class ClassDiscsPrintForm extends ClassDiscsCGI
             $this->ApplicationObj->ClassDiscMarksObject->Assessments=
                 $this->ApplicationObj->ClassDiscAssessmentsObject->Assessments;
 
-            $this->ApplicationObj->ClassDiscMarksObject->LatexMode=TRUE;
+            $this->ApplicationObj->SetLatexMode();
             $latex.=$this->ApplicationObj->ClassDiscMarksObject->MarksLatex($class,$disc);
         }
 

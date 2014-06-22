@@ -293,7 +293,7 @@ array
          'Person'    => 0,
          'Secretary' => 1,
          'Admin'     => 1,
-         "Clerk"     => 0,
+         "Clerk"     => 1,
          "Teacher"   => 0,
          "Coordinator" => 1,
       ),
@@ -303,7 +303,7 @@ array
          'Person'    => 0,
          'Secretary' => 1,
          'Admin'     => 1,
-         "Clerk"     => 0,
+         "Clerk"     => 1,
          "Teacher"   => 0,
          "Coordinator" => 1,
       ),
@@ -313,7 +313,7 @@ array
          'Person'    => 0,
          'Secretary' => 1,
          'Admin'     => 1,
-         "Clerk"     => 0,
+         "Clerk"     => 1,
          "Teacher"   => 0,
          "Coordinator" => 1,
       ),
@@ -458,6 +458,7 @@ array
             'Students' => 1,
             'HtmlTitles' => 1,
             'LatexTitles' => 1,
+            'HeadTable' => 1,
          ),
          'Coordinator' => array
          (
@@ -467,6 +468,7 @@ array
             'Students' => 1,
             'HtmlTitles' => 1,
             'LatexTitles' => 1,
+            'HeadTable' => 1,
          ),
          'Admin' => array
          (
@@ -476,6 +478,7 @@ array
             'Students' => 1,
             'HtmlTitles' => 1,
             'LatexTitles' => 1,
+            'HeadTable' => 1,
          ),
          'Clerk' => array
          (
@@ -483,7 +486,10 @@ array
             'Clerks' => 1,
             'Teachers' => 1,
             'Students' => 1,
-         ),
+            'HtmlTitles' => 1,
+            'LatexTitles' => 1,
+            'HeadTable' => 1,
+          ),
          'Teacher' => array
          (
          ),

@@ -13,7 +13,7 @@ class ClassesPrintsDaylies extends ClassesPrintsPrint
     {
         $no=$this->B("N&ordm;");
         $name=$this->B("NOME DO ACADÊMICO");
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $no="\\small{\\textbf{N$^o$}}";
             $name= "\\hspace{1.4cm} ".$name." \\hspace{1.4cm}";         
@@ -21,7 +21,7 @@ class ClassesPrintsDaylies extends ClassesPrintsPrint
 
         $row2=array($no,$name);
         $nfirst=2;
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             array_push($row2,"Matr. Data","Status","Status Data");     
             $nfirst+=3;

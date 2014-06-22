@@ -70,8 +70,9 @@ class InputFields extends SelectFields
             $object=$this->ItemData[ $data ][ "SqlObject" ];
             $value=$this->CreateDataSelectField($data,$item,$value);
 
+
             if (
-                !$this->LatexMode
+                !$this->LatexMode()
                 &&
                 isset($item[ $data ])
                 &&

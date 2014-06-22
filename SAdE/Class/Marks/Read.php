@@ -3,42 +3,92 @@
 class ClassMarksRead extends ClassMarksImport
 {
     //*
-    //* function ReadStudentDiscMark, Parameter list: $classid,$discid,$studentid,$assessment
+    //* function ReadStudentDiscMark, Parameter list: $classid,$discid,$studentid,$assessment,$secedit=1
     //*
     //* Reads Student Disc Status from DB.
     //*
 
-    function ReadStudentDiscMark($class,$disc,$student,$assessment)
+    function ReadStudentDiscMark($class,$disc,$student,$assessment,$secedit=1)
     {
         $res=$this->SelectUniqueHash
         (
            "",
-           $this->MarkFieldSqlWhere($class,$disc,$student,$assessment),
+           $this->MarkFieldSqlWhere($class,$disc,$student,$assessment,$secedit),
            TRUE,
            array("ID","Mark")
         );
 
-        if ($res[ "Mark" ]>10)
+        if ($res[ "Mark" ]>10.0)
         {
             $res[ "Mark" ]/=10.0;
         }
 
-        if (empty($res)) { return ""; }
-        else             { return $res[ "Mark" ]; }
+        if (empty($res[ "Mark" ])) { return ""; }
+        else             { return sprintf("%.1f",$res[ "Mark" ]); }
     }
 
     //*
-    //* function ReadStudentDiscSecEdit, Parameter list: $classid,$discid,$studentid,$assessment
+    //* function CalcStudentDiscMark, Parameter list: $classid,$discid,$studentid,$assessment
+    //*
+    //* Clc Student Disc Status from DB.
+    //*
+
+    function CalcStudentDiscMark($class,$disc,$student,$assessment)
+    {
+        $teachermark=$this->SelectUniqueHash
+        (
+           "",
+           $this->MarkFieldSqlWhere($class,$disc,$student,$assessment,1),
+           TRUE,
+           array("ID","Mark")
+        );
+        if ($teachermark[ "Mark" ]>10)
+        {
+            $teachermark[ "Mark" ]/=10.0;
+        }
+ 
+        $secretarymark=$this->SelectUniqueHash
+        (
+           "",
+           $this->MarkFieldSqlWhere($class,$disc,$student,$assessment,2),
+           TRUE,
+           array("ID","Mark")
+        );
+
+        if ($secretarymark[ "Mark" ]>10)
+        {
+            $secretarymark[ "Mark" ]/=10.0;
+        }
+
+        if (empty($secretarymark[ "Mark" ]) && empty($teachermark[ "Mark" ]) ) { return ""; }
+
+        $mark=0.0;
+        if (!empty($secretarymark))
+        {
+            $mark+=$secretarymark[ "Mark" ];
+        }
+        if (!empty($teachermark))
+        {
+            $mark+=$teachermark[ "Mark" ];
+        }
+
+        $mark=$this->Min($mark,10.0);
+
+        return sprintf("%.1f",$mark);
+    }
+
+    //*
+    //* function ReadStudentDiscSecEdit, Parameter list: $class,$disc,$student,$assessment,$secedit=1
     //*
     //* Reads Student Disc Status from DB.
     //*
 
-    function ReadStudentDiscSecEdit($class,$disc,$student,$assessment)
+    function ReadStudentDiscSecEdit($class,$disc,$student,$assessment,$secedit=1)
     {
         $res=$this->SelectUniqueHash
         (
            "",
-           $this->MarkFieldSqlWhere($class,$disc,$student,$assessment),
+           $this->MarkFieldSqlWhere($class,$disc,$student,$assessment,$secedit),
            TRUE,
            array("ID","SecEdit")
         );
@@ -58,7 +108,7 @@ class ClassMarksRead extends ClassMarksImport
         $marks=array();
         for ($assessment=1;$assessment<=$disc[ "NAssessments" ]+$disc[ "NRecoveries" ];$assessment++)
         {
-            $marks[ $assessment ]=$this->ReadStudentDiscMark($class,$disc,$student,$assessment);
+            $marks[ $assessment ]=$this->CalcStudentDiscMark($class,$disc,$student,$assessment);
         }
 
         return $marks;

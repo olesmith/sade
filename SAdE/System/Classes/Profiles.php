@@ -801,6 +801,7 @@ array
          ),
          "Admin" => array
          (
+            "Edit" => 1,
             "Students" => 1,
             "Discs" => 1,
             "Hours" => 1,
@@ -810,6 +811,7 @@ array
          ),
          "Clerk" => array
          (
+            "Edit" => 1,
             "Students" => 1,
             "Discs" => 1,
             "Hours" => 1,
@@ -833,6 +835,7 @@ array
          ),
          "Secretary" => array
          (
+            "Edit" => 1,
             "Students" => 1,
             "Discs" => 1,
             "Hours" => 1,

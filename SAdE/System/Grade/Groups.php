@@ -7,7 +7,9 @@ array(
          "No","Show","Periods","Delete",
          "ShortName","Name","Mode",
          "SortOrder","NextGrade","CHS","CHT",
-         "AssessmentType","NAssessments","AssessmentsWeights","MediaLimit","NRecoveries","FinalMedia","AbsencesType","AbsencesLimit",
+         "AssessmentType","NAssessments","AssessmentsWeights",
+         "MediaLimit","NRecoveries","FinalMedia",
+         "AbsencesType","AbsencesLimit",
          "NPeriods","NDiscs","NDiscsTotal"
       ),
       "Admin" => 1,

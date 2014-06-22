@@ -16,7 +16,7 @@ array(
       "Name" => "Básicos",
       "Data" => array
       (
-         "No","Delete","Questionaire","Number","Name",
+         "No","Delete","Grade","GradePeriod","Questionaire","Number","Name",
       ),
       "Admin" => 1,
       "Person" => 1,

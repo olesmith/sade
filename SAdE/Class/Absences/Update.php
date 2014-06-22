@@ -1,6 +1,5 @@
 <?php
 
-include_once("Class/Absences/Import.php");
 
 
 class ClassAbsencesUpdate extends ClassAbsencesImport

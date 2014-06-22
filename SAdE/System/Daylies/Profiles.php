@@ -45,7 +45,7 @@ array
          "Clerk" => 0,
          "Teacher"     => 1,
          "Secretary" => 0,
-      "Coordinator" => 1,
+         "Coordinator" => 1,
       ),
       'DaylyCalendar' => array
       (
@@ -57,6 +57,17 @@ array
          "Teacher"     => 1,
          "Secretary" => 1,
          "Coordinator" => 0,
+      ),
+      'DaylyAddContents' => array
+      (
+         'Public' => 0,
+         'Person' => 0,
+         'Admin' => 1,
+
+         "Clerk" => 1,
+         "Teacher"     => 1,
+         "Secretary" => 1,
+         "Coordinator" => 1,
       ),
       'DaylyContents' => array
       (

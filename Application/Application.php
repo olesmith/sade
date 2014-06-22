@@ -113,6 +113,22 @@ class Application extends Handlers
     }
 
     //*
+    //* function SetLatexMode, Parameter list: 
+    //*
+    //* Changes some character constants to use with LatexMode=1.
+    //*
+
+    function SetLatexMode()
+    {
+        $this->Sigma   = '$'."\\Sigma".  '$';
+        $this->Mu      = '$'."\\Mu".     '$';
+        $this->Percent = "\\%";
+
+        $this->LatexMode=TRUE;
+    }
+
+
+    //*
     //* function InitApplication, Parameter list: 
     //*
     //* Application initializer.
@@ -379,6 +395,60 @@ class Application extends Handlers
         }
 
         return $greyrow;
+    }
+
+    //*
+    //* Transfers data read into $this->Unit, into $this->ApplicationObj->CompanyHash.
+    //*
+
+    function Unit2CompanyHash()
+    {
+        if (!empty($this->Unit))
+        { 
+            foreach (array_keys($this->Unit) as $key)
+            {
+                $this->CompanyHash[ $key ]=$this->Unit[ $key ];
+            }
+
+            $this->CompanyHash[ "Institution" ]="";
+            if (!empty($this->Unit[ "Institution" ]))
+            {
+                $this->CompanyHash[ "Institution" ]=$this->Unit[ "Institution" ];
+            }
+
+            if (!empty($this->Unit[ "Title" ]))
+            {
+                $this->CompanyHash[ "Department" ]=$this->Unit[ "Title" ];
+            }
+
+            $this->CompanyHash[ "Url" ]="";
+            if (!empty($this->Unit[ "WWW" ]))
+            {
+                $this->CompanyHash[ "Url" ]=$this->Unit[ "WWW" ];
+            }
+            elseif (!empty($this->Unit[ "Url" ]))
+            {
+                $this->CompanyHash[ "Url" ]=$this->Unit[ "Url" ];
+            }
+
+            $this->CompanyHash[ "City" ]="";
+             if (!empty($this->Unit[ "City" ]))
+            {
+                $this->CompanyHash[ "City" ]=$this->Unit[ "City" ];
+            }
+
+            $this->CompanyHash[ "State" ]="";
+            if (!empty($this->Unit[ "State" ]))
+            {
+                $this->CompanyHash[ "State" ]=$this->Unit[ "State" ];
+            }
+
+            $this->CompanyHash[ "ZIP" ]="";
+             if (!empty($this->Unit[ "" ]))
+            {
+                $this->CompanyHash[ "ZIP" ]="CEP: ".$$this->Unit[ "ZIP" ];
+            }
+        }
     }
 }
 

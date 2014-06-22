@@ -1,7 +1,9 @@
 <?php
 
+include_once("Grade/Questions/Copy.php");
 
-class GradeQuestions extends Common
+
+class GradeQuestions extends GradeQuestionsCopy
 {
 
     //*
@@ -108,9 +110,6 @@ class GradeQuestions extends Common
     function EditGradeQuestions($edit,$grade,$period,&$table)
     {
         $this->InitData();
-
-        $this->SqlWhere="GradePeriod='".$period."'";
-
         $new=array
         (
            "Grade" => $grade,
@@ -165,6 +164,7 @@ class GradeQuestions extends Common
             array($dtable)
         );
     }
+
 }
 
 ?>

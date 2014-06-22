@@ -1,7 +1,5 @@
 <?php
 
-include_once("Class/Status/Update.php");
-
 
 class ClassStatusTitleRows extends ClassStatusUpdate
 {
@@ -16,7 +14,7 @@ class ClassStatusTitleRows extends ClassStatusUpdate
         $row=array();
 
         $nrows=count($this->StudentDataTitles);
-        //if (!$this->LatexMode) { $nrows++; }
+        //if (!$this->LatexMode()) { $nrows++; }
 
         array_push
         (
@@ -49,7 +47,7 @@ class ClassStatusTitleRows extends ClassStatusUpdate
     function ClassStatusTableDiscDataTitles($class,$discs)
     {
         $titles=$this->StatusDataTitles;
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             foreach (array_keys($titles) as $id)
             {

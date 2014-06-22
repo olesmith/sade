@@ -2,8 +2,10 @@
 
 //set_include_path('../Application:../MySql2:../Base'.":..:.");
 include_once("../Application/Application.php");
+//include_once("../Common/Icons.php");
 
 
+include_once("../MySql2/Unique.php");
 include_once("Common.php");
 include_once("Units.php");
 include_once("SAdE/Unit.php");
@@ -14,8 +16,11 @@ include_once("SAdE/InfoTable.php");
 include_once("SAdE/LeftMenu.php");
 include_once("SAdE/Accessors.php");
 
+
 class SAdE extends SAdEAccessors
 {
+    //use Icons;
+
     var $SavePath="?Action=Start";
     var $ApplicationMessages="Application.php";
 
@@ -77,6 +82,8 @@ class SAdE extends SAdEAccessors
     var $ClassDiscAbsencesObject=NULL;
     var $ClassDiscAssessmentsObject=NULL;
     var $ClassDiscMarksObject=NULL;
+
+    var $Teacher2DiscsObject=NULL;
 
     var $Sigma="&Sigma;";
     var $Mu="&mu;";
@@ -217,19 +224,6 @@ class SAdE extends SAdEAccessors
         }
 
         print "Invalid unit..."; exit();
-    }
-
-    //*
-    //* function SetLatexMode, Parameter list: 
-    //*
-    //* Changes some character constants to use with LatexMode=1.
-    //*
-
-    function SetLatexMode()
-    {
-        $this->Sigma   = '$'."\\Sigma".  '$';
-        $this->Mu      = '$'."\\Mu".     '$';
-        $this->Percent = "\\%";
     }
 
     //*

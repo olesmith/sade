@@ -103,7 +103,7 @@ class LeftMenu extends MySql
     //*
     //* function GenerateSubMenuList, Parameter list:
     //*
-    //* Generates (returns) the Left menu.
+    //* Generates (returns) Left submenu.
     //*
 
     function GenerateSubMenuList($submenu,$item=array())

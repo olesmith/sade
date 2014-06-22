@@ -102,7 +102,7 @@ class StudentsMatriculateUpdate extends StudentsMatriculateTable
            $this->ApplicationObj->GetPeriodName($period)
         );
 
-        if ($hasrecords) { return; }
+        if ($hasrecords && !empty($classstudent)) { return; }
 
         $classcgi=$this->GetPOST($this->SelectFieldName($period));
         if (

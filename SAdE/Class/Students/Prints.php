@@ -3,22 +3,26 @@
 
 class ClassStudentsPrints extends ClassStudentsShow
 {
+    var $Orientation="";
     var $PrintTypes=array
     (
        "Matricula" => array
        (
           "Title" => "Ficha de Matrícula",
           "Method" => "StudentMatricula",
+          "Orientation" => "Portrait",
        ),
        "Receit" => array
        (
           "Title" => "Ficha de Notas",
           "Method" => "StudentSheet",
+          "Orientation" => "Landscape",
        ),
        "ReceitSimple" => array
        (
           "Title" => "Ficha de Notas Simples",
           "Method" => "StudentSheetSimple",
+          "Orientation" => "Portrait",
        ),
     );
 
@@ -62,7 +66,7 @@ class ClassStudentsPrints extends ClassStudentsShow
 
         $latex=
             $this->H(1,$this->ApplicationObj->ClassDiscsObject->GetDisplayTitle()).
-            "\n\\vspace{0.25cm}\n\n";
+            "\n\\vspace{0.1cm}\n\n";
 
         foreach ($tables as $table)
         {
@@ -90,7 +94,8 @@ class ClassStudentsPrints extends ClassStudentsShow
 
         $latex=
             $this->H(1,$this->ApplicationObj->ClassDiscsObject->GetDisplayTitle()).
-            "\n\\vspace{0.25cm}\n\n";
+            "\n\\vspace{0.1cm}\n\n".
+            "";
 
         foreach ($tables as $table)
         {
@@ -98,7 +103,7 @@ class ClassStudentsPrints extends ClassStudentsShow
             $latex.=$table;
         }
 
-        $latex=$this->LatexOnePage($latex,"27.5cm",0.75);
+        $latex=$this->LatexOnePage($latex,"20cm",0.9);
 
         return $latex;
     }
@@ -111,6 +116,7 @@ class ClassStudentsPrints extends ClassStudentsShow
 
     function ClassStudentsAnything2Print()
     {
+        $this->Orientation="";
         foreach ($this->ApplicationObj->Students as $student)
         {
             foreach ($this->PrintTypes as $type => $def)
@@ -121,8 +127,10 @@ class ClassStudentsPrints extends ClassStudentsShow
                       $this->GetPOST("Include_All_".$type)==1
                    )
                 {
+                    $this->Orientation=$def[ "Orientation" ];
                     return TRUE;
                 }
+
             }
         }
 
@@ -138,30 +146,28 @@ class ClassStudentsPrints extends ClassStudentsShow
     function ClassStudentsPrint()
     {
         $this->ApplicationObj->SetLatexMode();
-        $this->LatexMode=TRUE;
-        $this->ApplicationObj->ClassesObject->LatexMode=TRUE;
-        $this->ApplicationObj->StudentsObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassStudentsObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassDiscsObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassMarksObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassAbsencesObject->LatexMode=TRUE;
-        $this->ApplicationObj->ClassObservationsObject->LatexMode=TRUE;
-
 
         $this->ApplicationObj->ClassDiscsObject->PerDisc=FALSE;
 
-        $this->ApplicationObj->ClassDiscsObject->TableType="Totals";
-
         $this->ApplicationObj->ClassDiscsObject->ReadTable();
 
+        $this->ApplicationObj->ClassDiscsObject->TableType="Print";
         $this->ApplicationObj->ClassDiscsObject->InitDisplayTable(0,0);
 
 
         $this->ApplicationObj->StudentsObject->InitLatexData();
 
+        $latex="";
+        if ($this->Orientation=="Landscape")
+        {
+            $latex.=$this->ApplicationObj->ClassesObject->LatexHeadLand();
+        }
+        else
+        {
+            $latex.=$this->ApplicationObj->ClassesObject->LatexHead();
+        }
 
-        $latex=
-            $this->ApplicationObj->ClassesObject->LatexHead().
+        $latex.=
             "\\begin{center}\n".
             "";
 
@@ -191,7 +197,7 @@ class ClassStudentsPrints extends ClassStudentsShow
             $this->ApplicationObj->ClassesObject->LatexTail().
             "";
 
-        //$this->ShowLatexCode($latex);exit();
+        // $this->ShowLatexCode($latex);exit();
          $this->RunLatexPrint($texfilename,$latex);
     }
 

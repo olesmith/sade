@@ -38,7 +38,7 @@ class ClassDiscAbsencesRow extends ClassDiscAbsencesUpdate
     {
         $row=array($this->B(sprintf("%02d",$n)));
 
-        if (!$this->LatexMode)
+        if (!$this->LatexMode())
         {
             $action="";
             if (preg_match('/^(Admin|Clerk|Secretary)$/',$this->ApplicationObj->Profile))

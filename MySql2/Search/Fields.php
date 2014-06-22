@@ -24,7 +24,7 @@ class SearchFields extends SearchCookies
     {
         if (empty($rval))
         {
-            $rval=$this->HtmlDateInputValue($data,TRUE);
+            //$rval=$this->HtmlDateInputValue($data,TRUE,FALSE);
         }
 
         return $this->HtmlDateInputField
@@ -143,6 +143,8 @@ class SearchFields extends SearchCookies
             }
         }
 
+        $setempty=FALSE;
+        if (empty($this->ItemHashes)) { $setempty=TRUE; }
 
         $value=$this->CreateSubItemSelectField
         (
@@ -155,6 +157,11 @@ class SearchFields extends SearchCookies
            FALSE,
            TRUE
         );
+
+        if ($setempty)
+        {
+            $this->ItemHashes=array();
+        }
 
         if ($this->ItemData[ $data ][ "SqlTextSearch" ] && ($rval=="" || $rval==0))
         {

@@ -29,13 +29,21 @@ class ItemReads extends ItemPrints
 
         //Skip derived data from list of data to read
         $datas=$this->NonDerivedData($datas);
+        $rdatas=array();
+        foreach ($datas as $data)
+        {
+            if ($this->DBFieldExists($this->SqlTableName(),$data))
+            {
+                array_push($rdatas,$data);
+            }
+        }
 
         //Check if all data has been read and store in $this->ItemHashes[ $id ].
         //If so, just return this array.
         if (isset($this->ItemHashes[ $id ]))
         {
             $ok=TRUE;
-            foreach ($datas as $data)
+            foreach ($rdatas as $data)
             {
                 if (!isset($this->ItemHashes[ $id ][ $data ]))
                 {
@@ -56,8 +64,7 @@ class ItemReads extends ItemPrints
         if ($id=="" || $id==0) { return array(); }
 
         $where=$this->GetRealWhereClause("ID='".$id."'");
-
-        $this->ItemHash=$this->SelectUniqueHash($this->SqlTableName(),$where,FALSE,$datas);
+        $this->ItemHash=$this->SelectUniqueHash($this->SqlTableName(),$where,FALSE,$rdatas);
 
         if (
              !$this->ItemHash

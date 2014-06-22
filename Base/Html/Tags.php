@@ -6,6 +6,7 @@ $NFields=0;
 
 class HtmlTags extends HtmlCSS
 {
+    var $Icons="icons/";
     //*
     //* sub HtmlTag, Parameter list: $tag,$contents,$options=array()
     //*
@@ -159,16 +160,15 @@ class HtmlTags extends HtmlCSS
     {
         if (!preg_match('/^(http|\/|\.)/',$src) && !file_exists($src))
         {
-            $src=$this->FindIconsPath()."/".$src;
+            //$src=$this->FindIconsPath()."/".$src;
         }
 
         $options[ "SRC" ]=$src;
-        $options[ "ALT" ]=$alttext;
+        $options[ "ALT" ]=$src;
         $options[ "BORDER" ]=0;
 
         if ($height>0) { $options[ "HEIGHT" ]=$height."px"; }
         if ($width>0)  { $options[ "WIDTH" ]=$width."px"; }
-
 
         return $this->HtmlTag("IMG","",$options);
     }
@@ -183,7 +183,7 @@ class HtmlTags extends HtmlCSS
 
     function H($n,$text,$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $sizes=array("","Huge","huge","LARGE","Large","large");
             return "\\".$sizes[ $n ]."{\\textbf{".$text."}}\n\n";
@@ -215,7 +215,7 @@ class HtmlTags extends HtmlCSS
 
     function SPAN($contents,$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return $contents;
         }
@@ -246,7 +246,7 @@ class HtmlTags extends HtmlCSS
 
     function CENTER($contents,$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return "\\begin{center}\n".$contents."\n\\end{center}";
         }
@@ -266,7 +266,7 @@ class HtmlTags extends HtmlCSS
 
     function RIGHT($contents,$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return "\\begin{flushright}\n".$contents."\n\\end{flushright}";
         }
@@ -286,7 +286,7 @@ class HtmlTags extends HtmlCSS
 
     function LEFT($contents,$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return "\\begin{flushright}\n".$contents."\n\\end{flushright}";
         }
@@ -322,7 +322,7 @@ class HtmlTags extends HtmlCSS
 
     function A($href,$contents="",$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return $contents;
         }
@@ -337,7 +337,7 @@ class HtmlTags extends HtmlCSS
 
     function BR()
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return "\n\n";
         }
@@ -360,7 +360,7 @@ class HtmlTags extends HtmlCSS
             return $rcontents;
         }
 
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return "\\textbf{".$contents."}";
         }
@@ -373,7 +373,7 @@ class HtmlTags extends HtmlCSS
 
     function I($contents="",$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return "\\textit{".$contents."}";
         }
@@ -386,7 +386,7 @@ class HtmlTags extends HtmlCSS
 
     function U($contents="",$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return "\\underline{".$contents."}";
         }
@@ -399,7 +399,7 @@ class HtmlTags extends HtmlCSS
 
     function TextColor($color,$contents="",$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             return "\\textcolor{".$color."}{".$contents."}";
         }
@@ -420,7 +420,7 @@ class HtmlTags extends HtmlCSS
 
     function SUB($text,$stext,$options=array())
     {
-        if ($this->LatexMode)
+        if ($this->LatexMode())
         {
             $stext=preg_replace('/,/',"}^{",$stext);
             return $text."\$_{".$stext."}\$";
